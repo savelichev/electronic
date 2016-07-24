@@ -1,16 +1,19 @@
 package ua.savelichev.electronic.dao;
 
-import ua.savelichev.electronic.dao.ConnectionFactory;
 import ua.savelichev.electronic.dao.interfaces.NotebookDAO;
 import ua.savelichev.electronic.domain.entity.Notebook;
 
 import javax.naming.NamingException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class NotebookDAOImpl implements NotebookDAO {
+
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
 
     public void createNotebook(Notebook notebook) {
@@ -32,7 +35,7 @@ public class NotebookDAOImpl implements NotebookDAO {
             preparedStatement.setString(7, notebook.getProcessor());
             preparedStatement.setInt(8, notebook.getRam());
             preparedStatement.setInt(9, notebook.getHdd());
-            preparedStatement.setString(10,notebook.getImageRef());
+            preparedStatement.setString(10, notebook.getImageRef());
             preparedStatement.setString(11, notebook.getCategory());
 
             preparedStatement.executeUpdate();
@@ -73,7 +76,7 @@ public class NotebookDAOImpl implements NotebookDAO {
 
             notebook = new Notebook();
 
-            while (resultSet.next()) {
+            if (resultSet.next()) {
 
                 notebook.setId(resultSet.getInt("id"));
                 notebook.setProducer(resultSet.getString("producer"));
@@ -114,22 +117,20 @@ public class NotebookDAOImpl implements NotebookDAO {
     @Override
     public int getId(Notebook notebook) {
         Connection connection = null;
-        PreparedStatement preparedStatement=null;
-        ResultSet resultSet=null;
-        int id=-1;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int id = -1;
 
         try {
             connection = connectionFactory.getConnection();
             preparedStatement = connection.prepareStatement("SELECT id FROM notebook WHERE producer=? AND model=?");
-            preparedStatement.setString(1,notebook.getProducer());
-            preparedStatement.setString(2,notebook.getModel());
-            resultSet=preparedStatement.executeQuery();
+            preparedStatement.setString(1, notebook.getProducer());
+            preparedStatement.setString(2, notebook.getModel());
+            resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 id = resultSet.getInt(1);
             }
-
-
 
 
         } catch (SQLException | NamingException e) {
@@ -153,9 +154,6 @@ public class NotebookDAOImpl implements NotebookDAO {
         }
         return id;
     }
-
-
-
 
 
     public List<Notebook> getAllNotebooks() {
@@ -231,10 +229,8 @@ public class NotebookDAOImpl implements NotebookDAO {
             preparedStatement.setString(7, notebook.getProcessor());
             preparedStatement.setInt(8, notebook.getRam());
             preparedStatement.setInt(9, notebook.getHdd());
-            preparedStatement.setString(10,notebook.getImageRef());
-            preparedStatement.setInt(11,notebook.getId());
-
-            System.out.println("from updateNotobook"+notebook);
+            preparedStatement.setString(10, notebook.getImageRef());
+            preparedStatement.setInt(11, notebook.getId());
 
             preparedStatement.executeUpdate();
 
@@ -288,8 +284,6 @@ public class NotebookDAOImpl implements NotebookDAO {
             }
         }
     }
-
-
 
 
     public List<Notebook> getNotebooksByPrice(int minPrice, int maxPrice) {

@@ -2,19 +2,20 @@ package ua.savelichev.electronic.domain.entity;
 
 public class OrderItem {
 
-    int id;
+    private int id;
 
-    int orderId;
+    private int orderId;
 
-    String title;
+    private String title;
 
-    int productArticle;
+    private int productArticle;
 
-    int productPrice;
+    private int price;
 
-    int productAmount;
+    private int amount;
 
-    int itemCost;
+    private int itemCost;
+
 
     public int getId() {
         return id;
@@ -48,20 +49,20 @@ public class OrderItem {
         this.productArticle = productArticle;
     }
 
-    public int getProductPrice() {
-        return productPrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setProductPrice(int productPrice) {
-        this.productPrice = productPrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public int getProductAmount() {
-        return productAmount;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setProductAmount(int productAmount) {
-        this.productAmount = productAmount;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getItemCost() {

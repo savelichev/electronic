@@ -11,13 +11,14 @@ public class Order {
 
     private List<OrderItem> orderItems;
 
-    private Address addressId;
+    private String address;
 
     private int orderCost;
 
     private String comment;
 
     private boolean isDone;
+
 
     public int getId() {
         return id;
@@ -43,12 +44,12 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    public Address getAddressId() {
-        return addressId;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressId(Address addressId) {
-        this.addressId = addressId;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getOrderCost() {
