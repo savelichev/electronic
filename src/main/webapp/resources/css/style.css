@@ -1,0 +1,17 @@
+.prod_border{
+    height:130px;
+}
+
+.buy_button{
+    margin-top: 50px;
+}
+
+td,th{
+    padding: 5px 10px;
+}
+
+.cart_item_price{
+    padding-top:26px;
+}
+
+
