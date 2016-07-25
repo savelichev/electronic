@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/signOut")
+@WebServlet("/sign-out")
 public class SignOutServlet extends HttpServlet {
 
     @Override

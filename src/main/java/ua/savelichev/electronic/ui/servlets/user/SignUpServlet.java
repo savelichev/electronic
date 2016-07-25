@@ -10,19 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/signUp")
+@WebServlet("/sign-up")
 public class SignUpServlet extends HttpServlet {
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("META-INF/view/user/signUp.jsp").forward(req, resp);
+        req.getRequestDispatcher("META-INF/view/user/sign-up.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.setCharacterEncoding("UTF-8");
 
         User inUser = new User();
 
@@ -37,9 +35,9 @@ public class SignUpServlet extends HttpServlet {
         boolean isUserCreated = new UserManager().createUser(inUser);
 
         if (isUserCreated) {
-            resp.sendRedirect("signIn");
+            resp.sendRedirect("sign-in");
         } else {
-            resp.sendRedirect("signUp");
+            resp.sendRedirect("sign-up");
         }
 
     }

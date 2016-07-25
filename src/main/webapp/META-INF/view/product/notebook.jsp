@@ -3,7 +3,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<%@ taglib prefix="cart" uri="WEB-INF/cartAdd" %>--%>
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -17,7 +16,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Electronic</title>
+    <title><fmt:message key="notebooks" bundle="${messages}"/></title>
 
     <link href="../../resources/css/bootstrap.css" rel="stylesheet">
     <link href="../../resources/css/style.css" rel="stylesheet">

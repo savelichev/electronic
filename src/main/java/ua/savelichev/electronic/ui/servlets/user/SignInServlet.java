@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/signIn")
+@WebServlet("/sign-in")
 public class SignInServlet extends HttpServlet {
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("META-INF/view/user/signIn.jsp").forward(req, resp);
+        req.getRequestDispatcher("META-INF/view/user/sign-in.jsp").forward(req, resp);
     }
 
     @Override
@@ -31,11 +31,11 @@ public class SignInServlet extends HttpServlet {
         User userFromDB = userManager.getUserByEmail(inUser.getEmail());
 
         if (userFromDB.getPassword() == null) {
-            resp.sendRedirect("signIn");
+            resp.sendRedirect("sign-in");
         }
 
         if (!(inUser.getPassword().equals(userFromDB.getPassword()))) {
-            resp.sendRedirect("signIn");
+            resp.sendRedirect("sign-in");
 
         }
 

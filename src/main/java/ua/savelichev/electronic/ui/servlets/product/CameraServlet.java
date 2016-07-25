@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/cameras")
+@WebServlet("/camera")
 public class CameraServlet extends HttpServlet {
 
     @Override

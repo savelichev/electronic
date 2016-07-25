@@ -7,7 +7,7 @@
 
 <html lang="${language}">
 <head>
-    <title>Admin page</title>
+    <title><fmt:message key="user_page" bundle="${messages}"/></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,9 +19,7 @@
 <!--top navigation bar-->
 <jsp:include page="../navigationbar.jsp"/>
 <div class="container">
-    <a href="cart"><fmt:message key="cart" bundle="${messages}"/></a>
-    <br/>
-    <a href="orders"><fmt:message key="orders" bundle="${messages}"/></a>
+    <a href="get-all-users"><fmt:message key="get_all_users" bundle="${messages}"/></a>
 
 </div>
 

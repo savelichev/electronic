@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/showAllUsers")
+@WebServlet("/show-all-users")
 public class ShowAllUsersServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.setAttribute("users",new UserManager().getAllUsers());
-        req.getRequestDispatcher("META-INF/view/user/allUsers.jsp").forward(req,resp);
+        req.getRequestDispatcher("META-INF/view/user/all-users.jsp").forward(req,resp);
     }
 }

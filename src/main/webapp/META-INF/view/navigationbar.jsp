@@ -31,12 +31,12 @@
                 </a>
                     <ul class="dropdown-menu">
                         <li><a href="audio"><fmt:message key="audio" bundle="${messages}"/></a></li>
-                        <li><a href="cameras"><fmt:message key="cameras" bundle="${messages}"/></a></li>
+                        <li><a href="camera"><fmt:message key="cameras" bundle="${messages}"/></a></li>
                         <li><a href="tv"><fmt:message key="tv" bundle="${messages}"/></a></li>
                         <li><a href="notebooks"><fmt:message key="notebooks" bundle="${messages}"/></a></li>
-                        <li><a href="phones"><fmt:message key="phones" bundle="${messages}"/></a></li>
+                        <li><a href="phone"><fmt:message key="phones" bundle="${messages}"/></a></li>
                         <li class="divider"></li>
-                        <li><a href="accessories"> <fmt:message key="accessories" bundle="${messages}"/> </a></li>
+                        <li><a href="accessory"> <fmt:message key="accessories" bundle="${messages}"/> </a></li>
                     </ul>
                 </li>
                 <li><a href="delivery"><fmt:message key="delivery" bundle="${messages}"/></a></li>
@@ -53,13 +53,13 @@
 
             <div class="navbar-btn navbar-right">
                 <div id="signin" style="display: none">
-                    <a href="signIn" class="btn btn-primary">
+                    <a href="sign-in" class="btn btn-primary">
                         <i class="fa fa-sign-in"></i> <fmt:message key="sign_in" bundle="${messages}"/>
                     </a>
                 </div>
 
                 <div id="signout" style="display: none">
-                    <a href="signOut" class="btn btn-primary">
+                    <a href="sign-out" class="btn btn-primary">
                         <i class="fa fa-sign-in"></i> <fmt:message key="sign_out" bundle="${messages}"/>
                     </a>
                 </div>

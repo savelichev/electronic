@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration</title>
+    <title><fmt:message key="sign_up" bundle="${messages}"/></title>
 
     <link href="../../resources/css/bootstrap.css" rel="stylesheet">
     <link href="../../resources/css/style.css" rel="stylesheet">
@@ -24,7 +24,7 @@
 
 <div class="container">
     <div class="col-md-4 container" id="registrationForm">
-        <form class="input-group" method="post" action="signUp">
+        <form class="input-group" method="post" action="sign-up">
             <div class="form-group">
                 <label for="inputEmail"><fmt:message key="email_address" bundle="${messages}"/></label>
                 <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">

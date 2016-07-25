@@ -9,7 +9,7 @@
 
 <html lang="${language}">
 <head>
-    <title>Admin page</title>
+    <title><fmt:message key="all_users" bundle="${messages}"/></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,7 @@
 <jsp:include page="../navigationbar.jsp"/>
 <div class="container">
     <div align="center">
-        <form action="showUserByEmail" method="get">
+        <form action="show-user-by-email" method="get">
             <fmt:message key="get_user_by_email" bundle="${messages}"/>
             <label>
                 <input type="email" name="userEmail" placeholder="Email"/>
@@ -49,7 +49,7 @@
                 <tr>
                     <td>
                         <div>
-                            <form action="blockUser" method="post">
+                            <form action="block-user" method="post">
 
                                     <input type="hidden" name="userEmail" value="${user.email}"/>
 
@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         <div>
-                            <form action="unblockUser" method="post">
+                            <form action="unblock-user" method="post">
                                 <label>
                                     <input hidden name="userEmail" value="${user.email}"/>
                                 </label>

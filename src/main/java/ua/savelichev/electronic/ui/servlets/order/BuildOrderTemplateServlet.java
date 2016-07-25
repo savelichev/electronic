@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/buildOrderTemplate")
+@WebServlet("/build-order-template")
 public class BuildOrderTemplateServlet extends HttpServlet {
 
     @Override

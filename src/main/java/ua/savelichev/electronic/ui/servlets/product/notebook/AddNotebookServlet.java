@@ -15,7 +15,7 @@ public class AddNotebookServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("META-INF/view/product/addNotebook.jsp").forward(req,resp);
+        req.getRequestDispatcher("META-INF/view/product/add-notebook.jsp").forward(req,resp);
 
     }
 

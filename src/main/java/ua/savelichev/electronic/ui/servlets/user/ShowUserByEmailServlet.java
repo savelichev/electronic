@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/showUserByEmail")
+@WebServlet("/show-all-users")
 public class ShowUserByEmailServlet extends HttpServlet {
 
     @Override
@@ -17,6 +17,6 @@ public class ShowUserByEmailServlet extends HttpServlet {
 
         req.setAttribute("users", new UserManager().getAllUsersByEmail(req.getParameter("userEmail")));
 
-        req.getRequestDispatcher("META-INF/view/user/allUsers.jsp").forward(req, resp);
+        req.getRequestDispatcher("META-INF/view/user/all-users.jsp").forward(req, resp);
     }
 }

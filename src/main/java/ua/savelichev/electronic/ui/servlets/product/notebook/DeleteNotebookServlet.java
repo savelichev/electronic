@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/deleteNotebook")
+@WebServlet("/delete-notebook")
 public class DeleteNotebookServlet extends HttpServlet{
 
     @Override

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/approveOrder")
+@WebServlet("/approve-order")
 public class ApproveOrder extends HttpServlet {
 
     @Override

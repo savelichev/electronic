@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language"
@@ -50,17 +48,17 @@
                 <div class="col-md-3">
                     <p class="cart_item_price">
                         <c:out value="${cartItem.product.price}"/><fmt:message key="currency"
-                                                                                                   bundle="${messages}"/>
+                                                                               bundle="${messages}"/>
                     </p>
                 </div>
 
                 <div class="col-md-3">
-                    <form method="post" action="cartAddProduct">
+                    <form method="post" action="cart-add-product">
                         <input type="hidden" name="productArticle" value="${cartItem.product.article}">
                         <button type="submit">+</button>
                     </form>
                     <c:out value="${cartItem.amount}"/>
-                    <form method="post" action="cartDecreaseProduct">
+                    <form method="post" action="cart-decrease-product">
                         <input type="hidden" name="productArticle" value="${cartItem.product.article}">
                         <button type="submit">-</button>
                     </form>
@@ -73,7 +71,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <form method="post" action="cartRemoveProduct">
+                    <form method="post" action="cart-remove-product">
                         <input type="hidden" name="productArticle" value="${cartItem.product.article}"/>
                         <button type="submit" class="btn-link">
                             <fmt:message key="remove" bundle="${messages}"/>
@@ -99,7 +97,7 @@
 
         </div>
         <div class="container">
-            <a class="btn btn-primary" href="buildOrderTemplate"><fmt:message key="make_an_order"
+            <a class="btn btn-primary" href="build-order-template"><fmt:message key="make_an_order"
                                                                               bundle="${messages}"/> </a>
         </div>
     </div>

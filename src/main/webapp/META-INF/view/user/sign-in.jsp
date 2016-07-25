@@ -25,7 +25,7 @@
 <div class="container">
 
     <div class="col-md-4 container" id="authForm">
-        <form class="input-group" method="post" action="signIn">
+        <form class="input-group" method="post" action="sign-in">
             <div class="form-group">
                 <label for="inputEmail"><fmt:message key="email_address" bundle="${messages}"/></label>
                 <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
@@ -38,7 +38,7 @@
             <br/>
             <div>
                 <button type="submit" class="btn btn-primary"><fmt:message key="sign_in" bundle="${messages}"/></button>
-                <a class="btn-link" href="signUp"><fmt:message key="sign_up" bundle="${messages}"/></a>
+                <a class="btn-link" href="sign-up"><fmt:message key="sign_up" bundle="${messages}"/></a>
             </div>
         </form>
     </div>

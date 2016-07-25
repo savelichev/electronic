@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/cartDecreaseProduct")
+@WebServlet("/cart-decrease-product")
 public class CartDecreaseProductServlet extends HttpServlet {
 
     @Override

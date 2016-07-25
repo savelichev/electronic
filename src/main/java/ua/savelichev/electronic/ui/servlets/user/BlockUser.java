@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/blockUser")
+@WebServlet("/block-user")
 public class BlockUser extends HttpServlet {
 
     @Override
@@ -17,6 +17,6 @@ public class BlockUser extends HttpServlet {
 
         new UserManager().blockUser(req.getParameter("userEmail"));
 
-        resp.sendRedirect("showAllUsers");
+        resp.sendRedirect("show-all-users");
     }
 }
