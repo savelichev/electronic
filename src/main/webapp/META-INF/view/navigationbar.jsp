@@ -33,7 +33,7 @@
                         <li><a href="audio"><fmt:message key="audio" bundle="${messages}"/></a></li>
                         <li><a href="camera"><fmt:message key="cameras" bundle="${messages}"/></a></li>
                         <li><a href="tv"><fmt:message key="tv" bundle="${messages}"/></a></li>
-                        <li><a href="notebooks"><fmt:message key="notebooks" bundle="${messages}"/></a></li>
+                        <li><a href="notebook"><fmt:message key="notebooks" bundle="${messages}"/></a></li>
                         <li><a href="phone"><fmt:message key="phones" bundle="${messages}"/></a></li>
                         <li class="divider"></li>
                         <li><a href="accessory"> <fmt:message key="accessories" bundle="${messages}"/> </a></li>

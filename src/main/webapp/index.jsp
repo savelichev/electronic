@@ -37,7 +37,7 @@
             </a>
         </div>
         <div class="col-md-2">
-            <a href="cameras">
+            <a href="camera">
                 <img src="resources/images/category_photo-video.png">
                 <p class="text-center">
                     <fmt:message key="cameras" bundle="${messages}"/>
@@ -53,7 +53,7 @@
             </a>
         </div>
         <div class="col-md-2">
-            <a href="notebooks">
+            <a href="notebook">
                 <img src="resources/images/catgory_computer.png">
                 <p class="text-center">
                     <fmt:message key="notebooks" bundle="${messages}"/>
@@ -61,7 +61,7 @@
             </a>
         </div>
         <div class="col-md-2">
-            <a href="phones">
+            <a href="phone">
                 <img src="resources/images/category_phone.png">
                 <p class="text-center">
                     <fmt:message key="phones" bundle="${messages}"/>
@@ -69,7 +69,7 @@
             </a>
         </div>
         <div class="col-md-2">
-            <a href="accessories">
+            <a href="accessory">
                 <img src="resources/images/category_accessories.png">
                 <p class="text-center">
                     <fmt:message key="accessories" bundle="${messages}"/>
