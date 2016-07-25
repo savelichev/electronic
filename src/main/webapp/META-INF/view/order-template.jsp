@@ -74,7 +74,7 @@
 
 
 <div class="container">
-    <form action="approveOrder" method="post">
+    <form action="approve-order" method="post">
         <div class="form-group">
             <label for="buyerName">
                 <fmt:message key="buyer_first_name" bundle="${messages}"/>
