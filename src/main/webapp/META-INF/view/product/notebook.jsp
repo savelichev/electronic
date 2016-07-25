@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col-md-1">
-                        <form method="post" action="cartAddProduct?productArticle=${notebook.article}">
+                        <form method="post" action="cart-add-product?productArticle=${notebook.article}">
                             <button type="submit" class="btn btn-primary buy_button">
                                 <fmt:message key="buy" bundle="${messages}"/>
                             </button>
@@ -69,7 +69,7 @@
 
                     <c:if test="${role=='ADMIN'}">
                         <div class="col-md-1">
-                            <form method="post" action="deleteNotebook?notebookArticle=${notebook.article}">
+                            <form method="post" action="delete-notebook?notebookArticle=${notebook.article}">
                                 <button type="submit" class="btn btn-primary">
                                     <fmt:message key="delete" bundle="${messages}"/>
                                 </button>

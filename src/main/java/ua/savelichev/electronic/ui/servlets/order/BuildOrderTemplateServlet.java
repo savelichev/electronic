@@ -23,7 +23,7 @@ public class BuildOrderTemplateServlet extends HttpServlet {
         HttpSession session=req.getSession();
 
         if(session.getAttribute("user")==null){
-            resp.sendRedirect("signIn");
+            resp.sendRedirect("sign-in");
             return;
         }
 
