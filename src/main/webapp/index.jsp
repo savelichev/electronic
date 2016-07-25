@@ -23,7 +23,7 @@
 <body>
 
 <!--top navigation bar-->
-<jsp:include page="view/navigationbar.jsp"/>
+<jsp:include page="META-INF/view/navigationbar.jsp"/>
 
 <%--main menu--%>
 <div class="container">

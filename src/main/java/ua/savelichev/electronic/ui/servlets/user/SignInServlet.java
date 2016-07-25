@@ -1,0 +1,47 @@
+package ua.savelichev.electronic.ui.servlets.user;
+
+import ua.savelichev.electronic.domain.managers.UserManager;
+import ua.savelichev.electronic.domain.entity.User;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/signIn")
+public class SignInServlet extends HttpServlet {
+
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("META-INF/view/user/signIn.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        UserManager userManager = new UserManager();
+        User inUser = new User();
+
+        inUser.setEmail(req.getParameter("email"));
+        inUser.setPassword(req.getParameter("password"));
+
+        User userFromDB = userManager.getUserByEmail(inUser.getEmail());
+
+        if (userFromDB.getPassword() == null) {
+            resp.sendRedirect("signIn");
+        }
+
+        if (!(inUser.getPassword().equals(userFromDB.getPassword()))) {
+            resp.sendRedirect("signIn");
+
+        }
+
+        req.getSession().setAttribute("user", userFromDB);
+        resp.sendRedirect("index");
+
+
+    }
+}
