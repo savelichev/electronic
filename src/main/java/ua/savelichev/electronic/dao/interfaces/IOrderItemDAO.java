@@ -15,7 +15,9 @@ public interface IOrderItemDAO {
 
     void updateOrderItem(OrderItem orderItem);
 
-    void deleteOrderItem(OrderItem orderItem);
+    void deleteOrderItemById(int orderItemId);
+
+    void deleteOrderItemsByOrderId(int orderId);
 
 
 }

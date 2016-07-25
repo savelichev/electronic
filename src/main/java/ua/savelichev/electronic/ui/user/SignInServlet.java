@@ -39,10 +39,10 @@ public class SignInServlet extends HttpServlet {
         if (!(inUser.getPassword().equals(userFromDB.getPassword()))) {
             resp.sendRedirect("signIn");
 
-        } else {
-            req.getSession().setAttribute("user", userFromDB);
-            resp.sendRedirect("index");
         }
+
+        req.getSession().setAttribute("user", userFromDB);
+        resp.sendRedirect("index");
 
 
     }

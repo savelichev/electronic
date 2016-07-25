@@ -37,9 +37,9 @@
     <div class="col-md-2">Подбор по параметрам</div>
     <div class="col-md-10">
         <div>
-            <ul>
+
             <c:forEach items="${notebooks}" var="notebook">
-                <li>
+
                 <div class="prod_border">
                     <div class="col-md-3">
                         <img class="img-responsive"
@@ -75,9 +75,9 @@
                 </div>
 
                 <br/>
-                </li>
+
             </c:forEach>
-            </ul>
+
         </div>
     </div>
 

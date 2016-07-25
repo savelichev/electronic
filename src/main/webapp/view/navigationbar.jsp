@@ -1,13 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages" var="messages"/>
 <c:set var="user" value="${sessionScope.user}"/>
 
 
-<div  class="navbar navbar-inverse navbar-static-top">
+<div class="navbar navbar-inverse navbar-static-top">
     <div class="container">
 
         <div class="navbar-header">
@@ -75,7 +77,7 @@
 
 
             <div class="navbar-text navbar-right">
-                <p class="navbar-link">${user.login}</p>
+                <a class="navbar-link" href="user-page"> ${user.login}</a>
             </div>
 
             <div class="navbar-text navbar-right">
@@ -83,8 +85,6 @@
                     <fmt:message key="cart" bundle="${messages}"/>
                 </a>
             </div>
-
-
 
 
         </div>

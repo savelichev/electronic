@@ -32,12 +32,12 @@
     <c:forEach var="cartItem" items="${cart.cartItems}">
         <div class="container">
 
-            <div class="col-md-3 col-lg-3">
+            <div class="col-md-3">
                 <img class="img-responsive"
                      src="/resources/notebook_images/${cartItem.product.producer}_${cartItem.product.model}_1.jpg">
             </div>
 
-            <div class="col-md-6 col-lg-6">
+            <div class="col-md-5">
                 <div>
                     <h5><c:out value="${cartItem.product.producer}"/> <c:out value="${cartItem.product.model}"/></h5>
                 </div>
@@ -46,13 +46,14 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="col-md-4 col-lg-4">
-                    <p class="cart_item_price"><c:out value="${cartItem.product.price}"/><fmt:message key="currency"
-                                                                                                  bundle="${messages}"/></p>
+            <div class="col-md-4">
+                <div class="col-md-3">
+                    <p class="cart_item_price">
+                        <c:out value="${cartItem.product.price}"/><fmt:message key="currency" bundle="${messages}"/>
+                    </p>
                 </div>
 
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-3">
                     <form method="post" action="cartAddProduct">
                         <input type="hidden" name="productArticle" value="${cartItem.product.article}">
                         <button type="submit">+</button>
@@ -64,7 +65,13 @@
                     </form>
                 </div>
 
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-3">
+                    <p class="cart_item_price">
+                        <c:out value="${cartItem.cartItemCost}"/><fmt:message key="currency" bundle="${messages}"/>
+                    </p>
+                </div>
+
+                <div class="col-md-3">
                     <form method="post" action="cartRemoveProduct">
                         <input type="hidden" name="productArticle" value="${cartItem.product.article}"/>
                         <button type="submit" class="btn-link">
@@ -91,7 +98,8 @@
 
         </div>
         <div class="container">
-            <a class="btn btn-primary" href="#"><fmt:message key="make_an_order" bundle="${messages}"/> </a>
+            <a class="btn btn-primary" href="buildOrderTemplate"><fmt:message key="make_an_order"
+                                                                              bundle="${messages}"/> </a>
         </div>
     </div>
 

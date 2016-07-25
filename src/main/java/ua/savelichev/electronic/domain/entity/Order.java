@@ -19,6 +19,10 @@ public class Order {
 
     private boolean isDone;
 
+    private String buyerName;
+
+    private String buyerCellNumber;
+
 
     public int getId() {
         return id;
@@ -68,11 +72,27 @@ public class Order {
         this.comment = comment;
     }
 
-    public boolean isDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
-    public void setDone(boolean done) {
+    public void setIsDone(boolean done) {
         isDone = done;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
+    public String getBuyerCellNumber() {
+        return buyerCellNumber;
+    }
+
+    public void setBuyerCellNumber(String buyerCellNumber) {
+        this.buyerCellNumber = buyerCellNumber;
     }
 }

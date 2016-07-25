@@ -1,7 +1,7 @@
 package ua.savelichev.electronic.domain.managers.product;
 
 
-import ua.savelichev.electronic.dao.NotebookDAOImpl;
+import ua.savelichev.electronic.dao.NotebookDAO;
 import ua.savelichev.electronic.domain.entity.Notebook;
 import ua.savelichev.electronic.domain.entity.Product;
 
@@ -13,12 +13,12 @@ public class NotebookManager implements ProductManager {
 
     public List<Notebook> getAllNotebooks() {
 
-        return new NotebookDAOImpl().getAllNotebooks();
+        return new NotebookDAO().getAllNotebooks();
     }
 
     public Notebook getNotebookById(int id) {
 
-        return new NotebookDAOImpl().getNotebookById(id);
+        return new NotebookDAO().getNotebookById(id);
     }
 
     public Notebook getNotebookByArticle(int article) {
@@ -30,7 +30,7 @@ public class NotebookManager implements ProductManager {
 
     @Override
     public int getId(Product product) {
-        return new NotebookDAOImpl().getId((Notebook) product);
+        return new NotebookDAO().getId((Notebook) product);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class NotebookManager implements ProductManager {
 
     public void addNotebook(Notebook notebook) {
 
-        NotebookDAOImpl notebookDAO = new NotebookDAOImpl();
+        NotebookDAO notebookDAO = new NotebookDAO();
 
         notebookDAO.createNotebook(notebook);
 
@@ -56,6 +56,6 @@ public class NotebookManager implements ProductManager {
 
     public void deleteNotebook(String notebookArticle) {
 
-        new NotebookDAOImpl().deleteNotebookByArticle(Integer.valueOf(notebookArticle));
+        new NotebookDAO().deleteNotebookByArticle(Integer.valueOf(notebookArticle));
     }
 }

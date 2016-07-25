@@ -4,7 +4,7 @@ import ua.savelichev.electronic.domain.entity.Notebook;
 
 import java.util.List;
 
-public interface NotebookDAO {
+public interface INotebookDAO {
 
     void createNotebook(Notebook notebook);
 

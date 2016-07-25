@@ -25,11 +25,14 @@ public class OrderDAO implements IOrderDAO {
             connection = connectionFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO electronic.order(user_id, comment, is_done) VALUES(?,?,?,?)");
+                    "INSERT INTO electronic.order(user_id, comment, is_done, buyer_name,address, buyer_cell_number) VALUES(?,?,?,?,?,?)");
 
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setString(2, order.getComment());
-            preparedStatement.setBoolean(3, order.isDone());
+            preparedStatement.setBoolean(3, order.getIsDone());
+            preparedStatement.setString(4, order.getBuyerName());
+            preparedStatement.setString(5, order.getAddress());
+            preparedStatement.setString(6, order.getBuyerCellNumber());
 
 
             preparedStatement.executeUpdate();
@@ -76,7 +79,10 @@ public class OrderDAO implements IOrderDAO {
                 order.setId(resultSet.getInt("id"));
                 order.setUserId(resultSet.getInt("user_id"));
                 order.setComment(resultSet.getString("comment"));
-                order.setDone(resultSet.getBoolean("is_done"));
+                order.setIsDone(resultSet.getBoolean("is_done"));
+                order.setBuyerName(resultSet.getString("buyer_name"));
+                order.setAddress(resultSet.getString("address"));
+                order.setBuyerCellNumber(resultSet.getString("buyer_cell_number"));
 
             }
 
@@ -104,6 +110,63 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
+    public List<Order> getOrdersByUserId(int userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Order> orders = null;
+        Order order = null;
+
+        try {
+            connection = connectionFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM electronic.order WHERE user_id=?");
+
+            preparedStatement.setInt(1, userId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            orders = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                order = new Order();
+
+                order.setId(resultSet.getInt("id"));
+                order.setUserId(resultSet.getInt("user_id"));
+                order.setComment(resultSet.getString("comment"));
+                order.setIsDone(resultSet.getBoolean("is_done"));
+                order.setBuyerName(resultSet.getString("buyer_name"));
+                order.setAddress(resultSet.getString("address"));
+                order.setBuyerCellNumber(resultSet.getString("buyer_cell_number"));
+
+                orders.add(order);
+            }
+
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return orders;
+    }
+
+    @Override
     public List<Order> getAllOrders() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -127,7 +190,11 @@ public class OrderDAO implements IOrderDAO {
                 order.setId(resultSet.getInt("id"));
                 order.setUserId(resultSet.getInt("user_id"));
                 order.setComment(resultSet.getString("comment"));
-                order.setDone(resultSet.getBoolean("is_done"));
+                order.setIsDone(resultSet.getBoolean("is_done"));
+                order.setBuyerName(resultSet.getString("buyer_name"));
+                order.setAddress(resultSet.getString("address"));
+                order.setBuyerCellNumber(resultSet.getString("buyer_cell_number"));
+
 
                 orders.add(order);
             }
@@ -165,11 +232,15 @@ public class OrderDAO implements IOrderDAO {
             connection = connectionFactory.getConnection();
 
             preparedStatement = connection.prepareStatement(
-                    "UPDATE electronic.order SET user_id=?,comment=?,is_done=? WHERE id=?");
+                    "UPDATE electronic.order SET user_id=?,comment=?,is_done=?,buyer_name=?,address=?,buyer_cell_number=? WHERE id=?");
 
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setString(2, order.getComment());
-            preparedStatement.setBoolean(3, order.isDone());
+            preparedStatement.setBoolean(3, order.getIsDone());
+            preparedStatement.setString(4, order.getBuyerName());
+            preparedStatement.setString(5, order.getAddress());
+            preparedStatement.setString(6,order.getBuyerCellNumber());
+            preparedStatement.setInt(7, order.getId());
 
 
             preparedStatement.executeUpdate();
@@ -222,5 +293,47 @@ public class OrderDAO implements IOrderDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public int getLastInsertedId() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int lastId = -1;
+
+        try {
+            connection = connectionFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT last_insert_id() AS id FROM electronic.order");
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                lastId = resultSet.getInt("id");
+            }
+
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return lastId;
     }
 }

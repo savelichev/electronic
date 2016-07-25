@@ -1,7 +1,7 @@
 package ua.savelichev.electronic.domain.managers;
 
 
-import ua.savelichev.electronic.dao.UserDAOImpl;
+import ua.savelichev.electronic.dao.UserDAO;
 import ua.savelichev.electronic.domain.entity.User;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserManager {
 
-    private UserDAOImpl userDAO = new UserDAOImpl();
+    private UserDAO userDAO = new UserDAO();
 
     public User getUserByEmail(String email) {
         return userDAO.getUserByEmail(email);
@@ -32,7 +32,7 @@ public class UserManager {
 
     public List<User> getAllUsers(){
 
-        return new UserDAOImpl().getAllUsers();
+        return new UserDAO().getAllUsers();
     }
 
     public void blockUser(String email){

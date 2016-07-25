@@ -1,7 +1,6 @@
 package ua.savelichev.electronic.dao;
 
-import ua.savelichev.electronic.dao.ConnectionFactory;
-import ua.savelichev.electronic.dao.interfaces.UserDAO;
+import ua.savelichev.electronic.dao.interfaces.IUserDAO;
 import ua.savelichev.electronic.domain.entity.User;
 
 import javax.naming.NamingException;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAO implements IUserDAO {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;

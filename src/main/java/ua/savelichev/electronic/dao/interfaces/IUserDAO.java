@@ -4,7 +4,7 @@ import ua.savelichev.electronic.domain.entity.User;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface IUserDAO {
 
 
     User getUserByEmail(String email);

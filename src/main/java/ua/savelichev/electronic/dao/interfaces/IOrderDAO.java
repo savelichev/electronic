@@ -10,11 +10,15 @@ public interface IOrderDAO {
 
     Order getOrderById(int id);
 
+    List<Order> getOrdersByUserId(int userId);
+
     List<Order> getAllOrders();
 
     void updateOrder(Order order);
 
     void deleteOrder(Order order);
+
+    int getLastInsertedId();
 
 
 }

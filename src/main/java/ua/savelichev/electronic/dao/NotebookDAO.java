@@ -1,6 +1,6 @@
 package ua.savelichev.electronic.dao;
 
-import ua.savelichev.electronic.dao.interfaces.NotebookDAO;
+import ua.savelichev.electronic.dao.interfaces.INotebookDAO;
 import ua.savelichev.electronic.domain.entity.Notebook;
 
 import javax.naming.NamingException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NotebookDAOImpl implements NotebookDAO {
+public class NotebookDAO implements INotebookDAO {
 
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
 
