@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter("/user")
 public class UnicodeFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/show-all-users")
+@WebServlet("/show-user-by-email")
 public class ShowUserByEmailServlet extends HttpServlet {
 
     @Override
