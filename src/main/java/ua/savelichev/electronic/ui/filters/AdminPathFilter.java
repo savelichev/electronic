@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.filters;
 
+import org.apache.log4j.Logger;
 import ua.savelichev.electronic.domain.entity.User;
 
 import javax.servlet.*;
@@ -14,6 +15,8 @@ import java.util.List;
 
 @WebFilter("/*")
 public class AdminPathFilter implements Filter {
+
+    private static final Logger log = Logger.getLogger(AdminPathFilter.class);
 
     private List<String> pathFilter = Arrays.asList(
             "/show-all-users",
@@ -44,10 +47,13 @@ public class AdminPathFilter implements Filter {
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         User user = (User) session.getAttribute("user");
 
+
+
         if (user != null && user.getRole().equals("ADMIN")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         } else {
+            log.info("User: \" "+user.getEmail()+"\" tries to go through ADMIN path: "+ url);
             ((HttpServletResponse) servletResponse).sendRedirect("index");
         }
 
