@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IOrderItemDAO {
 
-    void createOrderItem(OrderItem orderItem);
+    void createOrderItems(List<OrderItem> orderItems, int orderId);
 
     OrderItem getOrderItemById(int orderItemId);
 

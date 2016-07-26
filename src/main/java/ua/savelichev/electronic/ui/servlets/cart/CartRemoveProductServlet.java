@@ -1,8 +1,8 @@
 package ua.savelichev.electronic.ui.servlets.cart;
 
 import ua.savelichev.electronic.domain.entity.ICart;
-import ua.savelichev.electronic.domain.managers.CartManager;
-import ua.savelichev.electronic.domain.managers.ICartManager;
+import ua.savelichev.electronic.domain.services.CartService;
+import ua.savelichev.electronic.domain.services.ICartService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ public class CartRemoveProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ICartManager cartManager = new CartManager();
+        ICartService cartManager = new CartService();
 
         HttpSession session = req.getSession();
 

@@ -1,6 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
-import ua.savelichev.electronic.domain.managers.UserManager;
+import ua.savelichev.electronic.domain.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ public class BlockUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new UserManager().blockUser(req.getParameter("userEmail"));
+        new UserService().blockUser(req.getParameter("userEmail"));
 
         resp.sendRedirect("show-all-users");
     }

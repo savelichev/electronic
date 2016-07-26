@@ -17,29 +17,33 @@ public class OrderItemDAO implements IOrderItemDAO {
 
 
     @Override
-    public void createOrderItem(OrderItem orderItem) {
+    public void createOrderItems(List<OrderItem> orderItems, int orderId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = connectionFactory.getConnection();
+            connection.setAutoCommit(false);
+            for (OrderItem orderItem : orderItems) {
 
-            preparedStatement = connection.prepareStatement(
-                    "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
+                preparedStatement = connection.prepareStatement(
+                        "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
 
-            preparedStatement.setInt(1, orderItem.getOrderId());
-            preparedStatement.setInt(2, orderItem.getProductArticle());
-            preparedStatement.setInt(3, orderItem.getPrice());
-            preparedStatement.setInt(4, orderItem.getAmount());
-            preparedStatement.setString(5, orderItem.getTitle());
+                preparedStatement.setInt(1,orderId);
+                preparedStatement.setInt(2, orderItem.getProductArticle());
+                preparedStatement.setInt(3, orderItem.getPrice());
+                preparedStatement.setInt(4, orderItem.getAmount());
+                preparedStatement.setString(5, orderItem.getTitle());
 
-            preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
 
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         } finally {
             try {
-
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }

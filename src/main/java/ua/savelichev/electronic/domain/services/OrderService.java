@@ -1,4 +1,4 @@
-package ua.savelichev.electronic.domain.managers;
+package ua.savelichev.electronic.domain.services;
 
 
 import ua.savelichev.electronic.dao.OrderDAO;
@@ -10,7 +10,7 @@ import ua.savelichev.electronic.domain.entity.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderManager implements IOrderManager {
+public class OrderService implements IOrderService {
 
 
     public Order buildOrderTemplate(User user, Cart cart) {
@@ -63,32 +63,22 @@ public class OrderManager implements IOrderManager {
         order.setBuyerName(buyerName);
         order.setBuyerCellNumber(buyerCellNumber);
 
-        saveOrder(order);
+        createOrder(order);
     }
 
     @Override
-    public void saveOrder(Order order) {
+    public void createOrder(Order order) {
 
         IOrderDAO orderDAO = new OrderDAO();
 
-        IOrderItemDAO orderItemDAO = new OrderItemDAO();
-
         orderDAO.createOrder(order);
-
-        int orderId = orderDAO.getLastInsertedId();
-
-        for (OrderItem orderItem : order.getOrderItems()) {
-            orderItem.setOrderId(orderId);
-            orderItemDAO.createOrderItem(orderItem);
-        }
-
 
     }
 
     @Override
     public List<Order> getUserOrders(User user) {
-        OrderDAO orderDAO=new OrderDAO();
-        int userId=user.getId();
+        OrderDAO orderDAO = new OrderDAO();
+        int userId = user.getId();
         return orderDAO.getOrdersByUserId(userId);
     }
 }

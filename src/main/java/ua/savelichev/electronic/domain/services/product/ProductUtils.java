@@ -1,4 +1,4 @@
-package ua.savelichev.electronic.domain.managers.product;
+package ua.savelichev.electronic.domain.services.product;
 
 
 import ua.savelichev.electronic.domain.entity.Product;
@@ -51,12 +51,12 @@ public class ProductUtils {
         return productCategoryCode;
     }
 
-    public static ProductManager createManagerByCategory(String category) {
+    public static ProductService createManagerByCategory(String category) {
         switch (category) {
             case "notebook":
-                return new NotebookManager();
+                return new NotebookService();
             case "phone":
-                return new PhoneManager();
+                return new PhoneService();
 
         }
         return null;

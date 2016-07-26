@@ -1,8 +1,8 @@
-package ua.savelichev.electronic.domain.managers.product;
+package ua.savelichev.electronic.domain.services.product;
 
 import ua.savelichev.electronic.domain.entity.Product;
 
-public interface ProductManager {
+public interface ProductService {
 
     int getId(Product product);
 

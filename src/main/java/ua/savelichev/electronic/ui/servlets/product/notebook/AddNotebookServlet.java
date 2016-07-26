@@ -1,6 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.product.notebook;
 
-import ua.savelichev.electronic.domain.managers.product.NotebookManager;
+import ua.savelichev.electronic.domain.services.product.NotebookService;
 import ua.savelichev.electronic.domain.entity.Notebook;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ public class AddNotebookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        NotebookManager notebookManager = new NotebookManager();
+        NotebookService notebookManager = new NotebookService();
         Notebook notebook = new Notebook();
 
         notebook.setCategory(req.getParameter("category"));

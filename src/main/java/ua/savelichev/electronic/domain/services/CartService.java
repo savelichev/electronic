@@ -1,13 +1,13 @@
-package ua.savelichev.electronic.domain.managers;
+package ua.savelichev.electronic.domain.services;
 
 
 import ua.savelichev.electronic.domain.entity.Cart;
 import ua.savelichev.electronic.domain.entity.CartItem;
 import ua.savelichev.electronic.domain.entity.ICart;
 import ua.savelichev.electronic.domain.entity.Product;
-import ua.savelichev.electronic.domain.managers.product.ProductUtils;
+import ua.savelichev.electronic.domain.services.product.ProductUtils;
 
-public class CartManager implements ICartManager {
+public class CartService implements ICartService {
 
     ICart cart = null;
     CartItem cartItem = null;

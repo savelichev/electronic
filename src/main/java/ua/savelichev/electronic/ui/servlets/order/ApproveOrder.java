@@ -1,8 +1,8 @@
 package ua.savelichev.electronic.ui.servlets.order;
 
 import ua.savelichev.electronic.domain.entity.Order;
-import ua.savelichev.electronic.domain.managers.IOrderManager;
-import ua.savelichev.electronic.domain.managers.OrderManager;
+import ua.savelichev.electronic.domain.services.IOrderService;
+import ua.savelichev.electronic.domain.services.OrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ public class ApproveOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        IOrderManager orderManager = new OrderManager();
+        IOrderService orderManager = new OrderService();
 
         HttpSession session = req.getSession();
 

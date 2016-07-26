@@ -1,6 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
-import ua.savelichev.electronic.domain.managers.UserManager;
+import ua.savelichev.electronic.domain.services.UserService;
 import ua.savelichev.electronic.domain.entity.User;
 
 import javax.servlet.ServletException;
@@ -22,13 +22,13 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        UserManager userManager = new UserManager();
+        UserService userService = new UserService();
         User inUser = new User();
 
         inUser.setEmail(req.getParameter("email"));
         inUser.setPassword(req.getParameter("password"));
 
-        User userFromDB = userManager.getUserByEmail(inUser.getEmail());
+        User userFromDB = userService.getUserByEmail(inUser.getEmail());
 
         if (userFromDB.getPassword() == null) {
             resp.sendRedirect("sign-in");

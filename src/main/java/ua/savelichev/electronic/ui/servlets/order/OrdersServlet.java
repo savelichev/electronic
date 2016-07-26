@@ -2,7 +2,7 @@ package ua.savelichev.electronic.ui.servlets.order;
 
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.User;
-import ua.savelichev.electronic.domain.managers.OrderManager;
+import ua.savelichev.electronic.domain.services.OrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +19,7 @@ public class OrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        OrderManager orderManager = new OrderManager();
+        OrderService orderManager = new OrderService();
 
         HttpSession session = req.getSession();
 

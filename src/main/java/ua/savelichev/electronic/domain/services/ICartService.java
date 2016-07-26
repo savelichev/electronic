@@ -1,10 +1,9 @@
-package ua.savelichev.electronic.domain.managers;
+package ua.savelichev.electronic.domain.services;
 
 
-import ua.savelichev.electronic.domain.entity.CartItem;
 import ua.savelichev.electronic.domain.entity.ICart;
 
-public interface ICartManager {
+public interface ICartService {
 
     ICart addProduct(ICart cartFromSession, String productArticle);
 

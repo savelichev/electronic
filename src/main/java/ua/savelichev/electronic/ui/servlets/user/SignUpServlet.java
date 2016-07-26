@@ -1,6 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
-import ua.savelichev.electronic.domain.managers.UserManager;
+import ua.savelichev.electronic.domain.services.UserService;
 import ua.savelichev.electronic.domain.entity.User;
 
 import javax.servlet.ServletException;
@@ -32,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
         inUser.setCellNumber(req.getParameter("cellNumber"));
         inUser.setAddress(req.getParameter("address"));
 
-        boolean isUserCreated = new UserManager().createUser(inUser);
+        boolean isUserCreated = new UserService().createUser(inUser);
 
         if (isUserCreated) {
             resp.sendRedirect("sign-in");

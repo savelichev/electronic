@@ -1,8 +1,8 @@
-package ua.savelichev.electronic.domain.managers.product;
+package ua.savelichev.electronic.domain.services.product;
 
 import ua.savelichev.electronic.domain.entity.Product;
 
-public class PhoneManager implements ProductManager {
+public class PhoneService implements ProductService {
 
 
     @Override

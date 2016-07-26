@@ -1,4 +1,4 @@
-package ua.savelichev.electronic.domain.managers;
+package ua.savelichev.electronic.domain.services;
 
 
 import ua.savelichev.electronic.dao.UserDAO;
@@ -7,7 +7,7 @@ import ua.savelichev.electronic.domain.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserManager {
+public class UserService {
 
     private UserDAO userDAO = new UserDAO();
 

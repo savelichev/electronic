@@ -3,6 +3,7 @@ package ua.savelichev.electronic.dao;
 
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
 import ua.savelichev.electronic.domain.entity.Order;
+import ua.savelichev.electronic.domain.entity.OrderItem;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
@@ -21,9 +22,10 @@ public class OrderDAO implements IOrderDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+
         try {
             connection = connectionFactory.getConnection();
-
+            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(
                     "INSERT INTO electronic.order(user_id, comment, is_done, buyer_name,address, buyer_cell_number) VALUES(?,?,?,?,?,?)");
 
@@ -34,10 +36,41 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.setString(5, order.getAddress());
             preparedStatement.setString(6, order.getBuyerCellNumber());
 
-
             preparedStatement.executeUpdate();
 
+            preparedStatement.clearParameters();
+
+
+            ResultSet resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM electronic.order");
+            int orderId=0;
+            if(resultSet.next()){
+                orderId=resultSet.getInt("id");
+            }
+            preparedStatement.clearParameters();
+
+            for (OrderItem orderItem : order.getOrderItems()) {
+                preparedStatement = connection.prepareStatement(
+                 "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
+
+                preparedStatement.setInt(1,orderId);
+                preparedStatement.setInt(2, orderItem.getProductArticle());
+                preparedStatement.setInt(3, orderItem.getPrice());
+                preparedStatement.setInt(4, orderItem.getAmount());
+                preparedStatement.setString(5, orderItem.getTitle());
+
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
+
         } catch (SQLException | NamingException e) {
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         } finally {
             try {
@@ -239,11 +272,11 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.setBoolean(3, order.getIsDone());
             preparedStatement.setString(4, order.getBuyerName());
             preparedStatement.setString(5, order.getAddress());
-            preparedStatement.setString(6,order.getBuyerCellNumber());
+            preparedStatement.setString(6, order.getBuyerCellNumber());
             preparedStatement.setInt(7, order.getId());
 
-
             preparedStatement.executeUpdate();
+
 
         } catch (SQLException | NamingException e) {
             e.printStackTrace();

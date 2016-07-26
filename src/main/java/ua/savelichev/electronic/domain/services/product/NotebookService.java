@@ -1,4 +1,4 @@
-package ua.savelichev.electronic.domain.managers.product;
+package ua.savelichev.electronic.domain.services.product;
 
 
 import ua.savelichev.electronic.dao.NotebookDAO;
@@ -7,7 +7,7 @@ import ua.savelichev.electronic.domain.entity.Product;
 
 import java.util.List;
 
-public class NotebookManager implements ProductManager {
+public class NotebookService implements ProductService {
 
 
 

@@ -3,8 +3,8 @@ package ua.savelichev.electronic.ui.servlets.order;
 import ua.savelichev.electronic.domain.entity.Cart;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.User;
-import ua.savelichev.electronic.domain.managers.IOrderManager;
-import ua.savelichev.electronic.domain.managers.OrderManager;
+import ua.savelichev.electronic.domain.services.IOrderService;
+import ua.savelichev.electronic.domain.services.OrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +36,7 @@ public class BuildOrderTemplateServlet extends HttpServlet {
 
         Cart cart = (Cart) session.getAttribute("cart");
 
-        IOrderManager orderManager = new OrderManager();
+        IOrderService orderManager = new OrderService();
 
         Order orderTemplate = orderManager.buildOrderTemplate(user,cart);
 
