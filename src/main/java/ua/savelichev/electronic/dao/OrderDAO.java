@@ -12,10 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class OrderDAO implements IOrderDAO {
 
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("SQLqueries");
 
     @Override
     public void createOrder(Order order) {
@@ -26,8 +28,7 @@ public class OrderDAO implements IOrderDAO {
         try {
             connection = connectionFactory.getConnection();
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(
-                    "INSERT INTO electronic.order(user_id, comment, is_done, buyer_name,address, buyer_cell_number) VALUES(?,?,?,?,?,?)");
+            preparedStatement = connection.prepareStatement("CREATE_USER");
 
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setString(2, order.getComment());
@@ -42,17 +43,17 @@ public class OrderDAO implements IOrderDAO {
 
 
             ResultSet resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM electronic.order");
-            int orderId=0;
-            if(resultSet.next()){
-                orderId=resultSet.getInt("id");
+            int orderId = 0;
+            if (resultSet.next()) {
+                orderId = resultSet.getInt("id");
             }
             preparedStatement.clearParameters();
 
             for (OrderItem orderItem : order.getOrderItems()) {
                 preparedStatement = connection.prepareStatement(
-                 "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
+                        "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
 
-                preparedStatement.setInt(1,orderId);
+                preparedStatement.setInt(1, orderId);
                 preparedStatement.setInt(2, orderItem.getProductArticle());
                 preparedStatement.setInt(3, orderItem.getPrice());
                 preparedStatement.setInt(4, orderItem.getAmount());

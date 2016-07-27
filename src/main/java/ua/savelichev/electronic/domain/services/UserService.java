@@ -33,7 +33,8 @@ public class UserService {
 
     /**
      * Tries to create user.
-     * Checks is current email allready exists. If is return "false", if not creates new user and returns "true".
+     * Checks is current email allready exists. If yes returns "false", if not creates new user and returns "true".
+     *
      * @param user
      * @return
      */
@@ -53,19 +54,22 @@ public class UserService {
     public void updateUser(User user) {
         IUserDAO userDAO = new UserDAO();
         userDAO.updateUser(user);
-        log.debug("User "+user.getEmail()+" was updated");
+        log.debug("User " + user.getEmail() + " was updated");
     }
 
     public List<User> getAllUsers() {
-
-        return new UserDAO().getAllUsers();
+        IUserDAO userDAO = new UserDAO();
+        List<User> users = new ArrayList<>();
+        users=userDAO.getAllUsers();
+        log.debug("Got all users");
+        return users;
     }
 
     public void blockUser(String email) {
-
         User user = getUserByEmail(email);
         user.setBlocked(true);
         updateUser(user);
+        log.debug("User: "+email+" was blocked");
     }
 
     public void unblockUser(String email) {
@@ -73,15 +77,23 @@ public class UserService {
         User user = getUserByEmail(email);
         user.setBlocked(false);
         updateUser(user);
+        log.debug("User: "+email+" was unblocked");
 
     }
 
+    /**
+     * Adapter for request from admin-page.jsp
+     * where response must be in List<User> format </User>
+     * @param email
+     * @return
+     */
     public List<User> getAllUsersByEmail(String email) {
         if (email.equals("")) {
             return getAllUsers();
         }
         List<User> users = new ArrayList<>();
         users.add(getUserByEmail(email));
+        log.debug("Got all users with email: "+email);
         return users;
     }
 

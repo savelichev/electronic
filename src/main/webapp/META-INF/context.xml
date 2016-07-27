@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/electronic">
 
-    <!--<Resource-->
-            <!--name="jdbc/electronic"-->
-            <!--global="jdbc/electronic"-->
-            <!--factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"-->
-            <!--auth="Container"-->
-            <!--type="javax.sql.DataSource"-->
-            <!--username="root"-->
-            <!--password="savelichev"-->
-            <!--driverClassName="com.mysql.jdbc.Driver"-->
-            <!--description="Electronic MySQL database."-->
-            <!--url="jdbc:mysql://localhost:3306/electronic"-->
-            <!--maxTotal="10"-->
-            <!--maxIdle="10"-->
-            <!--maxWaitMillis="10000"-->
-            <!--removeAbandonedTimeout="300"-->
-            <!--defaultAutoCommit="true"/>-->
+    <Resource
+            name="jdbc/electronic"
+            global="jdbc/electronic"
+            factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="root"
+            password="savelichev"
+            driverClassName="com.mysql.jdbc.Driver"
+            description="Electronic MySQL database."
+            url="jdbc:mysql://localhost:3306/electronic"
+            maxTotal="10"
+            maxIdle="10"
+            maxWaitMillis="10000"
+            removeAbandonedTimeout="300"
+            defaultAutoCommit="true"/>
 
-    <Resource name="jdbc/electronic"
-              global="jdbc/electronic"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-              auth="Container"
-              type="javax.sql.DataSource"
-              username="sava"
-              password="savelichev"
-              driverClassName="com.mysql.jdbc.Driver"
-              description="Electronic MySQL database."
-              url="jdbc:mysql://192.168.1.159:3306/electronic"
-              maxTotal="10"
-              maxIdle="10"
-              maxWaitMillis="10000"
-              removeAbandonedTimeout="300"
-              defaultAutoCommit="true"/>
+    <!--<Resource name="jdbc/electronic"-->
+              <!--global="jdbc/electronic"-->
+              <!--factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"-->
+              <!--auth="Container"-->
+              <!--type="javax.sql.DataSource"-->
+              <!--username="sava"-->
+              <!--password="savelichev"-->
+              <!--driverClassName="com.mysql.jdbc.Driver"-->
+              <!--description="Electronic MySQL database."-->
+              <!--url="jdbc:mysql://192.168.1.159:3306/electronic"-->
+              <!--maxTotal="10"-->
+              <!--maxIdle="10"-->
+              <!--maxWaitMillis="10000"-->
+              <!--removeAbandonedTimeout="300"-->
+              <!--defaultAutoCommit="true"/>-->
 </Context>
 
