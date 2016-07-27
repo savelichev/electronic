@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements IUserDAO {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-    User user = null;
+
 
     @Override
     public User getUserByEmail(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        User user = null;
         try {
             connection = ConnectionFactory.getInstance().getConnection();
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ?");
@@ -38,9 +39,7 @@ public class UserDAO implements IUserDAO {
                 user.setAddress(resultSet.getString("address"));
                 user.setBlocked(resultSet.getBoolean("blocked"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
+        } catch (SQLException | NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -60,8 +59,12 @@ public class UserDAO implements IUserDAO {
         }
         return user;
     }
+
     @Override
     public void createUser(User inUser) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        User user = null;
         try {
             user = inUser;
             connection = ConnectionFactory.getInstance().getConnection();
@@ -96,6 +99,9 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public void updateUser(User inUser) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        User user = null;
         try {
             user = inUser;
             connection = ConnectionFactory.getInstance().getConnection();
@@ -130,8 +136,13 @@ public class UserDAO implements IUserDAO {
             }
         }
     }
+
     @Override
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        User user = null;
         List<User> users = null;
         try {
             users = new ArrayList<>();

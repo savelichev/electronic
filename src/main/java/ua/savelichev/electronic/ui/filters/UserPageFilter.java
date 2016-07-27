@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Filter sends redirect to admin-page if user requests "/user-page" and has role "ADMIN"
+ */
 @WebFilter("/user-page")
 public class UserPageFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -24,7 +28,6 @@ public class UserPageFilter implements Filter {
 
         if (user != null && !user.getRole().equals("ADMIN")) {
             filterChain.doFilter(servletRequest, servletResponse);
-            return;
         } else if(user != null && user.getRole().equals("ADMIN")){
             ((HttpServletResponse) servletResponse).sendRedirect("admin-page");
         }

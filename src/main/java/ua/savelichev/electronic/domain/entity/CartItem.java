@@ -44,6 +44,10 @@ public class CartItem {
         cartItemCost = product.getPrice() * amount;
     }
 
+
+    /**
+     * Cart items are equals if they contains the same product
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,7 +65,7 @@ public class CartItem {
     }
 
 
-    private void calculateCartItemCost(){
-        cartItemCost=product.getPrice()*amount;
+    private void calculateCartItemCost() {
+        cartItemCost = product.getPrice() * amount;
     }
 }

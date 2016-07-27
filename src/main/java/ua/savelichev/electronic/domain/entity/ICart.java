@@ -11,15 +11,14 @@ public interface ICart {
      * It means that amount could not be less then "1".
      * If you need to remove CartItem, invoke the method
      * {@link ua.savelichev.electronic.domain.entity.Cart#removeCartItem(CartItem)}
-     * @see ua.savelichev.electronic.domain.entity.Cart#removeCartItem(CartItem)
+     *
      * @param cartItem - target for decreasing
+     * @see ua.savelichev.electronic.domain.entity.Cart#removeCartItem(CartItem)
      */
     void decreaseCartItemAmount(CartItem cartItem);
 
 
     void removeCartItem(CartItem cartItem);
-
-
 
 
 }

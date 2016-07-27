@@ -1,6 +1,6 @@
 package ua.savelichev.electronic.domain.entity;
 
-public class Notebook extends Product{
+public class Notebook extends Product {
 
     private String displayDiagonal;
 
@@ -9,7 +9,6 @@ public class Notebook extends Product{
     private int ram;
 
     private int hdd;
-
 
 
     public String getDisplayDiagonal() {
@@ -47,7 +46,7 @@ public class Notebook extends Product{
 
     @Override
     public String toString() {
-        return "Notebook{" + super.toString()+
+        return "Notebook{" + super.toString() +
                 "displayDiagonal='" + displayDiagonal + '\'' +
                 ", processor='" + processor + '\'' +
                 ", ram=" + ram +

@@ -62,21 +62,6 @@ public class CartService implements ICartService {
         return cart;
     }
 
-//    @Override
-//    public ICart increaseProductAmount(ICart cartFromSession, String productArticle) {
-//        Product product = ProductUtils.getProductByArticle(Integer.valueOf(productArticle));
-//
-//        if (product != null) {
-//            cartItem = new CartItem(product);
-//        }
-//
-//        if (cartFromSession != null && cartFromSession instanceof ICart) {
-//            cart = (ICart) cartFromSession;
-//            cart.increaseCartItemAmount(cartItem);
-//        }
-//        return cart;
-//    }
-
 
     @Override
     public ICart decreaseProductAmount(ICart cartFromSession, String productArticle) {

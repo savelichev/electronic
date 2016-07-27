@@ -25,10 +25,10 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if ((req.getSession().getAttribute("badData")).equals("true")) {
-            resp.sendRedirect("sign-in");
-            return;
-        }
+//        if ((req.getSession().getAttribute("badData")).equals("true")) {
+//            resp.sendRedirect("sign-in");
+//            return;
+//        }
 
         UserService userService = new UserService();
         User inUser = new User();

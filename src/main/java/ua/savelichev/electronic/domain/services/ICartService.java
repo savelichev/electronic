@@ -9,8 +9,6 @@ public interface ICartService {
 
     ICart removeProduct(ICart cartFromSession, String productArticle);
 
-//    ICart increaseProductAmount(ICart cartFromSession, String productArticle);
-
     ICart decreaseProductAmount(ICart cartFromSession, String productArticle);
 
 

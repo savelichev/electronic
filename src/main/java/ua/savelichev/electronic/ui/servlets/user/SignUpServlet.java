@@ -32,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
         inUser.setCellNumber(req.getParameter("cellNumber"));
         inUser.setAddress(req.getParameter("address"));
 
-        boolean isUserCreated = new UserService().createUser(inUser);
+        boolean isUserCreated = new UserService().createUserIfNotExist(inUser);
 
         if (isUserCreated) {
             resp.sendRedirect("sign-in");

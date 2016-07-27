@@ -1,7 +1,7 @@
 package ua.savelichev.electronic.domain.entity;
 
 
-public class Phone extends Product{
+public class Phone extends Product {
 
     private String displayDiagonal;
 
