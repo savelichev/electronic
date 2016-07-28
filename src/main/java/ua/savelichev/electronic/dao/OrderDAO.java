@@ -1,6 +1,7 @@
 package ua.savelichev.electronic.dao;
 
 
+import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.OrderItem;
@@ -17,7 +18,10 @@ import java.util.ResourceBundle;
 public class OrderDAO implements IOrderDAO {
 
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
-    ResourceBundle resourceBundle = ResourceBundle.getBundle("SQLqueries");
+
+    private static final Logger log = Logger.getLogger(OrderDAO.class);
+
+    private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
     @Override
     public void createOrder(Order order) {
@@ -28,7 +32,7 @@ public class OrderDAO implements IOrderDAO {
         try {
             connection = connectionFactory.getConnection();
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement("CREATE_USER");
+            preparedStatement = connection.prepareStatement(bundle.getString("CREATE_ORDER"));
 
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setString(2, order.getComment());
@@ -42,7 +46,7 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.clearParameters();
 
 
-            ResultSet resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM electronic.order");
+            ResultSet resultSet = preparedStatement.executeQuery(bundle.getString("SELECT_LAST_INSERTED_ORDER_ID"));
             int orderId = 0;
             if (resultSet.next()) {
                 orderId = resultSet.getInt("id");
@@ -50,8 +54,7 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.clearParameters();
 
             for (OrderItem orderItem : order.getOrderItems()) {
-                preparedStatement = connection.prepareStatement(
-                        "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
+                preparedStatement = connection.prepareStatement(bundle.getString("CREATE_ORDER_ITEM"));
 
                 preparedStatement.setInt(1, orderId);
                 preparedStatement.setInt(2, orderItem.getProductArticle());
@@ -60,6 +63,7 @@ public class OrderDAO implements IOrderDAO {
                 preparedStatement.setString(5, orderItem.getTitle());
 
                 preparedStatement.executeUpdate();
+                preparedStatement.clearParameters();
             }
             connection.commit();
             connection.setAutoCommit(true);
@@ -84,6 +88,7 @@ public class OrderDAO implements IOrderDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -100,7 +105,7 @@ public class OrderDAO implements IOrderDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM electronic.order WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("GET_ORDER_BY_ID"));
 
             preparedStatement.setInt(1, id);
 
@@ -137,6 +142,7 @@ public class OrderDAO implements IOrderDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -154,7 +160,7 @@ public class OrderDAO implements IOrderDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM electronic.order WHERE user_id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("GET_ORDERS_BY_USER_ID"));
 
             preparedStatement.setInt(1, userId);
 
@@ -194,6 +200,7 @@ public class OrderDAO implements IOrderDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -211,7 +218,7 @@ public class OrderDAO implements IOrderDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM electronic.order");
+            preparedStatement = connection.prepareStatement(bundle.getString("GET_ALL_ORDERS"));
 
             resultSet = preparedStatement.executeQuery();
 
@@ -250,6 +257,7 @@ public class OrderDAO implements IOrderDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -265,8 +273,7 @@ public class OrderDAO implements IOrderDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(
-                    "UPDATE electronic.order SET user_id=?,comment=?,is_done=?,buyer_name=?,address=?,buyer_cell_number=? WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_ORDER"));
 
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setString(2, order.getComment());
@@ -304,7 +311,7 @@ public class OrderDAO implements IOrderDAO {
 
         try {
             connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement("DELETE FROM electronic.order WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("DELETE_ORDER"));
             preparedStatement.setInt(1, order.getId());
 
             preparedStatement.executeUpdate();
@@ -329,45 +336,4 @@ public class OrderDAO implements IOrderDAO {
         }
     }
 
-    @Override
-    public int getLastInsertedId() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        int lastId = -1;
-
-        try {
-            connection = connectionFactory.getConnection();
-
-            preparedStatement = connection.prepareStatement("SELECT last_insert_id() AS id FROM electronic.order");
-
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-
-                lastId = resultSet.getInt("id");
-            }
-
-
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return lastId;
-    }
 }

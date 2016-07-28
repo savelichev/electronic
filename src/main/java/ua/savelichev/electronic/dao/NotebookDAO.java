@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class NotebookDAO implements INotebookDAO {
 
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
-    ResourceBundle resourceBundle = ResourceBundle.getBundle("SQLqueries");
+    private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
     public void createNotebook(Notebook notebook) {
         Connection connection = null;
@@ -25,7 +25,7 @@ public class NotebookDAO implements INotebookDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("INSERT_NOTEBOOK");
+            preparedStatement = connection.prepareStatement(bundle.getString("INSERT_NOTEBOOK"));
 
             preparedStatement.setString(1, notebook.getProducer());
             preparedStatement.setString(2, notebook.getModel());
@@ -69,7 +69,7 @@ public class NotebookDAO implements INotebookDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT_NOTEBOOK_BY_ID");
+            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_NOTEBOOK_BY_ID"));
 
             preparedStatement.setInt(1, id);
 
@@ -124,7 +124,7 @@ public class NotebookDAO implements INotebookDAO {
 
         try {
             connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT_ID_BY_PRODUCER_AND_MODEL");
+            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ID_BY_PRODUCER_AND_MODEL"));
             preparedStatement.setString(1, notebook.getProducer());
             preparedStatement.setString(2, notebook.getModel());
             resultSet = preparedStatement.executeQuery();
@@ -168,7 +168,7 @@ public class NotebookDAO implements INotebookDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT_ALL_NOTEBOOKS");
+            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ALL_NOTEBOOKS"));
 
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -218,7 +218,7 @@ public class NotebookDAO implements INotebookDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("UPDATE_NOTEBOOK");
+            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_NOTEBOOK"));
 
             preparedStatement.setString(1, notebook.getProducer());
             preparedStatement.setString(2, notebook.getModel());
@@ -260,7 +260,7 @@ public class NotebookDAO implements INotebookDAO {
 
         try {
             connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement("DELETE_NOTEBOOK_BY_ARTICLE");
+            preparedStatement = connection.prepareStatement(bundle.getString("DELETE_NOTEBOOK_BY_ARTICLE"));
             preparedStatement.setInt(1, article);
 
             preparedStatement.executeUpdate();

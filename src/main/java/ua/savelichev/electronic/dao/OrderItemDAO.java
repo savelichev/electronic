@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.dao;
 
+import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IOrderItemDAO;
 import ua.savelichev.electronic.domain.entity.OrderItem;
 
@@ -10,12 +11,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class OrderItemDAO implements IOrderItemDAO {
 
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
 
+    private static final Logger log = Logger.getLogger(OrderItemDAO.class);
 
+    private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
+
+    /**
+     * Inserts into table "order_item" order items
+     *
+     * @param orderItems list of OrderItem for insert
+     * @param orderId    relevant order for items in list
+     */
     @Override
     public void createOrderItems(List<OrderItem> orderItems, int orderId) {
         Connection connection = null;
@@ -26,21 +37,25 @@ public class OrderItemDAO implements IOrderItemDAO {
             connection.setAutoCommit(false);
             for (OrderItem orderItem : orderItems) {
 
-                preparedStatement = connection.prepareStatement(
-                        "INSERT INTO electronic.order_item (order_id, product_article,price,amount,title) VALUES(?,?,?,?,?)");
+                preparedStatement = connection.prepareStatement(bundle.getString("CREATE_ORDER_ITEM"));
 
-                preparedStatement.setInt(1,orderId);
+                preparedStatement.setInt(1, orderId);
                 preparedStatement.setInt(2, orderItem.getProductArticle());
                 preparedStatement.setInt(3, orderItem.getPrice());
                 preparedStatement.setInt(4, orderItem.getAmount());
                 preparedStatement.setString(5, orderItem.getTitle());
 
                 preparedStatement.executeUpdate();
+                preparedStatement.clearParameters();
             }
             connection.commit();
+            for (OrderItem orderItem : orderItems) {
+                log.debug("Order item for order with id: " + orderId + " was inserted: " + orderItem);
+            }
             connection.setAutoCommit(true);
 
         } catch (SQLException | NamingException e) {
+            log.error("Exception during  inserting order items for order id: " + orderId + " " + e);
             e.printStackTrace();
         } finally {
             try {
@@ -52,6 +67,7 @@ public class OrderItemDAO implements IOrderItemDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -67,7 +83,7 @@ public class OrderItemDAO implements IOrderItemDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM notebook WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("GET_ORDER_ITEM_BY_ID"));
 
             preparedStatement.setInt(1, id);
 
@@ -86,6 +102,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
 
         } catch (SQLException | NamingException e) {
+            log.error("Exception during selection order item by id: " + id + e);
             e.printStackTrace();
         } finally {
             try {
@@ -101,6 +118,7 @@ public class OrderItemDAO implements IOrderItemDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -118,7 +136,7 @@ public class OrderItemDAO implements IOrderItemDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM notebook WHERE order_id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ORDER_ITEMS_BY_ORDER_ID"));
 
             preparedStatement.setInt(1, orderId);
 
@@ -139,7 +157,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
                 orderItems.add(orderItem);
             }
-
+            log.debug("Got list order items fo order id: " + orderId);
 
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
@@ -157,6 +175,7 @@ public class OrderItemDAO implements IOrderItemDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -171,8 +190,7 @@ public class OrderItemDAO implements IOrderItemDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(
-                    "UPDATE electronic.order_item SET order_id=?, product_article=?,price=?,amount=?,title=? WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_ORDER_ITEM"));
 
             preparedStatement.setInt(1, orderItem.getOrderId());
             preparedStatement.setInt(2, orderItem.getProductArticle());
@@ -182,8 +200,10 @@ public class OrderItemDAO implements IOrderItemDAO {
             preparedStatement.setInt(6, orderItem.getId());
 
             preparedStatement.executeUpdate();
+            log.debug("Updated order item: " + orderItem);
 
         } catch (SQLException | NamingException e) {
+            log.error("Exception  during update order item: " + orderItem + e);
             e.printStackTrace();
         } finally {
             try {
@@ -196,6 +216,7 @@ public class OrderItemDAO implements IOrderItemDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -209,13 +230,16 @@ public class OrderItemDAO implements IOrderItemDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("DELETE FROM electronic.order_item WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("DELETE_ORDER_ITEM_BY_ID"));
 
             preparedStatement.setInt(1, orderItemId);
 
             preparedStatement.executeUpdate();
 
+            log.debug("Deleted order item with id: " + orderItemId);
+
         } catch (SQLException | NamingException e) {
+            log.error("Exception during deletion of order item with id: " + orderItemId + e);
             e.printStackTrace();
         } finally {
             try {
@@ -228,6 +252,7 @@ public class OrderItemDAO implements IOrderItemDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -241,13 +266,16 @@ public class OrderItemDAO implements IOrderItemDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("DELETE FROM electronic.order_item WHERE order_id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("DELETE_ORDER_ITEMS_BY_ORDER_ID"));
 
             preparedStatement.setInt(1, orderId);
 
             preparedStatement.executeUpdate();
 
+            log.debug("Deleted order items with order id: " + orderId);
+
         } catch (SQLException | NamingException e) {
+            log.error("Exception during deletion of order items with order id: " + orderId + e);
             e.printStackTrace();
         } finally {
             try {
@@ -260,6 +288,7 @@ public class OrderItemDAO implements IOrderItemDAO {
                 }
 
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }

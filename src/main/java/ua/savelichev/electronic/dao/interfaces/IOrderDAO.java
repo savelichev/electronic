@@ -18,7 +18,6 @@ public interface IOrderDAO {
 
     void deleteOrder(Order order);
 
-    int getLastInsertedId();
 
 
 }
