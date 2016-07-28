@@ -2,14 +2,18 @@ package ua.savelichev.electronic.domain.entity;
 
 public interface ICart {
 
+    /**
+     * Adds CartItem to Cart
+     * If current CartItem exist in Cart it increases CartItem per one unit.
+     *
+     * @param cartItem CartItem to adding.
+     */
     void addCartItem(CartItem cartItem);
 
-//    void increaseCartItemAmount(CartItem cartItem);
-
     /**
-     * Decrease CartItem amount per one unit if it bigger then "1".
+     * Decreases CartItem amount per one unit if it bigger then "1".
      * It means that amount could not be less then "1".
-     * If you need to remove CartItem, invoke the method
+     * If it needs to remove CartItem, invoke the method
      * {@link ua.savelichev.electronic.domain.entity.Cart#removeCartItem(CartItem)}
      *
      * @param cartItem - target for decreasing
@@ -18,6 +22,11 @@ public interface ICart {
     void decreaseCartItemAmount(CartItem cartItem);
 
 
+    /**
+     * Removes CartItem from Cart
+     *
+     * @param cartItem CartItem for removing
+     */
     void removeCartItem(CartItem cartItem);
 
 

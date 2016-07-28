@@ -9,7 +9,8 @@ public class Phone extends Product {
 
     private String mainCamera;
 
-    private int batteryCapacity;
+    private String batteryCapacity;
+
 
     public String getDisplayDiagonal() {
         return displayDiagonal;
@@ -35,13 +36,14 @@ public class Phone extends Product {
         this.mainCamera = mainCamera;
     }
 
-    public int getBatteryCapacity() {
+    public String getBatteryCapacity() {
         return batteryCapacity;
     }
 
-    public void setBatteryCapacity(int batteryCapacity) {
+    public void setBatteryCapacity(String batteryCapacity) {
         this.batteryCapacity = batteryCapacity;
     }
+
 
     @Override
     public String toString() {

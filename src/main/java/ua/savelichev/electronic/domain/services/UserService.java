@@ -14,10 +14,10 @@ public class UserService {
     private static final Logger log = Logger.getLogger(UserService.class);
 
     /**
-     * Returns user by email.
+     * Gets user from database by email.
      * Returns empty user if not found.
      *
-     * @param email
+     * @param email target user email
      * @return User
      */
     public User getUserByEmail(String email) {
@@ -32,8 +32,9 @@ public class UserService {
     }
 
     /**
-     * Tries to create user.
-     * Checks is current email allready exists. If yes returns "false", if not creates new user and returns "true".
+     * Creates user if not exist.
+     * Checks is current email allready exists.
+     * If yes returns "false", if not creates new user and returns "true".
      *
      * @param user
      * @return
@@ -51,12 +52,20 @@ public class UserService {
         }
     }
 
+    /**
+     * Updates info about User
+     * @param user User with new parameters
+     */
     public void updateUser(User user) {
         IUserDAO userDAO = new UserDAO();
         userDAO.updateUser(user);
         log.debug("User " + user.getEmail() + " was updated");
     }
 
+    /**
+     * Gets all Users
+     * @return List of User
+     */
     public List<User> getAllUsers() {
         IUserDAO userDAO = new UserDAO();
         List<User> users = new ArrayList<>();
@@ -65,6 +74,10 @@ public class UserService {
         return users;
     }
 
+    /**
+     * Blocks User by email
+     * @param email email of User
+     */
     public void blockUser(String email) {
         User user = getUserByEmail(email);
         user.setBlocked(true);
@@ -72,6 +85,10 @@ public class UserService {
         log.debug("User: "+email+" was blocked");
     }
 
+    /**
+     * Unblocks User by email
+     * @param email email of User
+     */
     public void unblockUser(String email) {
 
         User user = getUserByEmail(email);
@@ -84,8 +101,8 @@ public class UserService {
     /**
      * Adapter for request from admin-page.jsp
      * where response must be in List<User> format </User>
-     * @param email
-     * @return
+     * @param email email of User
+     * @return List of User
      */
     public List<User> getAllUsersByEmail(String email) {
         if (email.equals("")) {

@@ -1,6 +1,6 @@
-package ua.savelichev.electronic.ui.servlets.product.notebook;
+package ua.savelichev.electronic.ui.servlets.product.phone;
 
-import ua.savelichev.electronic.domain.services.product.NotebookService;
+import ua.savelichev.electronic.domain.services.product.PhoneService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/delete-notebook")
-public class DeleteNotebookServlet extends HttpServlet{
+@WebServlet("/delete-phone")
+public class DeletePhoneServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        new NotebookService().deleteNotebookByArticle(req.getParameter("notebookArticle"));
-        resp.sendRedirect("notebooks");
+        new PhoneService().deletePhoneByArticle(req.getParameter("phoneArticle"));
+        resp.sendRedirect("phone");
     }
 }

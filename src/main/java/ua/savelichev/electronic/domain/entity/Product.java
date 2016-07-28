@@ -11,6 +11,8 @@ public abstract class Product {
 
     private String model;
 
+    private int storageId;
+
     private int price;
 
     private String description;
@@ -50,6 +52,14 @@ public abstract class Product {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public int getStorageId() {
+        return storageId;
+    }
+
+    public void setStorageId(int storageId) {
+        this.storageId = storageId;
     }
 
     public int getPrice() {

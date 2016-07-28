@@ -3,7 +3,7 @@ package ua.savelichev.electronic.domain.tags;
 
 import org.apache.log4j.Logger;
 import ua.savelichev.electronic.domain.services.StorageService;
-import ua.savelichev.electronic.domain.services.product.IStorageService;
+import ua.savelichev.electronic.domain.services.IStorageService;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -24,7 +24,7 @@ public class StorageTagHandler extends TagSupport {
 
         IStorageService storageService = new StorageService();
 
-        int amount = storageService.getProductAmountByArticle(Integer.valueOf(article));
+        int amount = storageService.getPositionAmountByArticle(Integer.valueOf(article));
 
         try {
             pageContext.getOut().print(amount);

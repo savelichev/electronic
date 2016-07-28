@@ -1,6 +1,7 @@
 package ua.savelichev.electronic.domain.services;
 
 
+import org.apache.log4j.Logger;
 import ua.savelichev.electronic.domain.entity.Cart;
 import ua.savelichev.electronic.domain.entity.CartItem;
 import ua.savelichev.electronic.domain.entity.ICart;
@@ -8,6 +9,8 @@ import ua.savelichev.electronic.domain.entity.Product;
 import ua.savelichev.electronic.domain.services.product.ProductUtils;
 
 public class CartService implements ICartService {
+
+    private static final Logger log = Logger.getLogger(CartService.class);
 
     ICart cart = null;
     CartItem cartItem = null;
@@ -30,17 +33,24 @@ public class CartService implements ICartService {
         }
 
         if (cartFromSession != null) {
-            cart = (ICart) cartFromSession;
+            cart = cartFromSession;
         } else {
             cart = new Cart();
         }
 
         cart.addCartItem(cartItem);
-
+        log.debug("Product was added. Product article: " + productArticle);
         return cart;
     }
 
 
+    /**
+     * Removes Product from Cart by article
+     *
+     * @param cartFromSession Cart from session
+     * @param productArticle  article of Product for removing
+     * @return Cart without Product with relevant article
+     */
     @Override
     public ICart removeProduct(ICart cartFromSession, String productArticle) {
 
@@ -51,16 +61,13 @@ public class CartService implements ICartService {
         }
 
         if (cartFromSession != null) {
-            cart = (ICart) cartFromSession;
+            cart = cartFromSession;
             cart.removeCartItem(cartItem);
         }
-
-        if (cart != null) {
-            ;
-        }
-
+        log.debug("Product was removed. Product article: " + productArticle);
         return cart;
     }
+
 
 
     @Override

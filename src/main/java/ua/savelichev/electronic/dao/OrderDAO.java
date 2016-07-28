@@ -103,9 +103,9 @@ public class OrderDAO implements IOrderDAO {
     }
 
     /**
-     * Get Order by id in table "order"
+     * Selects row from table "order" by field "id"
      *
-     * @param id
+     * @param id value of target row field "id"
      * @return Order. If not found id, returns empty Order.
      */
     @Override
@@ -158,10 +158,10 @@ public class OrderDAO implements IOrderDAO {
     }
 
     /**
-     * Get all Order by User id
+     * Selects rows from table "order" by field "user_id"
      *
-     * @param userId
-     * @return List of Orders
+     * @param userId value of target row field "user_id"
+     * @return List of Order objects
      */
     @Override
     public List<Order> getOrdersByUserId(int userId) {
@@ -214,9 +214,9 @@ public class OrderDAO implements IOrderDAO {
     }
 
     /**
-     * Get all orders from table "order"
+     * Selects all rows from table "order"
      *
-     * @return List of Orders
+     * @return List of Order objects
      */
     @Override
     public List<Order> getAllOrders() {
@@ -268,9 +268,9 @@ public class OrderDAO implements IOrderDAO {
     }
 
     /**
-     * Update Order in database relevant input Order
+     * Update row in the table "order" relevant input Order
      *
-     * @param order Order with new parameters
+     * @param order contains new parameters for row
      */
     @Override
     public void updateOrder(Order order) {
@@ -313,9 +313,9 @@ public class OrderDAO implements IOrderDAO {
     }
 
     /**
-     * Delete Order in database relevant input order
+     * Deletes row from table "order" relevant Order
      *
-     * @param order Order for deletion
+     * @param order target row relevant Order object
      */
     @Override
     public void deleteOrder(Order order) {

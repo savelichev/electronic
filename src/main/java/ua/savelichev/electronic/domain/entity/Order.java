@@ -95,4 +95,19 @@ public class Order {
     public void setBuyerCellNumber(String buyerCellNumber) {
         this.buyerCellNumber = buyerCellNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", orderItems=" + orderItems +
+                ", address='" + address + '\'' +
+                ", orderCost=" + orderCost +
+                ", comment='" + comment + '\'' +
+                ", isDone=" + isDone +
+                ", buyerName='" + buyerName + '\'' +
+                ", buyerCellNumber='" + buyerCellNumber + '\'' +
+                '}';
+    }
 }

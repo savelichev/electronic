@@ -22,7 +22,7 @@ public class NotebookDAO implements INotebookDAO {
     /**
      * Inserts row into table "notebook".
      *
-     * @param notebook
+     * @param notebook contains parameters for new row
      */
     public void createNotebook(Notebook notebook) {
         Connection connection = null;
@@ -63,13 +63,12 @@ public class NotebookDAO implements INotebookDAO {
                 e.printStackTrace();
             }
         }
-
     }
 
     /**
      * Selects row by id from table "notebook".
      *
-     * @param id
+     * @param id target row value of field "id"
      * @return Notebook from table "notebook" with id.
      */
     public Notebook getNotebookById(int id) {
@@ -100,6 +99,8 @@ public class NotebookDAO implements INotebookDAO {
                 notebook.setRam(resultSet.getInt("ram"));
                 notebook.setHdd(resultSet.getInt("hdd"));
                 notebook.setImageRef(resultSet.getString("image_ref"));
+                notebook.setCategory(resultSet.getString("category"));
+                notebook.setStorageId(resultSet.getInt("storage_id"));
             }
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
@@ -126,11 +127,12 @@ public class NotebookDAO implements INotebookDAO {
     }
 
     /**
-     * Get id of row by "producer" and "model".
+     * Selects row by "producer" and "model".
      * Uses in article generation.
-     * @param producer
-     * @param model
-     * @return int id
+     *
+     * @param producer target row value of field "producer"
+     * @param model    target row value of field "model"
+     * @return int id of selected row
      */
     @Override
     public int getId(String producer, String model) {
@@ -142,7 +144,8 @@ public class NotebookDAO implements INotebookDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ID_BY_PRODUCER_AND_MODEL"));
+            preparedStatement = connection.prepareStatement(
+                    bundle.getString("SELECT_NOTEBOOK_ID_BY_PRODUCER_AND_MODEL"));
 
             preparedStatement.setString(1, producer);
             preparedStatement.setString(2, model);
@@ -177,7 +180,8 @@ public class NotebookDAO implements INotebookDAO {
 
     /**
      * Selects all rows from database.
-     * @return List of Notebooks.
+     *
+     * @return List of Notebook objects.
      */
     public List<Notebook> getAllNotebooks() {
 
@@ -206,6 +210,8 @@ public class NotebookDAO implements INotebookDAO {
                 notebook.setRam(resultSet.getInt("ram"));
                 notebook.setHdd(resultSet.getInt("hdd"));
                 notebook.setImageRef(resultSet.getString("image_ref"));
+                notebook.setCategory(resultSet.getString("category"));
+                notebook.setStorageId(resultSet.getInt("storage_id"));
 
                 notebooks.add(notebook);
             }
@@ -235,7 +241,8 @@ public class NotebookDAO implements INotebookDAO {
 
     /**
      * Updates row with relevant input Notebook.
-     * @param notebook notebook wiith new parameters.
+     *
+     * @param notebook contains new parameters for relevant row.
      */
     public void updateNotebook(Notebook notebook) {
         Connection connection = null;
@@ -256,7 +263,9 @@ public class NotebookDAO implements INotebookDAO {
             preparedStatement.setInt(8, notebook.getRam());
             preparedStatement.setInt(9, notebook.getHdd());
             preparedStatement.setString(10, notebook.getImageRef());
-            preparedStatement.setInt(11, notebook.getId());
+            preparedStatement.setString(11, notebook.getCategory());
+            preparedStatement.setInt(12,notebook.getStorageId());
+            preparedStatement.setInt(13, notebook.getId());
 
             preparedStatement.executeUpdate();
 
@@ -280,7 +289,8 @@ public class NotebookDAO implements INotebookDAO {
 
     /**
      * Deletes row in database by field "article"
-     * @param article article of row for deletion
+     *
+     * @param article value of target row field "article"
      */
     public void deleteNotebookByArticle(int article) {
         Connection connection = null;

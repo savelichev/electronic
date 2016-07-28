@@ -31,8 +31,7 @@
         <div class="container">
 
             <div class="col-md-3">
-                <img class="img-responsive"
-                     src="/resources/notebook_images/${cartItem.product.producer}_${cartItem.product.model}_1.jpg">
+                <img class="img-responsive" src="/resources/product_images/${cartItem.product.imageRef}">
             </div>
 
             <div class="col-md-5">
@@ -98,16 +97,14 @@
         </div>
         <div class="container">
             <a class="btn btn-primary" href="build-order-template"><fmt:message key="make_an_order"
-                                                                              bundle="${messages}"/> </a>
+                                                                                bundle="${messages}"/> </a>
         </div>
     </div>
 
 
 </div>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../resources/js/bootstrap.js"></script>
 </body>
 </html>

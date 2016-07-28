@@ -46,7 +46,7 @@
                 <div class="prod_border">
                     <div class="col-md-3">
                         <img class="img-responsive"
-                             src="/resources/notebook_images/${notebook.imageRef}">
+                             src="/resources/product_images/${notebook.imageRef}">
                     </div>
                     <div class="col-md-6">
                         <div>
@@ -83,20 +83,15 @@
                         <str:getAmount article="${notebook.article}"/>
                     </div>
                 </div>
-
-
-
                 <br/>
 
             </c:forEach>
-
         </div>
     </div>
-
 </div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../../resources/js/bootstrap.js"></script>
+<script src="../resources/js/bootstrap.js"></script>
 </body>
 </html>
