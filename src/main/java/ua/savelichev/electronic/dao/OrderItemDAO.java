@@ -55,17 +55,17 @@ public class OrderItemDAO implements IOrderItemDAO {
             connection.setAutoCommit(true);
 
         } catch (SQLException | NamingException e) {
-            log.error("Exception during  inserting order items for order id: " + orderId + " " + e);
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
                 log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
@@ -92,17 +92,14 @@ public class OrderItemDAO implements IOrderItemDAO {
             orderItem = new OrderItem();
 
             if (resultSet.next()) {
-
                 orderItem.setOrderId(resultSet.getInt("order_id"));
                 orderItem.setProductArticle(resultSet.getInt("product_article"));
                 orderItem.setPrice(resultSet.getInt("price"));
                 orderItem.setAmount(resultSet.getInt("amount"));
                 orderItem.setTitle(resultSet.getString("title"));
             }
-
-
         } catch (SQLException | NamingException e) {
-            log.error("Exception during selection order item by id: " + id + e);
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
@@ -160,20 +157,21 @@ public class OrderItemDAO implements IOrderItemDAO {
             log.debug("Got list order items fo order id: " + orderId);
 
         } catch (SQLException | NamingException e) {
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
-
                 if (resultSet != null) {
                     resultSet.close();
                 }
+
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
                 log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
@@ -203,18 +201,17 @@ public class OrderItemDAO implements IOrderItemDAO {
             log.debug("Updated order item: " + orderItem);
 
         } catch (SQLException | NamingException e) {
-            log.error("Exception  during update order item: " + orderItem + e);
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
-
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
                 log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
@@ -235,22 +232,19 @@ public class OrderItemDAO implements IOrderItemDAO {
             preparedStatement.setInt(1, orderItemId);
 
             preparedStatement.executeUpdate();
-
             log.debug("Deleted order item with id: " + orderItemId);
-
         } catch (SQLException | NamingException e) {
-            log.error("Exception during deletion of order item with id: " + orderItemId + e);
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
-
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
                 log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
@@ -271,22 +265,19 @@ public class OrderItemDAO implements IOrderItemDAO {
             preparedStatement.setInt(1, orderId);
 
             preparedStatement.executeUpdate();
-
             log.debug("Deleted order items with order id: " + orderId);
-
         } catch (SQLException | NamingException e) {
-            log.error("Exception during deletion of order items with order id: " + orderId + e);
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
-
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
                 log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.dao;
 
+import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IUserDAO;
 import ua.savelichev.electronic.domain.entity.User;
 
@@ -10,9 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class UserDAO implements IUserDAO {
 
+    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private static final Logger log = Logger.getLogger(OrderDAO.class);
+    private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
     @Override
     public User getUserByEmail(String email) {
@@ -21,8 +26,10 @@ public class UserDAO implements IUserDAO {
         ResultSet resultSet = null;
         User user = null;
         try {
-            connection = ConnectionFactory.getInstance().getConnection();
-            preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ?");
+            connection = connectionFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(bundle.getString("GET_USER_BY_EMAIL"));
+
             preparedStatement.setString(1, email);
 
             resultSet = preparedStatement.executeQuery();
@@ -40,20 +47,23 @@ public class UserDAO implements IUserDAO {
                 user.setBlocked(resultSet.getBoolean("blocked"));
             }
         } catch (SQLException | NamingException e) {
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
+
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -61,15 +71,13 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void createUser(User inUser) {
+    public void createUser(User user) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        User user = null;
         try {
-            user = inUser;
-            connection = ConnectionFactory.getInstance().getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO user(firstname,lastname,cell_number,email,login,password,address) VALUES(?,?,?,?,?,?,?)");
+            connection = connectionFactory.getConnection();
 
+            preparedStatement = connection.prepareStatement(bundle.getString("CREATE_USER"));
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -79,34 +87,35 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(6, user.getPassword());
             preparedStatement.setString(7, user.getAddress());
 
-
             preparedStatement.executeUpdate();
         } catch (SQLException | NamingException e) {
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
+
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void updateUser(User inUser) {
+    public void updateUser(User user) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        User user = null;
         try {
-            user = inUser;
-            connection = ConnectionFactory.getInstance().getConnection();
+            connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement("UPDATE electronic.user SET firstname=?,lastname=?,cell_number=?,email=?,login=?,password=?,address=?,role=?,blocked=? WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_USER"));
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -120,18 +129,20 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(10, user.getId());
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException | NamingException e) {
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }
@@ -142,13 +153,12 @@ public class UserDAO implements IUserDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        User user = null;
+        User user;
         List<User> users = null;
         try {
             users = new ArrayList<>();
-            connection = ConnectionFactory.getInstance().getConnection();
-            preparedStatement = connection.prepareStatement("SELECT * FROM user");
-
+            connection = connectionFactory.getConnection();
+            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ALL_USERS"));
 
             resultSet = preparedStatement.executeQuery();
 
@@ -169,20 +179,23 @@ public class UserDAO implements IUserDAO {
                 users.add(user);
             }
         } catch (SQLException | NamingException e) {
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
+
                 if (preparedStatement != null) {
                     preparedStatement.close();
                 }
+
                 if (connection != null) {
                     connection.close();
                 }
-
             } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
                 e.printStackTrace();
             }
         }

@@ -10,7 +10,6 @@ import java.util.List;
 public class NotebookService implements ProductService {
 
 
-
     public List<Notebook> getAllNotebooks() {
 
         return new NotebookDAO().getAllNotebooks();
@@ -27,15 +26,14 @@ public class NotebookService implements ProductService {
     }
 
 
-
     @Override
     public int getId(Product product) {
-        return new NotebookDAO().getId((Notebook) product);
+        return new NotebookDAO().getId(product.getProducer(), product.getModel());
     }
 
     @Override
     public Product getProductByArticle(int article) {
-       return getNotebookById(Integer.valueOf(String.valueOf(article).substring(2, String.valueOf(article).length())));
+        return getNotebookById(Integer.valueOf(String.valueOf(article).substring(2, String.valueOf(article).length())));
     }
 
     public void addNotebook(Notebook notebook) {
@@ -44,9 +42,9 @@ public class NotebookService implements ProductService {
 
         notebookDAO.createNotebook(notebook);
 
-        notebook.setId(notebookDAO.getId(notebook));
+        notebook.setId(notebookDAO.getId(notebook.getProducer(), notebook.getModel()));
 
-        notebook.setArticle(ProductUtils.generateProductArticle(notebook.getCategory(),notebook.getId()));
+        notebook.setArticle(ProductUtils.generateProductArticle(notebook.getCategory(), notebook.getId()));
 
         notebookDAO.updateNotebook(notebook);
 

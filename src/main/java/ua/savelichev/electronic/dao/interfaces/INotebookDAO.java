@@ -10,18 +10,11 @@ public interface INotebookDAO {
 
     Notebook getNotebookById(int id);
 
-    int getId(Notebook notebook);
+    int getId(String producer, String model);
 
     List<Notebook> getAllNotebooks();
 
     void updateNotebook(Notebook notebook);
 
     void deleteNotebookByArticle(int article);
-
-
-    List<Notebook> getNotebooksByPrice(int minPrice, int maxPrice);
-
-    List<Notebook> getNotebooksByDiagonal(int minDiagonal, int maxDiagonal);
-
-
 }
