@@ -84,6 +84,12 @@ public abstract class Product {
         this.imageRef = imageRef;
     }
 
+    /**
+     * Compare Product producer and model for equals.
+     *
+     * @param o compare target.
+     * @return boolean.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,6 +102,11 @@ public abstract class Product {
 
     }
 
+    /**
+     * Calculates hashCode of product by Product unique fields product and model.
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int result = producer.hashCode();

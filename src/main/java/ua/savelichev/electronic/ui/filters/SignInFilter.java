@@ -27,7 +27,6 @@ public class SignInFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-
         if (!((HttpServletRequest) servletRequest).getMethod().equals("POST")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;

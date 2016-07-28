@@ -2,10 +2,13 @@ package ua.savelichev.electronic.domain.entity;
 
 public class CartItem {
 
+    /** CartItem Product entity*/
     private Product product;
 
+    /** Product amount*/
     private int amount;
 
+    /** Cost of CartItem */
     private int cartItemCost;
 
     public CartItem() {
@@ -40,13 +43,16 @@ public class CartItem {
         return cartItemCost;
     }
 
+    /**
+     * Calculates CartItem cost by product price and it's amount.
+     */
     private void calculateItemCost() {
         cartItemCost = product.getPrice() * amount;
     }
 
 
     /**
-     * Cart items are equals if they contains the same product
+     * Cart items are equals if they contains the same product.
      */
     @Override
     public boolean equals(Object o) {

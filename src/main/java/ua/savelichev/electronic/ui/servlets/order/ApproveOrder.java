@@ -18,7 +18,7 @@ public class ApproveOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        IOrderService orderManager = new OrderService();
+        IOrderService orderService = new OrderService();
 
         HttpSession session = req.getSession();
 
@@ -32,7 +32,7 @@ public class ApproveOrder extends HttpServlet {
 
         String buyerCellNumber = req.getParameter("buyerCellNumber");
 
-        orderManager.approveOrder(order, comment, address, buyerName, buyerCellNumber);
+        orderService.approveOrder(order, comment, address, buyerName, buyerCellNumber);
 
         session.removeAttribute("cart");
 

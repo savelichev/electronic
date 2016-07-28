@@ -19,7 +19,7 @@ public class CartDecreaseProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ICartService cartManager = new CartService();
+        ICartService cartService = new CartService();
 
         HttpSession session = req.getSession();
 
@@ -27,7 +27,7 @@ public class CartDecreaseProductServlet extends HttpServlet {
 
         String productArticle = req.getParameter("productArticle");
 
-        cart = cartManager.decreaseProductAmount(cart, productArticle);
+        cart = cartService.decreaseProductAmount(cart, productArticle);
 
         session.setAttribute("cart", cart);
 

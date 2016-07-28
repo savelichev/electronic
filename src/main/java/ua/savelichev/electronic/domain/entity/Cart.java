@@ -4,6 +4,9 @@ package ua.savelichev.electronic.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Uses for storage OrderItem as List and calculate Order cost
+ */
 public class Cart implements ICart {
 
     private List<CartItem> cartItems = new ArrayList<>();
@@ -61,7 +64,6 @@ public class Cart implements ICart {
         CartItem tempCartItem = cartItems.get(cartItems.indexOf(cartItem));
         if (tempCartItem.getAmount() > 1) {
             tempCartItem.setAmount(tempCartItem.getAmount() - 1);
-
         }
         calculateCartCost();
     }
@@ -76,6 +78,10 @@ public class Cart implements ICart {
     }
 
 
+    /**
+     * Calculates all CartItem cost in Order
+     * Invokes after each manipulate on OrderItems
+     */
     private void calculateCartCost() {
         int tempCartCost = 0;
         for (CartItem cartItem : cartItems) {

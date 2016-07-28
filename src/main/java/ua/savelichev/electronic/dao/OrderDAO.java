@@ -14,12 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
 public class OrderDAO implements IOrderDAO {
 
     private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
     private static final Logger log = Logger.getLogger(OrderDAO.class);
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
+    /**
+     * Creates relevant Order in table "order" and creates all OrderItem relevant this order into
+     * table "order_items".
+     * Uses JDBC transaction.
+     *
+     * @param order relevant order to create.
+     */
     @Override
     public void createOrder(Order order) {
         Connection connection = null;
@@ -94,6 +102,12 @@ public class OrderDAO implements IOrderDAO {
         }
     }
 
+    /**
+     * Get Order by id in table "order"
+     *
+     * @param id
+     * @return Order. If not found id, returns empty Order.
+     */
     @Override
     public Order getOrderById(int id) {
         Connection connection = null;
@@ -143,13 +157,19 @@ public class OrderDAO implements IOrderDAO {
         return order;
     }
 
+    /**
+     * Get all Order by User id
+     *
+     * @param userId
+     * @return List of Orders
+     */
     @Override
     public List<Order> getOrdersByUserId(int userId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Order> orders = null;
-        Order order = null;
+        Order order;
 
         try {
             connection = connectionFactory.getConnection();
@@ -193,6 +213,11 @@ public class OrderDAO implements IOrderDAO {
         return orders;
     }
 
+    /**
+     * Get all orders from table "order"
+     *
+     * @return List of Orders
+     */
     @Override
     public List<Order> getAllOrders() {
         Connection connection = null;
@@ -242,6 +267,11 @@ public class OrderDAO implements IOrderDAO {
         return orders;
     }
 
+    /**
+     * Update Order in database relevant input Order
+     *
+     * @param order Order with new parameters
+     */
     @Override
     public void updateOrder(Order order) {
         Connection connection = null;
@@ -282,6 +312,11 @@ public class OrderDAO implements IOrderDAO {
         }
     }
 
+    /**
+     * Delete Order in database relevant input order
+     *
+     * @param order Order for deletion
+     */
     @Override
     public void deleteOrder(Order order) {
         Connection connection = null;
@@ -293,6 +328,7 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.setInt(1, order.getId());
 
             preparedStatement.executeUpdate();
+            log.debug("Deleted order id: " + order.getId());
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();

@@ -8,6 +8,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Connection factory takes connection from server pool.
+ * Singleton pattern.
+ */
 public class ConnectionFactory {
 
     private static ConnectionFactory instance = new ConnectionFactory();
@@ -20,6 +24,12 @@ public class ConnectionFactory {
         return instance;
     }
 
+    /**
+     * Looks up environment context for DataSource.
+     * @return SQL Connection
+     * @throws NamingException
+     * @throws SQLException
+     */
     public Connection getConnection() throws NamingException, SQLException {
 
         InitialContext initialContext = new InitialContext();

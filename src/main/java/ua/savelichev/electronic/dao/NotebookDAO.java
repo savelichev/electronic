@@ -20,7 +20,7 @@ public class NotebookDAO implements INotebookDAO {
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
     /**
-     * Inserts notebook into table "notebook"
+     * Inserts row into table "notebook".
      *
      * @param notebook
      */
@@ -67,10 +67,10 @@ public class NotebookDAO implements INotebookDAO {
     }
 
     /**
-     * Selects row by id from table "notebook"
+     * Selects row by id from table "notebook".
      *
      * @param id
-     * @return Notebook from table "notebook" with id
+     * @return Notebook from table "notebook" with id.
      */
     public Notebook getNotebookById(int id) {
         Connection connection = null;
@@ -102,7 +102,7 @@ public class NotebookDAO implements INotebookDAO {
                 notebook.setImageRef(resultSet.getString("image_ref"));
             }
         } catch (SQLException | NamingException e) {
-            log.error("Exception: "+e);
+            log.error("Exception: " + e);
             e.printStackTrace();
         } finally {
             try {
@@ -125,7 +125,13 @@ public class NotebookDAO implements INotebookDAO {
         return notebook;
     }
 
-
+    /**
+     * Get id of row by "producer" and "model".
+     * Uses in article generation.
+     * @param producer
+     * @param model
+     * @return int id
+     */
     @Override
     public int getId(String producer, String model) {
         Connection connection = null;
@@ -169,7 +175,10 @@ public class NotebookDAO implements INotebookDAO {
         return id;
     }
 
-
+    /**
+     * Selects all rows from database.
+     * @return List of Notebooks.
+     */
     public List<Notebook> getAllNotebooks() {
 
         List<Notebook> notebooks = new ArrayList<>();
@@ -224,6 +233,10 @@ public class NotebookDAO implements INotebookDAO {
         return notebooks;
     }
 
+    /**
+     * Updates row with relevant input Notebook.
+     * @param notebook notebook wiith new parameters.
+     */
     public void updateNotebook(Notebook notebook) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -265,6 +278,10 @@ public class NotebookDAO implements INotebookDAO {
         }
     }
 
+    /**
+     * Deletes row in database by field "article"
+     * @param article article of row for deletion
+     */
     public void deleteNotebookByArticle(int article) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

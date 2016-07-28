@@ -34,7 +34,6 @@ public class AdminPathFilter implements Filter {
             "/admin-page"
     );
 
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -42,7 +41,6 @@ public class AdminPathFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         String url = ((HttpServletRequest) servletRequest).getRequestURI();
 
         if (!(adminPaths.contains(url))) {
@@ -52,7 +50,6 @@ public class AdminPathFilter implements Filter {
 
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         User user = (User) session.getAttribute("user");
-
 
         if (user != null && user.getRole().equals("ADMIN")) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -67,8 +64,6 @@ public class AdminPathFilter implements Filter {
             log.info("User: \" " + userIP + "\" logon attempt ADMIN path: " + url);
             ((HttpServletResponse) servletResponse).sendRedirect("index");
         }
-
-
     }
 
     @Override

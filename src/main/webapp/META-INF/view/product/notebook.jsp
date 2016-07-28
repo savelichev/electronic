@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="str" uri="WEB-INF/storage" %>
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -36,8 +37,8 @@
 
 <div class="container">
 
-    <div class="col-md-2">Подбор по параметрам</div>
-    <div class="col-md-10">
+    <%--<div class="col-md-2">Подбор по параметрам</div>--%>
+    <div class="col-md-12">
         <div>
 
             <c:forEach items="${notebooks}" var="notebook">
@@ -45,16 +46,16 @@
                 <div class="prod_border">
                     <div class="col-md-3">
                         <img class="img-responsive"
-                             src="/resources/notebook_images/${notebook.producer}_${notebook.model}_1.jpg">
+                             src="/resources/notebook_images/${notebook.imageRef}">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div>
-
                             <h5><c:out value="${notebook.producer}"/> <c:out value="${notebook.model}"/></h5>
-
                         </div>
                         <div>
-                            <p><c:out value="${notebook.price}"/><fmt:message key="currency" bundle="${messages}"/></p>
+                            <p>
+                                <c:out value="${notebook.price}"/> <fmt:message key="currency" bundle="${messages}"/>
+                            </p>
                             <p><c:out value="${notebook.description}"/></p>
                         </div>
                     </div>
@@ -77,7 +78,13 @@
                         </div>
                     </c:if>
 
+                    <div class="col-md-2">
+                        <fmt:message key="at_storage" bundle="${messages}"/>:
+                        <str:getAmount article="${notebook.article}"/>
+                    </div>
                 </div>
+
+
 
                 <br/>
 

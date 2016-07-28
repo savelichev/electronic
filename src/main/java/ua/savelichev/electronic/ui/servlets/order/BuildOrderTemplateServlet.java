@@ -36,9 +36,9 @@ public class BuildOrderTemplateServlet extends HttpServlet {
 
         Cart cart = (Cart) session.getAttribute("cart");
 
-        IOrderService orderManager = new OrderService();
+        IOrderService orderService = new OrderService();
 
-        Order orderTemplate = orderManager.buildOrderTemplate(user,cart);
+        Order orderTemplate = orderService.buildOrderTemplate(user,cart);
 
         session.setAttribute("orderTemplate", orderTemplate);
 

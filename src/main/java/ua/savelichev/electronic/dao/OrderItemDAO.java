@@ -73,6 +73,11 @@ public class OrderItemDAO implements IOrderItemDAO {
         }
     }
 
+    /**
+     * Returns OrderItem from database relevant input id
+     * @param id - id of Order Item in table
+     * @return OrderItem
+     */
     @Override
     public OrderItem getOrderItemById(int id) {
         Connection connection = null;
@@ -122,6 +127,11 @@ public class OrderItemDAO implements IOrderItemDAO {
         return orderItem;
     }
 
+    /**
+     * Returns all OrderItems which relevant input Order's id
+     * @param orderId id of Order
+     * @return List of OrderItems
+     */
     @Override
     public List<OrderItem> getOrderItemsByOrderId(int orderId) {
         Connection connection = null;
@@ -180,6 +190,10 @@ public class OrderItemDAO implements IOrderItemDAO {
         return orderItems;
     }
 
+    /**
+     * Updates OrderItem in database if found
+     * @param orderItem OrderItem with new parameters
+     */
     @Override
     public void updateOrderItem(OrderItem orderItem) {
         Connection connection = null;
@@ -219,6 +233,10 @@ public class OrderItemDAO implements IOrderItemDAO {
         }
     }
 
+    /**
+     * Delete row of OrderItem in table "order_item" by id.
+     * @param orderItemId
+     */
     @Override
     public void deleteOrderItemById(int orderItemId) {
         Connection connection = null;
@@ -252,6 +270,10 @@ public class OrderItemDAO implements IOrderItemDAO {
         }
     }
 
+    /**
+     * Delete all rows which references on input order_id
+     * @param orderId
+     */
     @Override
     public void deleteOrderItemsByOrderId(int orderId) {
         Connection connection = null;

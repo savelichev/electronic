@@ -115,7 +115,7 @@ public class ProductUtils {
                 return phoneService;
 
         }
-        log.debug("No ProductService for category: "+category);
+        log.error("No ProductService for category: "+category);
         return null;
     }
 

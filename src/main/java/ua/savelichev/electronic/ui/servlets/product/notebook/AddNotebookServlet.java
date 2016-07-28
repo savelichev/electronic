@@ -22,7 +22,7 @@ public class AddNotebookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        NotebookService notebookManager = new NotebookService();
+        NotebookService notebookService = new NotebookService();
         Notebook notebook = new Notebook();
 
         notebook.setCategory(req.getParameter("category"));
@@ -36,7 +36,7 @@ public class AddNotebookServlet extends HttpServlet {
         notebook.setHdd(Integer.valueOf(req.getParameter("hdd")));
         notebook.setImageRef(req.getParameter("imageRef"));
 
-        notebookManager.addNotebook(notebook);
+        notebookService.addNotebook(notebook);
 
         resp.sendRedirect("add-notebook");
 
