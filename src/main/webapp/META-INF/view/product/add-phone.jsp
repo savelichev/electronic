@@ -59,18 +59,19 @@
             </div>
 
             <div class="form-group">
-                <label for="processor"><fmt:message key="processor" bundle="${messages}"/></label>
-                <input type="text" class="form-control" id="processor" name="processor" placeholder="Processor">
+                <label for="os"><fmt:message key="operation_system" bundle="${messages}"/></label>
+                <input type="text" class="form-control" id="os" name="os" placeholder="Operation System">
             </div>
 
             <div class="form-group">
-                <label for="ram"><fmt:message key="ram" bundle="${messages}"/></label>
-                <input type="text" class="form-control" id="ram" name="ram" placeholder="RAM capacity">
+                <label for="mainCamera"><fmt:message key="main_camera" bundle="${messages}"/></label>
+                <input type="text" class="form-control" id="mainCamera" name="mainCamera" placeholder="Main camera">
             </div>
 
             <div class="form-group">
-                <label for="hdd"><fmt:message key="hdd" bundle="${messages}"/></label>
-                <input type="text" class="form-control" id="hdd" name="hdd" placeholder="HDD capacity">
+                <label for="batteryCapacity"><fmt:message key="battery_capacity" bundle="${messages}"/></label>
+                <input type="text" class="form-control" id="batteryCapacity" name="batteryCapacity"
+                       placeholder="Battery capacity">
             </div>
 
             <div class="form-group">

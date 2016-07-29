@@ -66,7 +66,7 @@ public class OrderService implements IOrderService {
         order.setAddress(address);
         order.setBuyerName(buyerName);
         order.setBuyerCellNumber(buyerCellNumber);
-        log.debug("Try to create Order: " + order);
+        log.debug("Try to approve Order: " + order);
         createOrder(order);
     }
 
@@ -79,6 +79,7 @@ public class OrderService implements IOrderService {
     public void createOrder(Order order) {
         IOrderDAO orderDAO = new OrderDAO();
         orderDAO.createOrder(order);
+        log.debug("Order created: " + order);
     }
 
     /**
@@ -91,6 +92,8 @@ public class OrderService implements IOrderService {
     public List<Order> getUserOrders(User user) {
         OrderDAO orderDAO = new OrderDAO();
         int userId = user.getId();
-        return orderDAO.getOrdersByUserId(userId);
+        List<Order> orders = orderDAO.getOrdersByUserId(userId);
+        log.debug("Got orders of user: "+user.getEmail());
+        return orders;
     }
 }
