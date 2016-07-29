@@ -33,54 +33,7 @@
     </div>
 
     <utbl:buildUserTable users="${users}" language="${language}"/>
-    <%--<div>--%>
-        <%--<table border="1" align="center">--%>
-            <%--<tr>--%>
-                <%--<th></th>--%>
-                <%--<th></th>--%>
-                <%--<th><fmt:message key="email_address" bundle="${messages}"/></th>--%>
-                <%--<th><fmt:message key="login" bundle="${messages}"/></th>--%>
-                <%--<th><fmt:message key="cell_number" bundle="${messages}"/></th>--%>
-                <%--<th><fmt:message key="firstname" bundle="${messages}"/></th>--%>
-                <%--<th><fmt:message key="lastname" bundle="${messages}"/></th>--%>
-                <%--<th><fmt:message key="block_status" bundle="${messages}"/></th>--%>
-                <%--<th><fmt:message key="role" bundle="${messages}"/></th>--%>
-            <%--</tr>--%>
-            <%--<c:forEach var="user" items="${users}">--%>
-                <%--<tr>--%>
-                    <%--<td>--%>
-                        <%--<div>--%>
-                            <%--<form action="block-user" method="post">--%>
 
-                                    <%--<input type="hidden" name="userEmail" value="${user.email}"/>--%>
-
-                                <%--<button type="submit"><fmt:message key="block" bundle="${messages}"/> </button>--%>
-                            <%--</form>--%>
-                        <%--</div>--%>
-                    <%--</td>--%>
-                    <%--<td>--%>
-                        <%--<div>--%>
-                            <%--<form action="unblock-user" method="post">--%>
-                                <%--<label>--%>
-                                    <%--<input hidden name="userEmail" value="${user.email}"/>--%>
-                                <%--</label>--%>
-                                <%--<button type="submit"><fmt:message key="unblock" bundle="${messages}"/> </button>--%>
-                            <%--</form>--%>
-                        <%--</div>--%>
-                    <%--</td>--%>
-                    <%--<td>${user.email}</td>--%>
-                    <%--<td>${user.login}</td>--%>
-                    <%--<td>${user.cellNumber}</td>--%>
-                    <%--<td>${user.firstName}</td>--%>
-                    <%--<td>${user.lastName}</td>--%>
-                    <%--<td>${user.blocked}</td>--%>
-                    <%--<td>${user.role}</td>--%>
-
-
-                <%--</tr>--%>
-            <%--</c:forEach>--%>
-        <%--</table>--%>
-    <%--</div>--%>
 </div>
 
 
