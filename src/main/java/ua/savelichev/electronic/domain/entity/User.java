@@ -2,24 +2,54 @@ package ua.savelichev.electronic.domain.entity;
 
 public class User {
 
+    /**
+     * User's identifier
+     */
     private int id;
 
+    /**
+     * User's login
+     */
     private String login;
 
+    /**
+     * User's password
+     */
     private String password;
 
+    /**
+     * User's first name
+     */
     private String firstName;
 
+    /**
+     * User's last name
+     */
     private String lastName;
 
+    /**
+     * User's cell number
+     */
     private String cellNumber;
 
+    /**
+     * User's email
+     */
     private String email;
 
+    /**
+     * User's address
+     */
     private String address;
 
+    /**
+     * User's authorization role
+     */
     private String role;
 
+    /**
+     * User's blocked flag
+     */
     private boolean blocked;
 
     public int getId() {

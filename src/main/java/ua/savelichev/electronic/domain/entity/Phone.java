@@ -1,14 +1,28 @@
 package ua.savelichev.electronic.domain.entity;
 
-
+/**
+ * Class contains unique phone parameters
+ */
 public class Phone extends Product {
 
+    /**
+     * Phone's display diagonal size.
+     */
     private String displayDiagonal;
 
+    /**
+     * Phone's operation system.
+     */
     private String operationSystem;
 
+    /**
+     * Phone's main camera parameter.
+     */
     private String mainCamera;
 
+    /**
+     * Phone's batteryCapacity.
+     */
     private String batteryCapacity;
 
 

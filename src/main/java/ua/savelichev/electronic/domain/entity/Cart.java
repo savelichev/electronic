@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Uses for storage OrderItem as List and calculate Order cost
+ * Uses for storage OrderItem as List and calculate Order cost.
  */
 public class Cart implements ICart {
 
+    /**
+     * List of cart items.
+     */
     private List<CartItem> cartItems = new ArrayList<>();
 
+    /**
+     * Cart total cost.
+     */
     private int cartCost;
 
     public List<CartItem> getCartItems() {
@@ -30,7 +36,7 @@ public class Cart implements ICart {
     }
 
     /**
-     * Adds new CartItem if it's not exist, else invokes
+     * Adds new CartItem if it's not exist, else invokes.
      * {@link ua.savelichev.electronic.domain.entity.Cart#increaseCartItemAmount(CartItem)}
      */
     @Override

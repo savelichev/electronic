@@ -3,12 +3,24 @@ package ua.savelichev.electronic.domain.entity;
 
 public class Notebook extends Product {
 
+    /**
+     * Notebook's display diagonal size.
+     */
     private String displayDiagonal;
 
+    /**
+     * Notebook's processor title.
+     */
     private String processor;
 
+    /**
+     * Notebook's RAM capacity.
+     */
     private int ram;
 
+    /**
+     * Notebook's HDD capacity
+     */
     private int hdd;
 
 

@@ -2,18 +2,39 @@ package ua.savelichev.electronic.domain.entity;
 
 public class OrderItem {
 
+    /**
+     * Order item identifier.
+     */
     private int id;
 
+    /**
+     * Order's id, owner of current order item.
+     */
     private int orderId;
 
+    /**
+     * Order item title.
+     */
     private String title;
 
+    /**
+     * Order item product article
+     */
     private int productArticle;
 
+    /**
+     * Product price.
+     */
     private int price;
 
+    /**
+     * Product amount.
+     */
     private int amount;
 
+    /**
+     * Total cost of order item.
+     */
     private int itemCost;
 
 

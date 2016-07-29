@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
 public class StorageDAO implements IStorageDAO {
 
     ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
@@ -17,6 +18,11 @@ public class StorageDAO implements IStorageDAO {
     ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
 
+    /**
+     * Inserts new row into the table "storage"
+     * @param article Product article
+     * @param amount  amount of Product
+     */
     @Override
     public void createPosition(int article, int amount) {
         Connection connection = null;
@@ -52,7 +58,11 @@ public class StorageDAO implements IStorageDAO {
 
     }
 
-
+    /**
+     * Selects from table "storage" field id with relevant field "article"
+     * @param article target row article value
+     * @return int id value
+     */
     @Override
     public int getPositionAmountByArticle(int article) {
         Connection connection = null;
@@ -97,6 +107,11 @@ public class StorageDAO implements IStorageDAO {
         return amount;
     }
 
+    /**
+     * Updates row in the table "storage"
+     * @param article target row "article" field value
+     * @param amount  new value for field "amount"
+     */
     @Override
     public void updatePositionAmountByArticle(int article, int amount) {
         Connection connection = null;

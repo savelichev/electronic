@@ -1,24 +1,56 @@
 package ua.savelichev.electronic.domain.entity;
 
-
+/**
+ * Basic class for all products
+ * Contains common fields of product.
+ */
 public abstract class Product {
 
+    /**
+     * Product identifier
+     */
     private int id;
 
+
+    /**
+     * Category of product, has the same name as table relevant this category.
+     * Example: category "notebook", table name "notebook".
+     */
     private String category;
 
+    /**
+     * Producer(brand) of product
+     */
     private String producer;
 
+    /**
+     * Model of product.
+     */
     private String model;
 
+    /**
+     * Foreign key on table "storage" where contains information about pruduct amount
+     */
     private int storageId;
 
+    /**
+     * Product price.
+     */
     private int price;
 
+    /**
+     * Product description.
+     */
     private String description;
 
+    /**
+     * Unique article of product.
+     */
     private int article;
 
+    /**
+     * Image reference of product.
+     */
     private String imageRef;
 
 
@@ -115,7 +147,7 @@ public abstract class Product {
     /**
      * Calculates hashCode of product by Product unique fields product and model.
      *
-     * @return
+     * @return int hashCode
      */
     @Override
     public int hashCode() {

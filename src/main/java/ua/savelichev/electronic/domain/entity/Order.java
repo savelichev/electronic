@@ -3,24 +3,54 @@ package ua.savelichev.electronic.domain.entity;
 
 import java.util.List;
 
+/**
+ * Class contains order parameters
+ */
 public class Order {
 
+    /**
+     * Order identifier
+     */
     private int id;
 
+    /**
+     * Order owner identifier
+     */
     private int userId;
 
+    /**
+     * List of order items
+     */
     private List<OrderItem> orderItems;
 
+    /**
+     * Delivery address
+     */
     private String address;
 
+    /**
+     * Order total cost
+     */
     private int orderCost;
 
+    /**
+     * Owner comment to order
+     */
     private String comment;
 
+    /**
+     * Order condition flag
+     */
     private boolean isDone;
 
+    /**
+     * Buyer name
+     */
     private String buyerName;
 
+    /**
+     * Buyer contact cell number
+     */
     private String buyerCellNumber;
 
 

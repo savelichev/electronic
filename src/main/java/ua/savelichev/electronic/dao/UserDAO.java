@@ -19,6 +19,12 @@ public class UserDAO implements IUserDAO {
     private static final Logger log = Logger.getLogger(OrderDAO.class);
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
+    /**
+     * Selects row from the table "user" by field "email"
+     *
+     * @param email target value in field "email"
+     * @return User object
+     */
     @Override
     public User getUserByEmail(String email) {
         Connection connection = null;
@@ -70,6 +76,11 @@ public class UserDAO implements IUserDAO {
         return user;
     }
 
+    /**
+     * Inserts row into the table "user"
+     *
+     * @param user object with parameters for new row
+     */
     @Override
     public void createUser(User user) {
         Connection connection = null;
@@ -108,6 +119,11 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Updates relevant row from table "user"
+     *
+     * @param user new parameters for exist row
+     */
     @Override
     public void updateUser(User user) {
         Connection connection = null;
@@ -148,6 +164,11 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Selects all rows from table "user"
+     *
+     * @return List of User objects
+     */
     @Override
     public List<User> getAllUsers() {
         Connection connection = null;

@@ -9,6 +9,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * Tag "storage" handler.
+ */
 public class StorageTagHandler extends TagSupport {
 
     private static final Logger log = Logger.getLogger(StorageTagHandler.class);
@@ -19,6 +22,13 @@ public class StorageTagHandler extends TagSupport {
         this.article = article;
     }
 
+
+    /**
+     * Gets from database information about product amount
+     *
+     * @return int product amount
+     * @throws JspException
+     */
     @Override
     public int doStartTag() throws JspException {
 
@@ -29,10 +39,9 @@ public class StorageTagHandler extends TagSupport {
         try {
             pageContext.getOut().print(amount);
         } catch (IOException e) {
-            log.error("Exception "+e);
+            log.error("Exception " + e);
             e.printStackTrace();
         }
-
         return SKIP_BODY;
     }
 }
