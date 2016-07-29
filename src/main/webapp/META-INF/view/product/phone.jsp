@@ -78,10 +78,6 @@
                         </div>
                     </c:if>
 
-                    <div class="col-md-2">
-                        <fmt:message key="at_storage" bundle="${messages}"/>:
-                        <str:getAmount article="${phone.article}"/>
-                    </div>
                 </div>
                 <br/>
 

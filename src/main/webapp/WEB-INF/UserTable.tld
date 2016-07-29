@@ -6,19 +6,23 @@
         version="2.1">
 
     <tlib-version>1.0</tlib-version>
-    <short-name>storage</short-name>
-    <uri>WEB-INF/storage</uri>
+    <short-name>userTable</short-name>
+    <uri>WEB-INF/userTable</uri>
     <tag>
-        <name>getAmount</name>
-        <tag-class>ua.savelichev.electronic.domain.tags.StorageTagHandler</tag-class>
+        <name>buildUserTable</name>
+        <tag-class>ua.savelichev.electronic.domain.tags.UserTableTagHandler</tag-class>
         <body-content>empty</body-content>
         <attribute>
-            <name>article</name>
+            <name>users</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>language</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
-
 
 
 </taglib>
