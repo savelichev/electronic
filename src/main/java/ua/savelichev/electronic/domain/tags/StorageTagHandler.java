@@ -2,8 +2,8 @@ package ua.savelichev.electronic.domain.tags;
 
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.domain.services.StorageService;
 import ua.savelichev.electronic.domain.services.IStorageService;
+import ua.savelichev.electronic.domain.services.StorageService;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;

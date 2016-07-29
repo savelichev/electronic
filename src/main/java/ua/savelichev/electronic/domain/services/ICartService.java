@@ -26,11 +26,12 @@ public interface ICartService {
 
     /**
      * Decrease Product amount in cart per one unit if it bigger then "1".
+     *
      * @param cartFromSession target cart
-     * @param productArticle target product's article
+     * @param productArticle  target product's article
      * @return
      */
-        ICart decreaseProductAmount(ICart cartFromSession, String productArticle);
+    ICart decreaseProductAmount(ICart cartFromSession, String productArticle);
 
 
 }

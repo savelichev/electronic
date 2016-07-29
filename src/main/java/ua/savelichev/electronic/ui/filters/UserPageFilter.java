@@ -28,7 +28,7 @@ public class UserPageFilter implements Filter {
 
         if (user != null && !user.getRole().equals("ADMIN")) {
             filterChain.doFilter(servletRequest, servletResponse);
-        } else if(user != null && user.getRole().equals("ADMIN")){
+        } else if (user != null && user.getRole().equals("ADMIN")) {
             ((HttpServletResponse) servletResponse).sendRedirect("admin-page");
         }
     }

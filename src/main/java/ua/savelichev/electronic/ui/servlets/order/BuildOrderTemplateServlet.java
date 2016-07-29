@@ -20,30 +20,23 @@ public class BuildOrderTemplateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        HttpSession session=req.getSession();
+        HttpSession session = req.getSession();
 
-        if(session.getAttribute("user")==null){
+        if (session.getAttribute("user") == null) {
             resp.sendRedirect("sign-in");
             return;
         }
 
-        if (session.getAttribute("cart")==null){
+        if (session.getAttribute("cart") == null) {
             resp.sendRedirect("cart");
             return;
         }
 
         User user = (User) session.getAttribute("user");
-
         Cart cart = (Cart) session.getAttribute("cart");
-
         IOrderService orderService = new OrderService();
-
-        Order orderTemplate = orderService.buildOrderTemplate(user,cart);
-
+        Order orderTemplate = orderService.buildOrderTemplate(user, cart);
         session.setAttribute("orderTemplate", orderTemplate);
-
         resp.sendRedirect("order-template");
     }
-
-
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  * Filter validates POST requests for not empty email or password parameters.
- *
+ * <p>
  * If email or password is empty sets session attribute "badData" to "true",
  * and sends redirect to sign-in Servlet by GET request.
  */

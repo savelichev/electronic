@@ -54,6 +54,7 @@ public class UserService {
 
     /**
      * Updates info about User
+     *
      * @param user User with new parameters
      */
     public void updateUser(User user) {
@@ -64,29 +65,32 @@ public class UserService {
 
     /**
      * Gets all Users
+     *
      * @return List of User
      */
     public List<User> getAllUsers() {
         IUserDAO userDAO = new UserDAO();
         List<User> users = new ArrayList<>();
-        users=userDAO.getAllUsers();
+        users = userDAO.getAllUsers();
         log.debug("Got all users");
         return users;
     }
 
     /**
      * Blocks User by email
+     *
      * @param email email of User
      */
     public void blockUser(String email) {
         User user = getUserByEmail(email);
         user.setBlocked(true);
         updateUser(user);
-        log.debug("User: "+email+" was blocked");
+        log.debug("User: " + email + " was blocked");
     }
 
     /**
      * Unblocks User by email
+     *
      * @param email email of User
      */
     public void unblockUser(String email) {
@@ -94,13 +98,14 @@ public class UserService {
         User user = getUserByEmail(email);
         user.setBlocked(false);
         updateUser(user);
-        log.debug("User: "+email+" was unblocked");
+        log.debug("User: " + email + " was unblocked");
 
     }
 
     /**
      * Adapter for request from admin-page.jsp
      * where response must be in List<User> format </User>
+     *
      * @param email email of User
      * @return List of User
      */
@@ -110,7 +115,7 @@ public class UserService {
         }
         List<User> users = new ArrayList<>();
         users.add(getUserByEmail(email));
-        log.debug("Got all users with email: "+email);
+        log.debug("Got all users with email: " + email);
         return users;
     }
 

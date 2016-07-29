@@ -69,7 +69,13 @@ public class CartService implements ICartService {
     }
 
 
-
+    /**
+     * Decrease Product amount in cart per one unit if it bigger then "1".
+     *
+     * @param cartFromSession target cart
+     * @param productArticle  target product's article
+     * @return
+     */
     @Override
     public ICart decreaseProductAmount(ICart cartFromSession, String productArticle) {
 

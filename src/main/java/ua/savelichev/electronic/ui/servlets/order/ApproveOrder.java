@@ -19,25 +19,14 @@ public class ApproveOrder extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         IOrderService orderService = new OrderService();
-
         HttpSession session = req.getSession();
-
         Order order = (Order) session.getAttribute("orderTemplate");
-
         String comment = req.getParameter("comment");
-
         String address = req.getParameter("address");
-
         String buyerName = req.getParameter("buyerName");
-
         String buyerCellNumber = req.getParameter("buyerCellNumber");
-
         orderService.approveOrder(order, comment, address, buyerName, buyerCellNumber);
-
         session.removeAttribute("cart");
-
         resp.sendRedirect("orders");
-
-
     }
 }

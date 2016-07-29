@@ -16,6 +16,4 @@ public class CartServlet extends HttpServlet {
 
         req.getRequestDispatcher("META-INF/view/cart.jsp").forward(req, resp);
     }
-
-
 }

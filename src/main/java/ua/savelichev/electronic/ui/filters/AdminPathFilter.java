@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Filter checks all requests for for access rights.
- *
+ * <p>
  * Checks user role if "adminPaths" contains request url.
  * Failing users rights to access url, filter sends redirect to "index",
  * logs info about user ip address and uri.
@@ -30,7 +30,9 @@ public class AdminPathFilter implements Filter {
             "/show-user-by-email",
             "/unblock-user",
             "/add-notebook",
+            "/add-phone",
             "/delete-notebook",
+            "/delete-phone",
             "/admin-page"
     );
 

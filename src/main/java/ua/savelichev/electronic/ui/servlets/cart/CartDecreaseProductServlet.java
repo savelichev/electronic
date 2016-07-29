@@ -18,19 +18,12 @@ public class CartDecreaseProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         ICartService cartService = new CartService();
-
         HttpSession session = req.getSession();
-
         ICart cart = (ICart) session.getAttribute("cart");
-
         String productArticle = req.getParameter("productArticle");
-
         cart = cartService.decreaseProductAmount(cart, productArticle);
-
         session.setAttribute("cart", cart);
-
 
         resp.sendRedirect("cart");
     }
