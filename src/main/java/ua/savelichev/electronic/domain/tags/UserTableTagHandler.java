@@ -29,6 +29,10 @@ public class UserTableTagHandler extends TagSupport {
         this.language = language;
     }
 
+    /**
+     * Builds table of User objects
+     * @throws JspException
+     */
     @Override
     public int doStartTag() throws JspException {
 

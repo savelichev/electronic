@@ -10,10 +10,7 @@ import java.util.List;
 
 public class PhoneService implements ProductService {
 
-
     private static final Logger log = Logger.getLogger(PhoneService.class);
-
-    private IPhoneDAO phoneDAO;
 
     /**
      * Gets id of Phone from database
@@ -24,7 +21,7 @@ public class PhoneService implements ProductService {
     @Override
     public int getId(Product product) {
 
-        phoneDAO = new PhoneDAO();
+        IPhoneDAO phoneDAO = new PhoneDAO();
         int id = phoneDAO.getId(product.getProducer(), product.getModel());
         log.debug("Got id: " + id + " for product with producer: " + product.getProducer()
                 + ", model: " + product.getModel());
@@ -51,7 +48,7 @@ public class PhoneService implements ProductService {
      * @return List of Phone objects
      */
     public List<Phone> getAllPhones() {
-        phoneDAO = new PhoneDAO();
+        IPhoneDAO phoneDAO = new PhoneDAO();
         List<Phone> phones = phoneDAO.getAllPhones();
         log.debug("Got list of all phones");
         return phones;
@@ -64,7 +61,7 @@ public class PhoneService implements ProductService {
      * @return Phone object
      */
     public Phone getPhoneById(int id) {
-        phoneDAO = new PhoneDAO();
+        IPhoneDAO phoneDAO = new PhoneDAO();
         Phone phone = phoneDAO.getPhoneById(id);
         log.debug("Got phone by id: " + id);
         return phone;
@@ -94,19 +91,12 @@ public class PhoneService implements ProductService {
      * @param phone contains new Phone parameters
      */
     public void addPhone(Phone phone) {
-
-        phoneDAO = new PhoneDAO();
-
+        IPhoneDAO phoneDAO = new PhoneDAO();
         phoneDAO.createPhone(phone);
-
         int id = phoneDAO.getId(phone.getProducer(), phone.getModel());
-
         int article = ProductUtils.generateProductArticle(phone.getCategory(), id);
-
         phone.setArticle(article);
-
         phoneDAO.updatePhone(phone);
-
         log.info("Added new Phone: " + phone);
     }
 
@@ -116,6 +106,7 @@ public class PhoneService implements ProductService {
      * @param phoneArticle target Phone article
      */
     public void deletePhoneByArticle(String phoneArticle) {
+        IPhoneDAO phoneDAO = new PhoneDAO();
         int article = Integer.valueOf(phoneArticle);
         phoneDAO.deletePhoneByArticle(article);
         log.info("Deleted phone by article: " + article);

@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IOrderItemDAO;
 import ua.savelichev.electronic.domain.entity.OrderItem;
 
@@ -15,11 +17,15 @@ import java.util.ResourceBundle;
 
 public class OrderItemDAO implements IOrderItemDAO {
 
-    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private IConnectionFactory connectionFactory;
 
     private static final Logger log = Logger.getLogger(OrderItemDAO.class);
 
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
+
+    public OrderItemDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     /**
      * Inserts into table "order_item" order items
@@ -75,6 +81,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
     /**
      * Returns OrderItem from database relevant input id
+     *
      * @param id - id of Order Item in table
      * @return OrderItem
      */
@@ -129,6 +136,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
     /**
      * Returns all OrderItems which relevant input Order's id
+     *
      * @param orderId id of Order
      * @return List of OrderItems
      */
@@ -192,6 +200,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
     /**
      * Updates OrderItem in database if found
+     *
      * @param orderItem OrderItem with new parameters
      */
     @Override
@@ -235,6 +244,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
     /**
      * Delete row of OrderItem in table "order_item" by id.
+     *
      * @param orderItemId
      */
     @Override
@@ -272,6 +282,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
     /**
      * Delete all rows which references on input order_id
+     *
      * @param orderId
      */
     @Override

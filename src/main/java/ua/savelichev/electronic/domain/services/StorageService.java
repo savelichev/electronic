@@ -1,6 +1,7 @@
 package ua.savelichev.electronic.domain.services;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.dao.StorageDAO;
 import ua.savelichev.electronic.dao.interfaces.IStorageDAO;
 
@@ -15,7 +16,7 @@ public class StorageService implements IStorageService {
      * @return int amount of Product at storage
      */
     public int getPositionAmountByArticle(int article) {
-        IStorageDAO storageDAO = new StorageDAO();
+        IStorageDAO storageDAO = DAOFactory.getInstance().getStorageDAO();
         int amount = storageDAO.getPositionAmountByArticle(article);
         log.debug("Got amount:" + amount + " for article: " + article);
         return amount;
@@ -28,7 +29,7 @@ public class StorageService implements IStorageService {
      * @param amount  new amount
      */
     public void changePositionAmount(int article, int amount) {
-        IStorageDAO storageDAO = new StorageDAO();
+        IStorageDAO storageDAO = DAOFactory.getInstance().getStorageDAO();
         log.debug("Try to change amount of product with article: " + article + " to: " + amount);
         storageDAO.updatePositionAmountByArticle(article, amount);
     }
@@ -40,7 +41,7 @@ public class StorageService implements IStorageService {
      * @param amount  Product amount for new position
      */
     public void createStoragePosition(int article, int amount) {
-        IStorageDAO storageDAO = new StorageDAO();
+        IStorageDAO storageDAO = DAOFactory.getInstance().getStorageDAO();
         log.debug("Try to create storage position with article: " + article + " and amount: " + amount);
         storageDAO.createPosition(article, amount);
     }

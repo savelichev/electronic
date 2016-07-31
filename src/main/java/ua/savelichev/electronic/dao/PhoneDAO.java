@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IPhoneDAO;
 import ua.savelichev.electronic.domain.entity.Phone;
 
@@ -15,10 +17,13 @@ import java.util.ResourceBundle;
 
 public class PhoneDAO implements IPhoneDAO {
 
-    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private IConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(OrderDAO.class);
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
+    public PhoneDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
     /**
      * Inserts row into table "phone".
      *

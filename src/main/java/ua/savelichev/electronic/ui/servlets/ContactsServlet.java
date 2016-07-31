@@ -13,5 +13,6 @@ public class ContactsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("META-INF/view/contacts.jsp").forward(req, resp);
+
     }
 }

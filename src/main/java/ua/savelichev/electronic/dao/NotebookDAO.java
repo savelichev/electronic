@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.INotebookDAO;
 import ua.savelichev.electronic.domain.entity.Notebook;
 
@@ -15,9 +17,14 @@ import java.util.ResourceBundle;
 
 public class NotebookDAO implements INotebookDAO {
 
-    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private IConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(OrderDAO.class);
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
+
+
+    public NotebookDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     /**
      * Inserts row into table "notebook".
@@ -264,7 +271,7 @@ public class NotebookDAO implements INotebookDAO {
             preparedStatement.setInt(9, notebook.getHdd());
             preparedStatement.setString(10, notebook.getImageRef());
             preparedStatement.setString(11, notebook.getCategory());
-            preparedStatement.setInt(12,notebook.getStorageId());
+            preparedStatement.setInt(12, notebook.getStorageId());
             preparedStatement.setInt(13, notebook.getId());
 
             preparedStatement.executeUpdate();

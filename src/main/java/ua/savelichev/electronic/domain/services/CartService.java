@@ -12,10 +12,6 @@ public class CartService implements ICartService {
 
     private static final Logger log = Logger.getLogger(CartService.class);
 
-    ICart cart = null;
-    CartItem cartItem = null;
-
-
     /**
      * Adds CartItem to exist ICart and creates new ICart, if no ICart in cartFromSession.
      *
@@ -25,6 +21,9 @@ public class CartService implements ICartService {
      */
     @Override
     public ICart addProduct(ICart cartFromSession, String productArticle) {
+
+        ICart cart;
+        CartItem cartItem = null;
 
         Product product = ProductUtils.getProductByArticle(Integer.valueOf(productArticle));
 
@@ -54,6 +53,9 @@ public class CartService implements ICartService {
     @Override
     public ICart removeProduct(ICart cartFromSession, String productArticle) {
 
+        ICart cart = null;
+        CartItem cartItem = null;
+
         Product product = ProductUtils.getProductByArticle(Integer.valueOf(productArticle));
 
         if (product != null) {
@@ -74,10 +76,13 @@ public class CartService implements ICartService {
      *
      * @param cartFromSession target cart
      * @param productArticle  target product's article
-     * @return
+     * @return Cart with decreased amount of Product
      */
     @Override
     public ICart decreaseProductAmount(ICart cartFromSession, String productArticle) {
+
+        ICart cart = null;
+        CartItem cartItem = null;
 
         Product product = ProductUtils.getProductByArticle(Integer.valueOf(productArticle));
 
@@ -86,7 +91,7 @@ public class CartService implements ICartService {
         }
 
         if (cartFromSession != null) {
-            cart = (ICart) cartFromSession;
+            cart = cartFromSession;
             cart.decreaseCartItemAmount(cartItem);
         }
 

@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IStorageDAO;
 
 import javax.naming.NamingException;
@@ -13,13 +15,17 @@ import java.util.ResourceBundle;
 
 public class StorageDAO implements IStorageDAO {
 
-    ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    IConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(StorageDAO.class);
     ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
 
+    public StorageDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     /**
      * Inserts new row into the table "storage"
+     *
      * @param article Product article
      * @param amount  amount of Product
      */
@@ -60,6 +66,7 @@ public class StorageDAO implements IStorageDAO {
 
     /**
      * Selects from table "storage" field id with relevant field "article"
+     *
      * @param article target row article value
      * @return int id value
      */
@@ -109,6 +116,7 @@ public class StorageDAO implements IStorageDAO {
 
     /**
      * Updates row in the table "storage"
+     *
      * @param article target row "article" field value
      * @param amount  new value for field "amount"
      */

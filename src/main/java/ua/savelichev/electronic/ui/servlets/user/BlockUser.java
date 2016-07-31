@@ -15,7 +15,8 @@ public class BlockUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new UserService().blockUser(req.getParameter("userEmail"));
+        UserService userService= new UserService();
+        userService.blockUser(req.getParameter("userEmail"));
 
         resp.sendRedirect("show-all-users");
     }

@@ -2,7 +2,8 @@ package ua.savelichev.electronic.domain.services;
 
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.dao.UserDAO;
+import ua.savelichev.electronic.dao.DAOFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IUserDAO;
 import ua.savelichev.electronic.domain.entity.User;
 
@@ -13,6 +14,13 @@ public class UserService {
 
     private static final Logger log = Logger.getLogger(UserService.class);
 
+    private IDAOFactory daoFactory;
+
+
+    public UserService(IDAOFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
+
     /**
      * Gets user from database by email.
      * Returns empty user if not found.
@@ -21,10 +29,11 @@ public class UserService {
      * @return User
      */
     public User getUserByEmail(String email) {
-        IUserDAO userDAO = new UserDAO();
+        IUserDAO userDAO = daoFactory.getUserDAO();
         User user = userDAO.getUserByEmail(email);
-        if (user.getPassword() == null) {
+        if (user == null) {
             log.debug("No user with email: " + email);
+            return null;
         } else {
             log.debug("User with email: " + email + " was found");
         }
@@ -32,22 +41,22 @@ public class UserService {
     }
 
     /**
-     * Creates user if not exist.
+     * Creates inUser if not exist.
      * Checks is current email allready exists.
-     * If yes returns "false", if not creates new user and returns "true".
+     * If yes returns "false", if not creates new inUser and returns "true".
      *
-     * @param user
-     * @return
+     * @param inUser inUser for creating
+     * @return boolean result of creating
      */
-    public boolean createUserIfNotExist(User user) {
-        IUserDAO userDAO = new UserDAO();
-
-        if (getUserByEmail(user.getEmail()).getPassword() != null) {
-            log.debug("Couldn't create user with email: " + user.getEmail() + " cause this email allready exist");
+    public boolean createUserIfNotExist(User inUser) {
+        User userFromDB = getUserByEmail(inUser.getEmail());
+        if (userFromDB != null) {
+            log.debug("Couldn't create inUser with email: " + inUser.getEmail() + " cause this email allready exist");
             return false;
         } else {
-            userDAO.createUser(user);
-            log.debug("User with email: " + user.getEmail() + " was created");
+            IUserDAO userDAO = daoFactory.getUserDAO();
+            userDAO.createUser(inUser);
+            log.debug("User with email: " + inUser.getEmail() + " was created");
             return true;
         }
     }
@@ -58,7 +67,6 @@ public class UserService {
      * @param user User with new parameters
      */
     public void updateUser(User user) {
-        IUserDAO userDAO = new UserDAO();
         userDAO.updateUser(user);
         log.debug("User " + user.getEmail() + " was updated");
     }
@@ -69,7 +77,6 @@ public class UserService {
      * @return List of User
      */
     public List<User> getAllUsers() {
-        IUserDAO userDAO = new UserDAO();
         List<User> users = new ArrayList<>();
         users = userDAO.getAllUsers();
         log.debug("Got all users");
@@ -94,7 +101,6 @@ public class UserService {
      * @param email email of User
      */
     public void unblockUser(String email) {
-
         User user = getUserByEmail(email);
         user.setBlocked(false);
         updateUser(user);

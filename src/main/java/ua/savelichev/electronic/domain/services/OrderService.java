@@ -2,6 +2,7 @@ package ua.savelichev.electronic.domain.services;
 
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.dao.OrderDAO;
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
 import ua.savelichev.electronic.domain.entity.*;
@@ -77,7 +78,7 @@ public class OrderService implements IOrderService {
      */
     @Override
     public void createOrder(Order order) {
-        IOrderDAO orderDAO = new OrderDAO();
+        IOrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
         orderDAO.createOrder(order);
         log.debug("Order created: " + order);
     }
@@ -90,7 +91,7 @@ public class OrderService implements IOrderService {
      */
     @Override
     public List<Order> getUserOrders(User user) {
-        OrderDAO orderDAO = new OrderDAO();
+        IOrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
         int userId = user.getId();
         List<Order> orders = orderDAO.getOrdersByUserId(userId);
         log.debug("Got orders of user: "+user.getEmail());

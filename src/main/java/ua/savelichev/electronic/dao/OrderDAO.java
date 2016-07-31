@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.OrderItem;
@@ -17,9 +19,13 @@ import java.util.ResourceBundle;
 
 public class OrderDAO implements IOrderDAO {
 
-    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private IConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(OrderDAO.class);
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
+
+    public OrderDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     /**
      * Creates relevant Order in table "order" and creates all OrderItem relevant this order into

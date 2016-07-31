@@ -58,6 +58,10 @@
             <div>
                 <button type="submit" class="btn btn-primary"><fmt:message key="sign_up" bundle="${messages}"/></button>
             </div>
+            <c:set var="badData" value="${sessionScope.badSignUpData}"/>
+            <c:if test="${badData==true}">
+                <p>Wrong email, password or login!</p>
+            </c:if>
 
         </form>
     </div>
