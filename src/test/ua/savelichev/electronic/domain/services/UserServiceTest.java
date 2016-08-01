@@ -1,48 +1,37 @@
 package ua.savelichev.electronic.domain.services;
 
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import ua.savelichev.electronic.dao.DAOFactory;
+import ua.savelichev.electronic.dao.DAOFactoryForTest;
 import ua.savelichev.electronic.dao.UserDAO;
 import ua.savelichev.electronic.domain.entity.User;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class UserServiceTest {
 
-    private UserService userService;
+    private UserService userService = new UserService(DAOFactoryForTest.getInstance());
 
-
-
-
-    @Before
-    public void init() {
-        userService = new UserService();
-
-    }
-
-//    @Test
-//    public void testNullGetUserByEmail() {
-//
-//        String email = "123@gmail.com";
-//        assertNull(userService.getUserByEmail(email));
-//    }
 
     @Test
     public void testExistUserGetUserByEmail() {
 
-        String email = "savelichev.n@gmail.com";
+        String email = "12345@gmail.com";
+
         User user = new User(email);
+
+        UserDAO userDAO = mock(UserDAO.class);
+        when(userDAO.getUserByEmail(anyString())).thenReturn(user);
+
+        DAOFactory daoFactory =mock(DAOFactory.class);
+        when(daoFactory.getUserDAO()).thenReturn(userDAO);
+
+        UserService userService = new UserService(daoFactory);
+
         assertEquals(user, userService.getUserByEmail(email));
     }
 }

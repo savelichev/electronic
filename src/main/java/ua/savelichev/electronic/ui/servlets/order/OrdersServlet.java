@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.order;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.User;
 import ua.savelichev.electronic.domain.services.OrderService;
@@ -18,7 +19,7 @@ public class OrdersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderService orderManager = new OrderService();
+        OrderService orderManager = new OrderService(DAOFactory.getInstance());
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         List<Order> orders = orderManager.getUserOrders(user);

@@ -2,6 +2,7 @@ package ua.savelichev.electronic.domain.services.product;
 
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.Product;
 
 import java.util.HashMap;
@@ -106,11 +107,11 @@ public class ProductUtils {
     public static ProductService getProductServiceByCategory(String category) throws NullPointerException{
         switch (category) {
             case "notebook":
-                NotebookService notebookService = new NotebookService();
+                NotebookService notebookService = new NotebookService(DAOFactory.getInstance());
                 log.debug("Got new NotebookService for category: "+category);
                 return notebookService;
             case "phone":
-                PhoneService phoneService = new PhoneService();
+                PhoneService phoneService = new PhoneService(DAOFactory.getInstance());
                 log.debug("Got new PhoneService for category: "+category);
                 return phoneService;
 

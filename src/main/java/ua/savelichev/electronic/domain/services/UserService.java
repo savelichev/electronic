@@ -2,7 +2,6 @@ package ua.savelichev.electronic.domain.services;
 
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IUserDAO;
 import ua.savelichev.electronic.domain.entity.User;
@@ -16,14 +15,13 @@ public class UserService {
 
     private IDAOFactory daoFactory;
 
-
     public UserService(IDAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
     /**
      * Gets user from database by email.
-     * Returns empty user if not found.
+     * Returns null if not found.
      *
      * @param email target user email
      * @return User
@@ -49,13 +47,16 @@ public class UserService {
      * @return boolean result of creating
      */
     public boolean createUserIfNotExist(User inUser) {
+
         User userFromDB = getUserByEmail(inUser.getEmail());
+
         if (userFromDB != null) {
             log.debug("Couldn't create inUser with email: " + inUser.getEmail() + " cause this email allready exist");
             return false;
         } else {
             IUserDAO userDAO = daoFactory.getUserDAO();
             userDAO.createUser(inUser);
+
             log.debug("User with email: " + inUser.getEmail() + " was created");
             return true;
         }
@@ -67,6 +68,7 @@ public class UserService {
      * @param user User with new parameters
      */
     public void updateUser(User user) {
+        IUserDAO userDAO = daoFactory.getUserDAO();
         userDAO.updateUser(user);
         log.debug("User " + user.getEmail() + " was updated");
     }
@@ -77,6 +79,7 @@ public class UserService {
      * @return List of User
      */
     public List<User> getAllUsers() {
+        IUserDAO userDAO = daoFactory.getUserDAO();
         List<User> users = new ArrayList<>();
         users = userDAO.getAllUsers();
         log.debug("Got all users");
@@ -105,7 +108,6 @@ public class UserService {
         user.setBlocked(false);
         updateUser(user);
         log.debug("User: " + email + " was unblocked");
-
     }
 
     /**
@@ -116,9 +118,11 @@ public class UserService {
      * @return List of User
      */
     public List<User> getAllUsersByEmail(String email) {
+
         if (email.equals("")) {
             return getAllUsers();
         }
+
         List<User> users = new ArrayList<>();
         users.add(getUserByEmail(email));
         log.debug("Got all users with email: " + email);

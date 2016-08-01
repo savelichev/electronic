@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.product.phone;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.Notebook;
 import ua.savelichev.electronic.domain.entity.Phone;
 import ua.savelichev.electronic.domain.services.product.NotebookService;
@@ -24,7 +25,7 @@ public class AddPhoneServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        PhoneService phoneService = new PhoneService();
+        PhoneService phoneService = new PhoneService(DAOFactory.getInstance());
         Phone phone = new Phone();
 
         phone.setCategory(req.getParameter("category"));

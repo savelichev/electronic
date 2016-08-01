@@ -2,8 +2,7 @@ package ua.savelichev.electronic.domain.services;
 
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.dao.DAOFactory;
-import ua.savelichev.electronic.dao.OrderDAO;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
 import ua.savelichev.electronic.domain.entity.*;
 
@@ -13,6 +12,12 @@ import java.util.List;
 public class OrderService implements IOrderService {
 
     private static final Logger log = Logger.getLogger(OrderService.class);
+
+    private IDAOFactory daoFactory;
+
+    public OrderService(IDAOFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     /**
      * Builds Order Template.
@@ -78,7 +83,7 @@ public class OrderService implements IOrderService {
      */
     @Override
     public void createOrder(Order order) {
-        IOrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
+        IOrderDAO orderDAO = daoFactory.getOrderDAO();
         orderDAO.createOrder(order);
         log.debug("Order created: " + order);
     }
@@ -91,10 +96,10 @@ public class OrderService implements IOrderService {
      */
     @Override
     public List<Order> getUserOrders(User user) {
-        IOrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
+        IOrderDAO orderDAO = daoFactory.getOrderDAO();
         int userId = user.getId();
         List<Order> orders = orderDAO.getOrdersByUserId(userId);
-        log.debug("Got orders of user: "+user.getEmail());
+        log.debug("Got orders of user: " + user.getEmail());
         return orders;
     }
 }

@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.product.notebook;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.services.product.NotebookService;
 import ua.savelichev.electronic.domain.entity.Notebook;
 
@@ -17,7 +18,7 @@ public class NotebookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Notebook> listNotebooks = new NotebookService().getAllNotebooks();
+        List<Notebook> listNotebooks = new NotebookService(DAOFactory.getInstance()).getAllNotebooks();
 
         req.setAttribute("notebooks",listNotebooks );
         req.getRequestDispatcher("META-INF/view/product/notebook.jsp").forward(req,resp);

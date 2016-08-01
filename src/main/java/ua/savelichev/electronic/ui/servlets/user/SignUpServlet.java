@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.services.UserService;
 import ua.savelichev.electronic.domain.entity.User;
 
@@ -45,7 +46,7 @@ public class SignUpServlet extends HttpServlet {
         inUser.setCellNumber(cellNumber);
         inUser.setAddress(address);
 
-        boolean isUserCreated = new UserService().createUserIfNotExist(inUser);
+        boolean isUserCreated = new UserService(DAOFactory.getInstance()).createUserIfNotExist(inUser);
 
 
         if (isUserCreated) {

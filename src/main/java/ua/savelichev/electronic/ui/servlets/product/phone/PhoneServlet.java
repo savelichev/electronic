@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.product.phone;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.Phone;
 import ua.savelichev.electronic.domain.services.product.PhoneService;
 
@@ -17,7 +18,7 @@ public class PhoneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Phone> listPhones = new PhoneService().getAllPhones();
+        List<Phone> listPhones = new PhoneService(DAOFactory.getInstance()).getAllPhones();
 
         req.setAttribute("phones", listPhones);
         req.getRequestDispatcher("META-INF/view/product/phone.jsp").forward(req, resp);

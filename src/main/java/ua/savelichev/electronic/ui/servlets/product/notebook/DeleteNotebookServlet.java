@@ -1,6 +1,7 @@
 package ua.savelichev.electronic.ui.servlets.product.notebook;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.services.product.NotebookService;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ public class DeleteNotebookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        NotebookService notebookService = new NotebookService();
+        NotebookService notebookService = new NotebookService(DAOFactory.getInstance());
         String article = req.getParameter("notebookArticle");
         log.info("Sending request for deletion product with article: " + article);
         notebookService.deleteNotebookByArticle(article);

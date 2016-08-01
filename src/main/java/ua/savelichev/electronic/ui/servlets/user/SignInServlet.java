@@ -28,7 +28,7 @@ public class SignInServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setAttribute("badData",false);
-        UserService userService = new UserService(DAOFactory.getInstance().getUserDAO());
+        UserService userService = new UserService(DAOFactory.getInstance());
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");

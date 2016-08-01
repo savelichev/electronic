@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.User;
 import ua.savelichev.electronic.domain.services.UserService;
 
@@ -17,7 +18,7 @@ public class ShowAllUsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserService userService = new UserService();
+        UserService userService = new UserService(DAOFactory.getInstance());
         List<User> users = userService.getAllUsers();
 
         req.setAttribute("users", users);

@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.order;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.Cart;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.User;
@@ -34,7 +35,7 @@ public class BuildOrderTemplateServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
         Cart cart = (Cart) session.getAttribute("cart");
-        IOrderService orderService = new OrderService();
+        IOrderService orderService = new OrderService(DAOFactory.getInstance());
         Order orderTemplate = orderService.buildOrderTemplate(user, cart);
         session.setAttribute("orderTemplate", orderTemplate);
         resp.sendRedirect("order-template");

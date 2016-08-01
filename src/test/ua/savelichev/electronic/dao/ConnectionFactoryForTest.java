@@ -1,6 +1,7 @@
 package ua.savelichev.electronic.dao;
 
 
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
 import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 
 import javax.naming.NamingException;
@@ -8,15 +9,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactoryForTest implements IDAOFactory {
+public class ConnectionFactoryForTest implements IConnectionFactory {
 
-    private static IDAOFactory instance = new ConnectionFactoryForTest();
+    private static IConnectionFactory instance = new ConnectionFactoryForTest();
 
     private ConnectionFactoryForTest() {
 
     }
 
-    public static IDAOFactory getInstance() {
+    public static IConnectionFactory getInstance() {
         return instance;
     }
 
