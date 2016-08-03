@@ -57,7 +57,7 @@ public class PhoneDAO implements IPhoneDAO {
             log.debug("phone inserted: " + phone);
             preparedStatement.clearParameters();
 
-            resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM phone");
+            resultSet = preparedStatement.executeQuery(bundle.getString("SELECT_LAST_INSERTED_PHONE_ID"));
             int phoneId = 0;
             if (resultSet.next()) {
                 phoneId = resultSet.getInt("id");
@@ -67,21 +67,21 @@ public class PhoneDAO implements IPhoneDAO {
             int phoneArticle = ProductUtils.generateProductArticle("phone", phoneId);
             log.debug("Generated phone article: " + phoneArticle);
             int amount = 0;
-            preparedStatement = connection.prepareStatement("INSERT INTO storage (article, amount) VALUES(?,?)");
+            preparedStatement = connection.prepareStatement(bundle.getString("CREATE_STORAGE_POSITION"));
             preparedStatement.setInt(1, phoneArticle);
             preparedStatement.setInt(2, amount);
             preparedStatement.executeUpdate();
             preparedStatement.clearParameters();
             log.debug("Storage position created: article= " + phoneArticle + ", amount= " + amount);
 
-            resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM storage");
+            resultSet = preparedStatement.executeQuery(bundle.getString("SELECT_LAST_INSERTED_STORAGE_ID"));
             int storageId = 0;
             if (resultSet.next()) {
                 storageId = resultSet.getInt("id");
             }
             log.debug("Got storage position id: " + storageId);
             preparedStatement.clearParameters();
-            preparedStatement = connection.prepareStatement("UPDATE phone SET article=?, storage_id=? WHERE id=?");
+            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_PHONE_ARTICLE_AND_STORAGE_ID"));
             preparedStatement.setInt(1, phoneArticle);
             preparedStatement.setInt(2, storageId);
             preparedStatement.setInt(3, phoneId);
