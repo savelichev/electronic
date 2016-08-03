@@ -16,7 +16,7 @@ public class ShowUserByEmailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("users", new UserService(DAOFactory.getInstance()).getAllUsersByEmail(req.getParameter("userEmail")));
+        req.setAttribute("users", new UserService(DAOFactory.getInstance()).getUserByEmailAsList(req.getParameter("userEmail")));
         req.getRequestDispatcher("META-INF/view/user/all-users.jsp").forward(req, resp);
     }
 }

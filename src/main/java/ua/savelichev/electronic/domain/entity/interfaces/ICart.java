@@ -1,4 +1,6 @@
-package ua.savelichev.electronic.domain.entity;
+package ua.savelichev.electronic.domain.entity.interfaces;
+
+import ua.savelichev.electronic.domain.entity.CartItem;
 
 public interface ICart {
 

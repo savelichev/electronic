@@ -21,7 +21,7 @@ public class DeleteNotebookServlet extends HttpServlet {
         NotebookService notebookService = new NotebookService(DAOFactory.getInstance());
         String article = req.getParameter("notebookArticle");
         log.info("Sending request for deletion product with article: " + article);
-        notebookService.deleteNotebookByArticle(article);
+        notebookService.deleteNotebookByArticle(Integer.valueOf(article));
         resp.sendRedirect("notebook");
     }
 }

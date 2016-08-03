@@ -2,7 +2,6 @@ package ua.savelichev.electronic.domain.services.product;
 
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.dao.NotebookDAO;
 import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.INotebookDAO;
 import ua.savelichev.electronic.domain.entity.Notebook;
@@ -10,7 +9,7 @@ import ua.savelichev.electronic.domain.entity.Product;
 
 import java.util.List;
 
-public class NotebookService implements ProductService {
+public class NotebookService implements IProductService {
 
     private static final Logger log = Logger.getLogger(NotebookService.class);
 
@@ -28,11 +27,13 @@ public class NotebookService implements ProductService {
      */
     @Override
     public int getId(Product product) {
-        INotebookDAO notebookDAO = daoFactory.getNotebookDAO();
-        int id = notebookDAO.getId(product.getProducer(), product.getModel());
-        log.debug("Got id: " + id + " for product with producer: " + product.getProducer()
-                + ", model: " + product.getModel());
-        return id;
+        if (product != null) {
+            INotebookDAO notebookDAO = daoFactory.getNotebookDAO();
+            int id = notebookDAO.getId(product.getProducer(), product.getModel());
+            log.debug("Got id: " + id + " for product with producer: " + product.getProducer()
+                    + ", model: " + product.getModel());
+            return id;
+        } else return 0;
     }
 
     /**
@@ -110,11 +111,10 @@ public class NotebookService implements ProductService {
     /**
      * Deletes Notebook from database
      *
-     * @param notebookArticle target Notebook article
+     * @param article target Notebook article
      */
-    public void deleteNotebookByArticle(String notebookArticle) {
+    public void deleteNotebookByArticle(int article) {
         INotebookDAO notebookDAO = daoFactory.getNotebookDAO();
-        int article = Integer.valueOf(notebookArticle);
         notebookDAO.deleteNotebookByArticle(article);
         log.info("Deleted notebook by article: " + article);
     }

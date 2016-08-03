@@ -2,8 +2,8 @@ package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
-import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
+import ua.savelichev.electronic.domain.entity.interfaces.IOrder;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.entity.OrderItem;
 
@@ -35,7 +35,7 @@ public class OrderDAO implements IOrderDAO {
      * @param order relevant order to create.
      */
     @Override
-    public void createOrder(Order order) {
+    public void createOrder(IOrder order) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -115,7 +115,7 @@ public class OrderDAO implements IOrderDAO {
      * @return Order. If not found id, returns empty Order.
      */
     @Override
-    public Order getOrderById(int id) {
+    public IOrder getOrderById(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -170,12 +170,12 @@ public class OrderDAO implements IOrderDAO {
      * @return List of Order objects
      */
     @Override
-    public List<Order> getOrdersByUserId(int userId) {
+    public List<IOrder> getOrdersByUserId(int userId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Order> orders = null;
-        Order order;
+        List<IOrder> orders = null;
+        IOrder order;
 
         try {
             connection = connectionFactory.getConnection();
@@ -225,12 +225,12 @@ public class OrderDAO implements IOrderDAO {
      * @return List of Order objects
      */
     @Override
-    public List<Order> getAllOrders() {
+    public List<IOrder> getAllOrders() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Order> orders = null;
-        Order order = null;
+        List<IOrder> orders = null;
+        IOrder order = null;
 
         try {
             connection = connectionFactory.getConnection();
@@ -279,7 +279,7 @@ public class OrderDAO implements IOrderDAO {
      * @param order contains new parameters for row
      */
     @Override
-    public void updateOrder(Order order) {
+    public void updateOrder(IOrder order) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -324,7 +324,7 @@ public class OrderDAO implements IOrderDAO {
      * @param order target row relevant Order object
      */
     @Override
-    public void deleteOrder(Order order) {
+    public void deleteOrder(IOrder order) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

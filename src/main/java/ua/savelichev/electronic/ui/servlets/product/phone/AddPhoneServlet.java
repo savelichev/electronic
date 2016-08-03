@@ -1,9 +1,7 @@
 package ua.savelichev.electronic.ui.servlets.product.phone;
 
 import ua.savelichev.electronic.dao.DAOFactory;
-import ua.savelichev.electronic.domain.entity.Notebook;
 import ua.savelichev.electronic.domain.entity.Phone;
-import ua.savelichev.electronic.domain.services.product.NotebookService;
 import ua.savelichev.electronic.domain.services.product.PhoneService;
 
 import javax.servlet.ServletException;

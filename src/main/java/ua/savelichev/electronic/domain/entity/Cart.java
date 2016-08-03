@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.domain.entity;
 
 
+import ua.savelichev.electronic.domain.entity.interfaces.ICart;
+
 import java.util.ArrayList;
 import java.util.List;
 

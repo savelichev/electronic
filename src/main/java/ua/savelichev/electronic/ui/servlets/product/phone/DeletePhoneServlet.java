@@ -21,7 +21,7 @@ public class DeletePhoneServlet extends HttpServlet {
         PhoneService phoneService = new PhoneService(DAOFactory.getInstance());
         String article = req.getParameter("phoneArticle");
         log.info("Sending request for deletion product with article: " + article);
-        phoneService.deletePhoneByArticle(article);
+        phoneService.deletePhoneByArticle(Integer.valueOf(article));
         resp.sendRedirect("phone");
     }
 }

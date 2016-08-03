@@ -28,15 +28,15 @@ public class StorageService implements IStorageService {
     }
 
     /**
-     * Changes Position amount at storage.
+     * Changes Position newAmount at storage.
      *
      * @param article Product article
-     * @param amount  new amount
+     * @param newAmount  new newAmount
      */
-    public void changePositionAmount(int article, int amount) {
+    public void changePositionAmount(int article, int newAmount) {
         IStorageDAO storageDAO = daoFactory.getStorageDAO();
-        log.debug("Try to change amount of product with article: " + article + " to: " + amount);
-        storageDAO.updatePositionAmountByArticle(article, amount);
+        log.debug("Try to change newAmount of product with article: " + article + " to: " + newAmount);
+        storageDAO.updatePositionAmountByArticle(article, newAmount);
     }
 
     /**

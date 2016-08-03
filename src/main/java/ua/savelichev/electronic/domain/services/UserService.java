@@ -68,9 +68,11 @@ public class UserService {
      * @param user User with new parameters
      */
     public void updateUser(User user) {
-        IUserDAO userDAO = daoFactory.getUserDAO();
-        userDAO.updateUser(user);
-        log.debug("User " + user.getEmail() + " was updated");
+        if (user != null) {
+            IUserDAO userDAO = daoFactory.getUserDAO();
+            userDAO.updateUser(user);
+            log.debug("User " + user.getEmail() + " was updated");
+        }
     }
 
     /**
@@ -92,10 +94,18 @@ public class UserService {
      * @param email email of User
      */
     public void blockUser(String email) {
-        User user = getUserByEmail(email);
-        user.setBlocked(true);
-        updateUser(user);
-        log.debug("User: " + email + " was blocked");
+        if (email != null) {
+            User user = getUserByEmail(email);
+            if(user!=null){
+                user.setBlocked(true);
+                updateUser(user);
+                log.debug("User: " + email + " was blocked");
+            }else {
+                log.debug("User: " + email + " wasn't blocked");
+            }
+        }else {
+            log.debug("User: " + email + " wasn't blocked");
+        }
     }
 
     /**
@@ -104,10 +114,18 @@ public class UserService {
      * @param email email of User
      */
     public void unblockUser(String email) {
-        User user = getUserByEmail(email);
-        user.setBlocked(false);
-        updateUser(user);
-        log.debug("User: " + email + " was unblocked");
+        if (email != null) {
+            User user = getUserByEmail(email);
+            if(user!=null){
+                user.setBlocked(false);
+                updateUser(user);
+                log.debug("User: " + email + " was unblocked");
+            }else {
+                log.debug("User: " + email + " wasn't unblocked");
+            }
+        }else {
+            log.debug("User: " + email + " wasn't unblocked");
+        }
     }
 
     /**
@@ -117,7 +135,7 @@ public class UserService {
      * @param email email of User
      * @return List of User
      */
-    public List<User> getAllUsersByEmail(String email) {
+    public List<User> getUserByEmailAsList(String email) {
 
         if (email.equals("")) {
             return getAllUsers();

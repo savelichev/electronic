@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IOrderDAO;
 import ua.savelichev.electronic.domain.entity.*;
+import ua.savelichev.electronic.domain.entity.interfaces.IOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +29,15 @@ public class OrderService implements IOrderService {
      * @param cart Cart with List of CartItem.
      * @return template of order which needs to be approved by User.
      */
-    public Order buildOrderTemplate(User user, Cart cart) {
-        Order order = new Order();
+    public IOrder buildOrderTemplate(User user, Cart cart) {
 
-        order.setUserId(user.getId());
-        order.setAddress(user.getAddress());
-        order.setOrderCost(cart.getCartCost());
-        order.setComment("");
-        order.setIsDone(false);
+        IOrder orderTemplate = new Order();
+
+        orderTemplate.setUserId(user.getId());
+        orderTemplate.setAddress(user.getAddress());
+        orderTemplate.setOrderCost(cart.getCartCost());
+        orderTemplate.setComment("");
+        orderTemplate.setIsDone(false);
 
         List<OrderItem> orderItems = new ArrayList<>();
 
@@ -52,9 +54,9 @@ public class OrderService implements IOrderService {
 
             orderItems.add(orderItem);
         }
-        order.setOrderItems(orderItems);
-        log.debug("Order template was built: " + order);
-        return order;
+        orderTemplate.setOrderItems(orderItems);
+        log.debug("Order template was built: " + orderTemplate);
+        return orderTemplate;
     }
 
     /**
@@ -67,13 +69,15 @@ public class OrderService implements IOrderService {
      * @param buyerName       buyer name
      * @param buyerCellNumber buyer cell number
      */
-    public void approveOrder(Order order, String comment, String address, String buyerName, String buyerCellNumber) {
-        order.setComment(comment);
-        order.setAddress(address);
-        order.setBuyerName(buyerName);
-        order.setBuyerCellNumber(buyerCellNumber);
-        log.debug("Try to approve Order: " + order);
-        createOrder(order);
+    public void approveOrder(IOrder order, String comment, String address, String buyerName, String buyerCellNumber) {
+        if (order != null) {
+            order.setComment(comment);
+            order.setAddress(address);
+            order.setBuyerName(buyerName);
+            order.setBuyerCellNumber(buyerCellNumber);
+            log.debug("Try to approve Order: " + order);
+            createOrder(order);
+        }
     }
 
     /**
@@ -82,10 +86,12 @@ public class OrderService implements IOrderService {
      * @param order Order to save
      */
     @Override
-    public void createOrder(Order order) {
-        IOrderDAO orderDAO = daoFactory.getOrderDAO();
-        orderDAO.createOrder(order);
-        log.debug("Order created: " + order);
+    public void createOrder(IOrder order) {
+        if (order != null) {
+            IOrderDAO orderDAO = daoFactory.getOrderDAO();
+            orderDAO.createOrder(order);
+            log.debug("Order created: " + order);
+        }
     }
 
     /**
@@ -95,11 +101,14 @@ public class OrderService implements IOrderService {
      * @return List of User
      */
     @Override
-    public List<Order> getUserOrders(User user) {
-        IOrderDAO orderDAO = daoFactory.getOrderDAO();
-        int userId = user.getId();
-        List<Order> orders = orderDAO.getOrdersByUserId(userId);
-        log.debug("Got orders of user: " + user.getEmail());
-        return orders;
+    public List<IOrder> getUserOrders(User user) {
+        if (user != null) {
+            IOrderDAO orderDAO = daoFactory.getOrderDAO();
+            int userId = user.getId();
+            List<IOrder> orders = orderDAO.getOrdersByUserId(userId);
+            log.debug("Got orders of user: " + user.getEmail());
+            return orders;
+        }
+        return null;
     }
 }
