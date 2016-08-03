@@ -29,7 +29,7 @@ public class ConnectionFactoryForTest implements IConnectionFactory {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        String url = "jdbc:mysql://192.168.1.159/electronic";
+        String url = "jdbc:mysql://192.168.1.159/test_electronic";
         Connection conn = DriverManager.getConnection(url, "sava", "savelichev");
         return conn;
     }

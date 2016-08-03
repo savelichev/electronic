@@ -2,9 +2,9 @@ package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
-import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IPhoneDAO;
 import ua.savelichev.electronic.domain.entity.Phone;
+import ua.savelichev.electronic.domain.services.product.ProductUtils;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
@@ -24,6 +24,7 @@ public class PhoneDAO implements IPhoneDAO {
     public PhoneDAO(IConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
+
     /**
      * Inserts row into table "phone".
      *
@@ -32,9 +33,12 @@ public class PhoneDAO implements IPhoneDAO {
     public void createPhone(Phone phone) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
             connection = connectionFactory.getConnection();
+            connection.setAutoCommit(false);
+            log.debug("Transaction begin");
 
             preparedStatement = connection.prepareStatement(bundle.getString("INSERT_PHONE"));
 
@@ -43,16 +47,61 @@ public class PhoneDAO implements IPhoneDAO {
             preparedStatement.setInt(3, phone.getPrice());
             preparedStatement.setString(4, phone.getDescription());
             preparedStatement.setString(5, phone.getDisplayDiagonal());
-            preparedStatement.setInt(6, phone.getArticle());
-            preparedStatement.setString(7, phone.getOperationSystem());
-            preparedStatement.setString(8, phone.getMainCamera());
-            preparedStatement.setString(9, phone.getBatteryCapacity());
-            preparedStatement.setString(10, phone.getImageRef());
-            preparedStatement.setString(11, phone.getCategory());
+            preparedStatement.setString(6, phone.getOperationSystem());
+            preparedStatement.setString(7, phone.getMainCamera());
+            preparedStatement.setString(8, phone.getBatteryCapacity());
+            preparedStatement.setString(9, phone.getImageRef());
+            preparedStatement.setString(10, phone.getCategory());
 
             preparedStatement.executeUpdate();
+            log.debug("phone inserted" + phone);
+            preparedStatement.clearParameters();
+
+            resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM phone");
+            int phoneId = 0;
+            if (resultSet.next()) {
+                phoneId = resultSet.getInt("id");
+            }
+            log.debug("Got phone id" + phoneId);
+            preparedStatement.clearParameters();
+            int phoneArticle = ProductUtils.generateProductArticle("phone", phoneId);
+            log.debug("Generated phone article" + phoneArticle);
+            int amount = 0;
+            preparedStatement = connection.prepareStatement("INSERT INTO storage (article, amount) VALUES(?,?)");
+            preparedStatement.setInt(1, phoneArticle);
+            preparedStatement.setInt(2, amount);
+            preparedStatement.executeUpdate();
+            preparedStatement.clearParameters();
+            log.debug("Storage position created: article= " + phoneArticle + ", amount= " + amount);
+
+            resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM storage");
+            int storageId = 0;
+            if (resultSet.next()) {
+                storageId = resultSet.getInt("id");
+            }
+            log.debug("Got storage position id" + storageId);
+            preparedStatement.clearParameters();
+            preparedStatement = connection.prepareStatement("UPDATE phone SET article=?, storage_id=? WHERE id=?");
+            preparedStatement.setInt(1, phoneArticle);
+            preparedStatement.setInt(2, storageId);
+            preparedStatement.setInt(3, phoneId);
+            preparedStatement.executeUpdate();
+            log.debug("Phone updated:phoneArticle= " + phoneArticle + ", storageId= " + storageId);
+
+            connection.commit();
+            log.debug("Transaction committed");
+            connection.setAutoCommit(true);
+
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                log.error("Exception rollback transaction: " + ex);
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         } finally {
             try {
@@ -269,8 +318,7 @@ public class PhoneDAO implements IPhoneDAO {
             preparedStatement.setString(9, phone.getBatteryCapacity());
             preparedStatement.setString(10, phone.getImageRef());
             preparedStatement.setString(11, phone.getCategory());
-            preparedStatement.setInt(12,phone.getStorageId());
-            preparedStatement.setInt(13, phone.getId());
+            preparedStatement.setInt(12, phone.getId());
 
             preparedStatement.executeUpdate();
 
@@ -327,4 +375,6 @@ public class PhoneDAO implements IPhoneDAO {
             }
         }
     }
+
+
 }

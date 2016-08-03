@@ -245,7 +245,7 @@ public class OrderItemDAO implements IOrderItemDAO {
     /**
      * Delete row of OrderItem in table "order_item" by id.
      *
-     * @param orderItemId
+     * @param orderItemId for deletion
      */
     @Override
     public void deleteOrderItemById(int orderItemId) {
@@ -283,7 +283,7 @@ public class OrderItemDAO implements IOrderItemDAO {
     /**
      * Delete all rows which references on input order_id
      *
-     * @param orderId
+     * @param orderId id of orderItems
      */
     @Override
     public void deleteOrderItemsByOrderId(int orderId) {

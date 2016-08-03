@@ -99,15 +99,13 @@ public class PhoneService implements IProductService {
      * @param phone contains new Phone parameters
      */
     public void addPhone(Phone phone) {
-        if (phone != null) {
-            IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
-            phoneDAO.createPhone(phone);
-            int id = phoneDAO.getId(phone.getProducer(), phone.getModel());
-            int article = ProductUtils.generateProductArticle(phone.getCategory(), id);
-            phone.setArticle(article);
-            phoneDAO.updatePhone(phone);
-            log.info("Added new Phone: " + phone);
+        if (phone == null) {
+            return;
         }
+        IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
+        log.info("Sending query for insert new Phone: " + phone);
+        phoneDAO.createPhone(phone);
+
     }
 
     /**
@@ -119,6 +117,6 @@ public class PhoneService implements IProductService {
         IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
 
         phoneDAO.deletePhoneByArticle(article);
-        log.info("Deleted phone by article: " + article);
+        log.info("Send request to DAO for deletion phone by article: " + article);
     }
 }
