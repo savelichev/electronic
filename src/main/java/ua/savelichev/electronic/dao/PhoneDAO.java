@@ -54,7 +54,7 @@ public class PhoneDAO implements IPhoneDAO {
             preparedStatement.setString(10, phone.getCategory());
 
             preparedStatement.executeUpdate();
-            log.debug("phone inserted" + phone);
+            log.debug("phone inserted: " + phone);
             preparedStatement.clearParameters();
 
             resultSet = preparedStatement.executeQuery("SELECT last_insert_id() AS id FROM phone");
@@ -62,10 +62,10 @@ public class PhoneDAO implements IPhoneDAO {
             if (resultSet.next()) {
                 phoneId = resultSet.getInt("id");
             }
-            log.debug("Got phone id" + phoneId);
+            log.debug("Got phone id: " + phoneId);
             preparedStatement.clearParameters();
             int phoneArticle = ProductUtils.generateProductArticle("phone", phoneId);
-            log.debug("Generated phone article" + phoneArticle);
+            log.debug("Generated phone article: " + phoneArticle);
             int amount = 0;
             preparedStatement = connection.prepareStatement("INSERT INTO storage (article, amount) VALUES(?,?)");
             preparedStatement.setInt(1, phoneArticle);
@@ -79,7 +79,7 @@ public class PhoneDAO implements IPhoneDAO {
             if (resultSet.next()) {
                 storageId = resultSet.getInt("id");
             }
-            log.debug("Got storage position id" + storageId);
+            log.debug("Got storage position id: " + storageId);
             preparedStatement.clearParameters();
             preparedStatement = connection.prepareStatement("UPDATE phone SET article=?, storage_id=? WHERE id=?");
             preparedStatement.setInt(1, phoneArticle);
@@ -97,9 +97,10 @@ public class PhoneDAO implements IPhoneDAO {
             try {
                 if (connection != null) {
                     connection.rollback();
+                    log.debug("Transaction rollback");
                 }
             } catch (SQLException ex) {
-                log.error("Exception rollback transaction: " + ex);
+                log.error("Exception in rollback transaction: " + ex);
                 ex.printStackTrace();
             }
             e.printStackTrace();
