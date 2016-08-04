@@ -2,7 +2,6 @@ package ua.savelichev.electronic.dao;
 
 
 import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
-import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 
 import javax.naming.NamingException;
 import java.sql.Connection;

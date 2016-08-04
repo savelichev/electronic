@@ -322,10 +322,10 @@ public class NotebookDAO implements INotebookDAO {
             preparedStatement.setInt(9, notebook.getHdd());
             preparedStatement.setString(10, notebook.getImageRef());
             preparedStatement.setString(11, notebook.getCategory());
-            preparedStatement.setInt(12, notebook.getStorageId());
-            preparedStatement.setInt(13, notebook.getId());
+            preparedStatement.setInt(12, notebook.getId());
 
             preparedStatement.executeUpdate();
+            log.debug("Notebook updated: "+notebook);
 
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);

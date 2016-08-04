@@ -158,6 +158,7 @@ public class PhoneDAO implements IPhoneDAO {
                 phone.setCategory(resultSet.getString("category"));
                 phone.setStorageId(resultSet.getInt("storage_id"));
             }
+            log.debug("Got phone by id: "+id);
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();
@@ -270,6 +271,7 @@ public class PhoneDAO implements IPhoneDAO {
 
                 phones.add(phone);
             }
+            log.debug("Got all phones");
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();

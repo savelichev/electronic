@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IStorageDAO;
+import ua.savelichev.electronic.domain.entity.StoragePosition;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.anyInt;
@@ -29,7 +30,7 @@ public class StorageServiceTest {
 
         int article = 12343;
 
-        when(mockStorageDAO.getPositionAmountByArticle(anyInt())).thenReturn(10);
+        when(mockStorageDAO.getStoragePositionByArticle(anyInt())).thenReturn(new StoragePosition(article,10));
 
         assertEquals(10, storageService.getPositionAmountByArticle(article));
     }

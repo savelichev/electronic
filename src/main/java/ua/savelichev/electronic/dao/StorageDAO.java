@@ -4,12 +4,15 @@ import org.apache.log4j.Logger;
 import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
 import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IStorageDAO;
+import ua.savelichev.electronic.domain.entity.StoragePosition;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -26,11 +29,10 @@ public class StorageDAO implements IStorageDAO {
     /**
      * Inserts new row into the table "storage"
      *
-     * @param article Product article
-     * @param amount  amount of Product
+     * @param storagePosition
      */
     @Override
-    public void createPosition(int article, int amount) {
+    public void createStoragePosition(StoragePosition storagePosition) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -39,11 +41,11 @@ public class StorageDAO implements IStorageDAO {
 
             preparedStatement = connection.prepareStatement(bundle.getString("CREATE_STORAGE_POSITION"));
 
-            preparedStatement.setInt(1, article);
-            preparedStatement.setInt(2, amount);
+            preparedStatement.setInt(1, storagePosition.getArticle());
+            preparedStatement.setInt(2, storagePosition.getAmount());
 
             preparedStatement.executeUpdate();
-            log.debug("Storage position created, article: " + article + " amount: " + amount);
+            log.debug("Storage position created: " + storagePosition);
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();
@@ -71,11 +73,11 @@ public class StorageDAO implements IStorageDAO {
      * @return int id value
      */
     @Override
-    public int getPositionAmountByArticle(int article) {
+    public StoragePosition getStoragePositionByArticle(int article) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        int amount = 0;
+        StoragePosition storagePosition = null;
 
         try {
             connection = connectionFactory.getConnection();
@@ -86,9 +88,12 @@ public class StorageDAO implements IStorageDAO {
 
             resultSet = preparedStatement.executeQuery();
 
+            storagePosition = new StoragePosition();
+
             if (resultSet.next()) {
-                amount = resultSet.getInt("amount");
+                storagePosition.setAmount(resultSet.getInt("amount"));
             }
+            storagePosition.setArticle(article);
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();
@@ -110,18 +115,17 @@ public class StorageDAO implements IStorageDAO {
                 e.printStackTrace();
             }
         }
-        log.debug("Got position amount: " + amount + " for article: " + article);
-        return amount;
+        log.debug("Got storage position: " + storagePosition);
+        return storagePosition;
     }
 
     /**
      * Updates row in the table "storage"
      *
-     * @param article target row "article" field value
-     * @param amount  new value for field "amount"
+     * @param storagePosition position for update
      */
     @Override
-    public void updatePositionAmountByArticle(int article, int amount) {
+    public void updateStoragePosition(StoragePosition storagePosition) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -130,11 +134,11 @@ public class StorageDAO implements IStorageDAO {
 
             preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_POSITION_AMOUNT"));
 
-            preparedStatement.setInt(1, amount);
-            preparedStatement.setInt(2, article);
+            preparedStatement.setInt(1, storagePosition.getAmount());
+            preparedStatement.setInt(2, storagePosition.getArticle());
 
             preparedStatement.executeUpdate();
-            log.debug("Set position amount: " + amount + " for article: " + article);
+            log.debug("Storage position updated: " + storagePosition);
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();
@@ -152,4 +156,61 @@ public class StorageDAO implements IStorageDAO {
             }
         }
     }
+
+    @Override
+    public List<StoragePosition> getAllStoragePositions() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<StoragePosition> storagePositions = null;
+        StoragePosition storagePosition = null;
+
+        try {
+            connection = connectionFactory.getConnection();
+
+            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ALL_FROM_STORAGE"));
+
+            resultSet = preparedStatement.executeQuery();
+
+            storagePositions = new ArrayList<>();
+
+
+            while (resultSet.next()) {
+                storagePosition = new StoragePosition();
+                storagePosition.setId(resultSet.getInt("id"));
+                storagePosition.setArticle(resultSet.getInt("article"));
+                storagePosition.setAmount(resultSet.getInt("amount"));
+
+                storagePositions.add(storagePosition);
+            }
+
+
+        } catch (SQLException | NamingException e) {
+            log.error("Exception: " + e);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                log.error("Exception during  closing resources: " + e);
+                e.printStackTrace();
+            }
+        }
+        log.debug("Got all storage positions.");
+        return storagePositions;
+    }
+
+
 }
+
+
