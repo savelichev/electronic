@@ -152,6 +152,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(10, user.getId());
 
             preparedStatement.executeUpdate();
+            log.debug("User updated: " + user);
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();

@@ -22,8 +22,10 @@ public class NotebookDAOTest {
     @Before
     public void init() {
         connectionFactory = ConnectionFactoryForTest.getInstance();
+        tableCleaner = new TableCleaner();
+
         notebookDAO = new NotebookDAO(connectionFactory);
-        notebook=new Notebook();
+        notebook = new Notebook();
         notebook.setProducer("Producer");
         notebook.setModel("Model");
         notebook.setCategory("notebook");
@@ -35,13 +37,12 @@ public class NotebookDAOTest {
         notebook.setRam(2);
         notebook.setHdd(500);
 
+        tableCleaner.cleanTables("notebook", "storage");
+
     }
 
     @Test
     public void testCreateNotebook() {
-
-        tableCleaner = new TableCleaner("notebook", "storage");
-        tableCleaner.cleanTables();
 
         notebookDAO.createNotebook(notebook);
 
@@ -54,9 +55,6 @@ public class NotebookDAOTest {
 
     @Test
     public void testCreateNotebookRollback() {
-
-        tableCleaner = new TableCleaner("notebook", "storage");
-        tableCleaner.cleanTables();
 
         Notebook notebook = new Notebook();
 
@@ -71,9 +69,6 @@ public class NotebookDAOTest {
 
     @Test
     public void testGetNotebookById() {
-
-        tableCleaner = new TableCleaner("notebook", "storage");
-        tableCleaner.cleanTables();
 
         notebookDAO.createNotebook(notebook);
 
@@ -90,9 +85,6 @@ public class NotebookDAOTest {
     @Test
     public void testGetId() {
 
-        tableCleaner = new TableCleaner("notebook", "storage");
-        tableCleaner.cleanTables();
-
         notebookDAO.createNotebook(notebook);
 
         int id = -1;
@@ -103,9 +95,6 @@ public class NotebookDAOTest {
 
     @Test
     public void testUpdateNotebook() {
-
-        tableCleaner = new TableCleaner("notebook", "storage");
-        tableCleaner.cleanTables();
 
         notebookDAO.createNotebook(notebook);
 
@@ -124,9 +113,6 @@ public class NotebookDAOTest {
 
     @Test
     public void testDeleteNotebookByArticle() {
-
-        tableCleaner = new TableCleaner("notebook", "storage");
-        tableCleaner.cleanTables();
 
         notebookDAO.createNotebook(notebook);
 

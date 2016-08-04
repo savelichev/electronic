@@ -17,20 +17,14 @@ public class PhoneDAOTest {
     IConnectionFactory connectionFactory;
     IPhoneDAO phoneDAO;
     TableCleaner tableCleaner;
+    Phone phone;
 
     @Before
     public void init() {
         connectionFactory = ConnectionFactoryForTest.getInstance();
         phoneDAO = new PhoneDAO(connectionFactory);
-    }
-
-    @Test
-    public void testCreatePhone() {
-
-        tableCleaner = new TableCleaner("phone", "storage");
-        tableCleaner.cleanTables();
-
-        Phone phone = new Phone();
+        tableCleaner = new TableCleaner();
+        phone = new Phone();
         phone.setProducer("Producer");
         phone.setModel("Model");
         phone.setCategory("phone");
@@ -41,6 +35,12 @@ public class PhoneDAOTest {
         phone.setOperationSystem("OS");
         phone.setMainCamera("12");
         phone.setBatteryCapacity("2000");
+
+        tableCleaner.cleanTables("phone", "storage");
+    }
+
+    @Test
+    public void testCreatePhone() {
 
         phoneDAO.createPhone(phone);
 
@@ -53,9 +53,6 @@ public class PhoneDAOTest {
 
     @Test
     public void testCreatePhoneRollback() {
-
-        tableCleaner = new TableCleaner("phone", "storage");
-        tableCleaner.cleanTables();
 
         Phone phone = new Phone();
 
@@ -70,21 +67,6 @@ public class PhoneDAOTest {
 
     @Test
     public void testGetPhoneById() {
-
-        tableCleaner = new TableCleaner("phone", "storage");
-        tableCleaner.cleanTables();
-
-        Phone phone = new Phone();
-        phone.setProducer("Producer");
-        phone.setModel("Model");
-        phone.setCategory("phone");
-        phone.setPrice(1000);
-        phone.setDescription("Description");
-        phone.setImageRef("Producer_Model_1.jpg");
-        phone.setDisplayDiagonal("5.5");
-        phone.setOperationSystem("OS");
-        phone.setMainCamera("12");
-        phone.setBatteryCapacity("2000");
 
         phoneDAO.createPhone(phone);
 
@@ -101,21 +83,6 @@ public class PhoneDAOTest {
     @Test
     public void testGetId() {
 
-        tableCleaner = new TableCleaner("phone", "storage");
-        tableCleaner.cleanTables();
-
-        Phone phone = new Phone();
-        phone.setProducer("Producer");
-        phone.setModel("Model");
-        phone.setCategory("phone");
-        phone.setPrice(1000);
-        phone.setDescription("Description");
-        phone.setImageRef("Producer_Model_1.jpg");
-        phone.setDisplayDiagonal("5.5");
-        phone.setOperationSystem("OS");
-        phone.setMainCamera("12");
-        phone.setBatteryCapacity("2000");
-
         phoneDAO.createPhone(phone);
 
 
@@ -127,21 +94,6 @@ public class PhoneDAOTest {
 
     @Test
     public void testUpdatePhone() {
-
-        tableCleaner = new TableCleaner("phone", "storage");
-        tableCleaner.cleanTables();
-
-        Phone phone = new Phone();
-        phone.setProducer("Producer");
-        phone.setModel("Model");
-        phone.setCategory("phone");
-        phone.setPrice(1000);
-        phone.setDescription("Description");
-        phone.setImageRef("Producer_Model_1.jpg");
-        phone.setDisplayDiagonal("5.5");
-        phone.setOperationSystem("OS");
-        phone.setMainCamera("12");
-        phone.setBatteryCapacity("2000");
 
         phoneDAO.createPhone(phone);
 
@@ -160,21 +112,6 @@ public class PhoneDAOTest {
 
     @Test
     public void testDeletePhoneByArticle() {
-
-        tableCleaner = new TableCleaner("phone", "storage");
-        tableCleaner.cleanTables();
-
-        Phone phone = new Phone();
-        phone.setProducer("Producer");
-        phone.setModel("Model");
-        phone.setCategory("phone");
-        phone.setPrice(1000);
-        phone.setDescription("Description");
-        phone.setImageRef("Producer_Model_1.jpg");
-        phone.setDisplayDiagonal("5.5");
-        phone.setOperationSystem("OS");
-        phone.setMainCamera("12");
-        phone.setBatteryCapacity("2000");
 
         phoneDAO.createPhone(phone);
 

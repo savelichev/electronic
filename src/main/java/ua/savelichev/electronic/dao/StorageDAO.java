@@ -29,7 +29,7 @@ public class StorageDAO implements IStorageDAO {
     /**
      * Inserts new row into the table "storage"
      *
-     * @param storagePosition
+     * @param storagePosition target for creation
      */
     @Override
     public void createStoragePosition(StoragePosition storagePosition) {

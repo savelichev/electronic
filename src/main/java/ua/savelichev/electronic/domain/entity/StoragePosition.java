@@ -40,4 +40,20 @@ public class StoragePosition {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StoragePosition that = (StoragePosition) o;
+
+        return article == that.article;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return article;
+    }
 }
