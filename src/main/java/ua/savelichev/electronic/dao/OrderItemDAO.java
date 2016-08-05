@@ -164,6 +164,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
                 orderItem = new OrderItem();
 
+                orderItem.setId(resultSet.getInt("id"));
                 orderItem.setOrderId(resultSet.getInt("order_id"));
                 orderItem.setProductArticle(resultSet.getInt("product_article"));
                 orderItem.setPrice(resultSet.getInt("price"));
@@ -172,7 +173,7 @@ public class OrderItemDAO implements IOrderItemDAO {
 
                 orderItems.add(orderItem);
             }
-            log.debug("Got list order items fo order id: " + orderId);
+            log.debug("Got list order items fo order id: " + orderId + " amount: " + orderItems.size());
 
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);

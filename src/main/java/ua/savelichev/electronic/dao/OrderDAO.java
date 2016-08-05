@@ -231,6 +231,7 @@ public class OrderDAO implements IOrderDAO {
         ResultSet resultSet = null;
         List<IOrder> orders = null;
         IOrder order = null;
+        List<OrderItem> orderItems=null;
 
         try {
             connection = connectionFactory.getConnection();
@@ -249,7 +250,9 @@ public class OrderDAO implements IOrderDAO {
                 order.setBuyerName(resultSet.getString("buyer_name"));
                 order.setAddress(resultSet.getString("address"));
                 order.setBuyerCellNumber(resultSet.getString("buyer_cell_number"));
+
                 orders.add(order);
+
             }
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
