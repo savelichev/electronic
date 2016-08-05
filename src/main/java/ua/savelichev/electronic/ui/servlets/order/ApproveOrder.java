@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.order;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.entity.Order;
 import ua.savelichev.electronic.domain.services.IOrderService;
 import ua.savelichev.electronic.domain.services.OrderService;
@@ -18,7 +19,7 @@ public class ApproveOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        IOrderService orderService = new OrderService();
+        IOrderService orderService = new OrderService(DAOFactory.getInstance());
         HttpSession session = req.getSession();
         Order order = (Order) session.getAttribute("orderTemplate");
         String comment = req.getParameter("comment");

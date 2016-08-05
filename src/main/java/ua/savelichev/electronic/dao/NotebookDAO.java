@@ -1,8 +1,11 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.INotebookDAO;
 import ua.savelichev.electronic.domain.entity.Notebook;
+import ua.savelichev.electronic.domain.services.product.ProductUtils;
 
 import javax.naming.NamingException;
 import java.sql.Connection;
@@ -15,9 +18,14 @@ import java.util.ResourceBundle;
 
 public class NotebookDAO implements INotebookDAO {
 
-    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private IConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(OrderDAO.class);
     private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
+
+
+    public NotebookDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     /**
      * Inserts row into table "notebook".
@@ -27,9 +35,12 @@ public class NotebookDAO implements INotebookDAO {
     public void createNotebook(Notebook notebook) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
             connection = connectionFactory.getConnection();
+            connection.setAutoCommit(false);
+            log.debug("Transaction begin");
 
             preparedStatement = connection.prepareStatement(bundle.getString("INSERT_NOTEBOOK"));
 
@@ -38,16 +49,62 @@ public class NotebookDAO implements INotebookDAO {
             preparedStatement.setInt(3, notebook.getPrice());
             preparedStatement.setString(4, notebook.getDescription());
             preparedStatement.setString(5, notebook.getDisplayDiagonal());
-            preparedStatement.setInt(6, notebook.getArticle());
-            preparedStatement.setString(7, notebook.getProcessor());
-            preparedStatement.setInt(8, notebook.getRam());
-            preparedStatement.setInt(9, notebook.getHdd());
-            preparedStatement.setString(10, notebook.getImageRef());
-            preparedStatement.setString(11, notebook.getCategory());
+            preparedStatement.setString(6, notebook.getProcessor());
+            preparedStatement.setInt(7, notebook.getRam());
+            preparedStatement.setInt(8, notebook.getHdd());
+            preparedStatement.setString(9, notebook.getImageRef());
+            preparedStatement.setString(10, notebook.getCategory());
 
             preparedStatement.executeUpdate();
+            log.debug("notebook inserted: " + notebook);
+            preparedStatement.clearParameters();
+
+            resultSet = preparedStatement.executeQuery(bundle.getString("SELECT_LAST_INSERTED_NOTEBOOK_ID"));
+            int notebookId = 0;
+            if (resultSet.next()) {
+                notebookId = resultSet.getInt("id");
+            }
+            log.debug("Got notebook id: " + notebookId);
+            preparedStatement.clearParameters();
+            int notebookArticle = ProductUtils.generateProductArticle("notebook", notebookId);
+            log.debug("Generated notebook article: " + notebookArticle);
+            int amount = 0;
+            preparedStatement = connection.prepareStatement(bundle.getString("CREATE_STORAGE_POSITION"));
+            preparedStatement.setInt(1, notebookArticle);
+            preparedStatement.setInt(2, amount);
+            preparedStatement.executeUpdate();
+            preparedStatement.clearParameters();
+            log.debug("Storage position created: article= " + notebookArticle + ", amount= " + amount);
+
+            resultSet = preparedStatement.executeQuery(bundle.getString("SELECT_LAST_INSERTED_STORAGE_ID"));
+            int storageId = 0;
+            if (resultSet.next()) {
+                storageId = resultSet.getInt("id");
+            }
+            log.debug("Got storage position id: " + storageId);
+            preparedStatement.clearParameters();
+            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_NOTEBOOK_ARTICLE_AND_STORAGE_ID"));
+            preparedStatement.setInt(1, notebookArticle);
+            preparedStatement.setInt(2, storageId);
+            preparedStatement.setInt(3, notebookId);
+            preparedStatement.executeUpdate();
+            log.debug("Notebook updated:notebookArticle= " + notebookArticle + ", storageId= " + storageId);
+
+            connection.commit();
+            log.debug("Transaction committed");
+            connection.setAutoCommit(true);
+
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                    log.debug("Transaction rollback");
+                }
+            } catch (SQLException ex) {
+                log.error("Exception in rollback transaction: " + ex);
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         } finally {
             try {
@@ -63,6 +120,7 @@ public class NotebookDAO implements INotebookDAO {
                 e.printStackTrace();
             }
         }
+
     }
 
     /**
@@ -264,10 +322,10 @@ public class NotebookDAO implements INotebookDAO {
             preparedStatement.setInt(9, notebook.getHdd());
             preparedStatement.setString(10, notebook.getImageRef());
             preparedStatement.setString(11, notebook.getCategory());
-            preparedStatement.setInt(12,notebook.getStorageId());
-            preparedStatement.setInt(13, notebook.getId());
+            preparedStatement.setInt(12, notebook.getId());
 
             preparedStatement.executeUpdate();
+            log.debug("Notebook updated: "+notebook);
 
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);

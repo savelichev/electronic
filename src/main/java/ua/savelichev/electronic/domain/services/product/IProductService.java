@@ -2,7 +2,7 @@ package ua.savelichev.electronic.domain.services.product;
 
 import ua.savelichev.electronic.domain.entity.Product;
 
-public interface ProductService {
+public interface IProductService {
 
     /**
      * Gets product id from relevant table in database

@@ -1,12 +1,14 @@
 package ua.savelichev.electronic.domain.entity;
 
 
+import ua.savelichev.electronic.domain.entity.interfaces.IOrder;
+
 import java.util.List;
 
 /**
  * Class contains order parameters
  */
-public class Order {
+public class Order implements IOrder {
 
     /**
      * Order identifier

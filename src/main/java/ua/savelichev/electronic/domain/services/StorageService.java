@@ -1,12 +1,19 @@
 package ua.savelichev.electronic.domain.services;
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.dao.StorageDAO;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IStorageDAO;
+import ua.savelichev.electronic.domain.entity.StoragePosition;
 
 public class StorageService implements IStorageService {
 
     private static final Logger log = Logger.getLogger(StorageService.class);
+
+    private IDAOFactory daoFactory;
+
+    public StorageService(IDAOFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     /**
      * Gets amount of Position at storage.
@@ -15,22 +22,24 @@ public class StorageService implements IStorageService {
      * @return int amount of Product at storage
      */
     public int getPositionAmountByArticle(int article) {
-        IStorageDAO storageDAO = new StorageDAO();
-        int amount = storageDAO.getPositionAmountByArticle(article);
+        IStorageDAO storageDAO = daoFactory.getStorageDAO();
+        StoragePosition storagePosition = storageDAO.getStoragePositionByArticle(article);
+        int amount = storagePosition.getAmount();
         log.debug("Got amount:" + amount + " for article: " + article);
         return amount;
     }
 
     /**
-     * Changes Position amount at storage.
+     * Changes Position newAmount at storage.
      *
-     * @param article Product article
-     * @param amount  new amount
+     * @param article   Product article
+     * @param newAmount new newAmount
      */
-    public void changePositionAmount(int article, int amount) {
-        IStorageDAO storageDAO = new StorageDAO();
-        log.debug("Try to change amount of product with article: " + article + " to: " + amount);
-        storageDAO.updatePositionAmountByArticle(article, amount);
+    public void changePositionAmount(int article, int newAmount) {
+        StoragePosition storagePosition = new StoragePosition(article, newAmount);
+        IStorageDAO storageDAO = daoFactory.getStorageDAO();
+        log.debug("Try to change newAmount of product with article: " + article + " to: " + newAmount);
+        storageDAO.updateStoragePosition(storagePosition);
     }
 
     /**
@@ -40,8 +49,9 @@ public class StorageService implements IStorageService {
      * @param amount  Product amount for new position
      */
     public void createStoragePosition(int article, int amount) {
-        IStorageDAO storageDAO = new StorageDAO();
+        StoragePosition storagePosition = new StoragePosition(article, amount);
+        IStorageDAO storageDAO = daoFactory.getStorageDAO();
         log.debug("Try to create storage position with article: " + article + " and amount: " + amount);
-        storageDAO.createPosition(article, amount);
+        storageDAO.createStoragePosition(storagePosition);
     }
 }

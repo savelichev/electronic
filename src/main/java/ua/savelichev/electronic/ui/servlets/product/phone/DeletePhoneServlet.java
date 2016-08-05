@@ -1,6 +1,7 @@
 package ua.savelichev.electronic.ui.servlets.product.phone;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.services.product.PhoneService;
 
 import javax.servlet.ServletException;
@@ -17,10 +18,10 @@ public class DeletePhoneServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PhoneService phoneService = new PhoneService();
+        PhoneService phoneService = new PhoneService(DAOFactory.getInstance());
         String article = req.getParameter("phoneArticle");
         log.info("Sending request for deletion product with article: " + article);
-        phoneService.deletePhoneByArticle(article);
+        phoneService.deletePhoneByArticle(Integer.valueOf(article));
         resp.sendRedirect("phone");
     }
 }

@@ -2,7 +2,7 @@ package ua.savelichev.electronic.domain.services;
 
 
 import ua.savelichev.electronic.domain.entity.Cart;
-import ua.savelichev.electronic.domain.entity.Order;
+import ua.savelichev.electronic.domain.entity.interfaces.IOrder;
 import ua.savelichev.electronic.domain.entity.User;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface IOrderService {
      * @param cart Cart with List of CartItem.
      * @return template of order which needs to be approved by User.
      */
-    Order buildOrderTemplate(User user, Cart cart);
+    IOrder buildOrderTemplate(User user, Cart cart);
 
     /**
      * Completes Order by Order template.
@@ -30,14 +30,14 @@ public interface IOrderService {
      * @param buyerName       buyer name
      * @param buyerCellNumber buyer cell number
      */
-    void approveOrder(Order order, String comment, String address, String buyerName, String buyerCellNumber);
+    void approveOrder(IOrder order, String comment, String address, String buyerName, String buyerCellNumber);
 
     /**
      * Saves Order to database
      *
      * @param order Order to save
      */
-    void createOrder(Order order);
+    void createOrder(IOrder order);
 
     /**
      * Takes all User Orders from database
@@ -45,6 +45,6 @@ public interface IOrderService {
      * @param user User fo search
      * @return List of User
      */
-    List<Order> getUserOrders(User user);
+    List<IOrder> getUserOrders(User user);
 
 }

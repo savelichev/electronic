@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.product.notebook;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.services.product.NotebookService;
 import ua.savelichev.electronic.domain.entity.Notebook;
 
@@ -22,7 +23,7 @@ public class AddNotebookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        NotebookService notebookService = new NotebookService();
+        NotebookService notebookService = new NotebookService(DAOFactory.getInstance());
         Notebook notebook = new Notebook();
 
         notebook.setCategory(req.getParameter("category"));

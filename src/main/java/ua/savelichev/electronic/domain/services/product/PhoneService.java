@@ -1,19 +1,22 @@
 package ua.savelichev.electronic.domain.services.product;
 
 import org.apache.log4j.Logger;
-import ua.savelichev.electronic.dao.PhoneDAO;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IPhoneDAO;
 import ua.savelichev.electronic.domain.entity.Phone;
 import ua.savelichev.electronic.domain.entity.Product;
 
 import java.util.List;
 
-public class PhoneService implements ProductService {
-
+public class PhoneService implements IProductService {
 
     private static final Logger log = Logger.getLogger(PhoneService.class);
 
-    private IPhoneDAO phoneDAO;
+    private IDAOFactory daoFactory;
+
+    public PhoneService(IDAOFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     /**
      * Gets id of Phone from database
@@ -23,12 +26,13 @@ public class PhoneService implements ProductService {
      */
     @Override
     public int getId(Product product) {
-
-        phoneDAO = new PhoneDAO();
-        int id = phoneDAO.getId(product.getProducer(), product.getModel());
-        log.debug("Got id: " + id + " for product with producer: " + product.getProducer()
-                + ", model: " + product.getModel());
-        return id;
+        if (product != null) {
+            IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
+            int id = phoneDAO.getId(product.getProducer(), product.getModel());
+            log.debug("Got id: " + id + " for product with producer: " + product.getProducer()
+                    + ", model: " + product.getModel());
+            return id;
+        } else return 0;
     }
 
     /**
@@ -39,6 +43,7 @@ public class PhoneService implements ProductService {
      */
     @Override
     public Product getProductByArticle(int article) {
+
         int id = ProductUtils.getProductIdFromArticle(article);
         Phone phone = getPhoneById(id);
         log.debug("Got product by article: " + article);
@@ -51,7 +56,7 @@ public class PhoneService implements ProductService {
      * @return List of Phone objects
      */
     public List<Phone> getAllPhones() {
-        phoneDAO = new PhoneDAO();
+        IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
         List<Phone> phones = phoneDAO.getAllPhones();
         log.debug("Got list of all phones");
         return phones;
@@ -64,7 +69,7 @@ public class PhoneService implements ProductService {
      * @return Phone object
      */
     public Phone getPhoneById(int id) {
-        phoneDAO = new PhoneDAO();
+        IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
         Phone phone = phoneDAO.getPhoneById(id);
         log.debug("Got phone by id: " + id);
         return phone;
@@ -94,30 +99,24 @@ public class PhoneService implements ProductService {
      * @param phone contains new Phone parameters
      */
     public void addPhone(Phone phone) {
-
-        phoneDAO = new PhoneDAO();
-
+        if (phone == null) {
+            return;
+        }
+        IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
+        log.info("Sending query for insert new Phone: " + phone);
         phoneDAO.createPhone(phone);
 
-        int id = phoneDAO.getId(phone.getProducer(), phone.getModel());
-
-        int article = ProductUtils.generateProductArticle(phone.getCategory(), id);
-
-        phone.setArticle(article);
-
-        phoneDAO.updatePhone(phone);
-
-        log.info("Added new Phone: " + phone);
     }
 
     /**
      * Deletes Phone from database
      *
-     * @param phoneArticle target Phone article
+     * @param article target Phone article
      */
-    public void deletePhoneByArticle(String phoneArticle) {
-        int article = Integer.valueOf(phoneArticle);
+    public void deletePhoneByArticle(int article) {
+        IPhoneDAO phoneDAO = daoFactory.getPhoneDAO();
+
         phoneDAO.deletePhoneByArticle(article);
-        log.info("Deleted phone by article: " + article);
+        log.info("Send request to DAO for deletion phone by article: " + article);
     }
 }

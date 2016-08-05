@@ -1,5 +1,6 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
+import ua.savelichev.electronic.dao.DAOFactory;
 import ua.savelichev.electronic.domain.services.UserService;
 import ua.savelichev.electronic.domain.entity.User;
 
@@ -22,21 +23,36 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User inUser = new User();
+        req.getSession().setAttribute("badSignUpData", false);
 
-        inUser.setEmail(req.getParameter("email"));
-        inUser.setPassword(req.getParameter("password"));
-        inUser.setLogin(req.getParameter("login"));
-        inUser.setFirstName(req.getParameter("firstName"));
-        inUser.setLastName(req.getParameter("lastName"));
-        inUser.setCellNumber(req.getParameter("cellNumber"));
-        inUser.setAddress(req.getParameter("address"));
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String login = req.getParameter("login");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String cellNumber = req.getParameter("cellNumber");
+        String address = req.getParameter("address");
 
-        boolean isUserCreated = new UserService().createUserIfNotExist(inUser);
+        if (email.equals("") || password.equals("") || login.equals("")) {
+            req.getSession().setAttribute("badSignUpData", true);
+            resp.sendRedirect("sign-up");
+        }
+
+        User inUser = new User(email);
+        inUser.setPassword(password);
+        inUser.setLogin(login);
+        inUser.setFirstName(firstName);
+        inUser.setLastName(lastName);
+        inUser.setCellNumber(cellNumber);
+        inUser.setAddress(address);
+
+        boolean isUserCreated = new UserService(DAOFactory.getInstance()).createUserIfNotExist(inUser);
+
 
         if (isUserCreated) {
             resp.sendRedirect("sign-in");
         } else {
+            req.getSession().setAttribute("badSignUpData", true);
             resp.sendRedirect("sign-up");
         }
 

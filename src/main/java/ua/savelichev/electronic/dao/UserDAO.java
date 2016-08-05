@@ -1,6 +1,8 @@
 package ua.savelichev.electronic.dao;
 
 import org.apache.log4j.Logger;
+import ua.savelichev.electronic.dao.interfaces.IConnectionFactory;
+import ua.savelichev.electronic.dao.interfaces.IDAOFactory;
 import ua.savelichev.electronic.dao.interfaces.IUserDAO;
 import ua.savelichev.electronic.domain.entity.User;
 
@@ -15,9 +17,13 @@ import java.util.ResourceBundle;
 
 public class UserDAO implements IUserDAO {
 
-    private ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
+    private IConnectionFactory connectionFactory;
     private static final Logger log = Logger.getLogger(OrderDAO.class);
-    private ResourceBundle bundle = ResourceBundle.getBundle("SQLQueries");
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("SQLQueries");
+
+    public UserDAO(IConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
     /**
      * Selects row from the table "user" by field "email"
@@ -34,19 +40,19 @@ public class UserDAO implements IUserDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(bundle.getString("GET_USER_BY_EMAIL"));
+            preparedStatement = connection.prepareStatement(BUNDLE.getString("GET_USER_BY_EMAIL"));
 
             preparedStatement.setString(1, email);
 
             resultSet = preparedStatement.executeQuery();
-            user = new User();
+
             if (resultSet.next()) {
+                user = new User(resultSet.getString("email"));
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
                 user.setFirstName(resultSet.getString("firstname"));
                 user.setLastName(resultSet.getString("lastname"));
-                user.setEmail(resultSet.getString("email"));
                 user.setCellNumber(resultSet.getString("cell_number"));
                 user.setRole(resultSet.getString("role"));
                 user.setAddress(resultSet.getString("address"));
@@ -88,7 +94,7 @@ public class UserDAO implements IUserDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(bundle.getString("CREATE_USER"));
+            preparedStatement = connection.prepareStatement(BUNDLE.getString("CREATE_USER"));
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -99,6 +105,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(7, user.getAddress());
 
             preparedStatement.executeUpdate();
+            log.debug("User: " + user.getEmail() + "was created");
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();
@@ -131,7 +138,7 @@ public class UserDAO implements IUserDAO {
         try {
             connection = connectionFactory.getConnection();
 
-            preparedStatement = connection.prepareStatement(bundle.getString("UPDATE_USER"));
+            preparedStatement = connection.prepareStatement(BUNDLE.getString("UPDATE_USER"));
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -145,6 +152,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(10, user.getId());
 
             preparedStatement.executeUpdate();
+            log.debug("User updated: " + user);
         } catch (SQLException | NamingException e) {
             log.error("Exception: " + e);
             e.printStackTrace();
@@ -179,19 +187,18 @@ public class UserDAO implements IUserDAO {
         try {
             users = new ArrayList<>();
             connection = connectionFactory.getConnection();
-            preparedStatement = connection.prepareStatement(bundle.getString("SELECT_ALL_USERS"));
+            preparedStatement = connection.prepareStatement(BUNDLE.getString("SELECT_ALL_USERS"));
 
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                user = new User();
+                user = new User(resultSet.getString("email"));
 
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
                 user.setFirstName(resultSet.getString("firstname"));
                 user.setLastName(resultSet.getString("lastname"));
-                user.setEmail(resultSet.getString("email"));
                 user.setCellNumber(resultSet.getString("cell_number"));
                 user.setRole(resultSet.getString("role"));
                 user.setAddress(resultSet.getString("address"));

@@ -1,14 +1,17 @@
 package ua.savelichev.electronic.dao.interfaces;
 
+import ua.savelichev.electronic.domain.entity.StoragePosition;
+
+import java.util.List;
+
 public interface IStorageDAO {
 
     /**
      * Inserts new row into the table "storage"
      *
-     * @param article Product article
-     * @param amount  amount of Product
+     * @param storagePosition new storage position
      */
-    void createPosition(int article, int amount);
+    void createStoragePosition(StoragePosition storagePosition);
 
     /**
      * Selects row from the table "storage" by field "article"
@@ -16,15 +19,15 @@ public interface IStorageDAO {
      * @param article target row article value
      * @return value of field "amount"
      */
-    int getPositionAmountByArticle(int article);
+    StoragePosition getStoragePositionByArticle(int article);
 
     /**
      * Updates row in the table "order"
      *
-     * @param article target row article value
-     * @param amount  new value for field "amount"
+     * @param storagePosition position for update
      */
-    void updatePositionAmountByArticle(int article, int amount);
+    void updateStoragePosition(StoragePosition storagePosition);
 
+    List<StoragePosition> getAllStoragePositions();
 
 }

@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title><fmt:message key="add_notebook" bundle="${messages}"/></title>
+    <title><fmt:message key="add_phone" bundle="${messages}"/></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,10 +27,10 @@
 
 <div class="container">
     <div class="col-md-4 container" id="addnotebook">
-        <form class="input-group" method="post" action="add-notebook">
+        <form class="input-group" method="post" action="add-phone">
 
 
-            <input type="text" class="hidden" name="category" value="notebook">
+            <input type="text" class="hidden" name="category" value="phone">
 
             <div class="form-group">
                 <label for="producer"><fmt:message key="producer" bundle="${messages}"/></label>
