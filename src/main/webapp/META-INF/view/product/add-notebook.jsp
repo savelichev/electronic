@@ -29,7 +29,6 @@
     <div class="col-md-4 container" id="addnotebook">
         <form class="input-group" method="post" action="add-notebook">
 
-
             <input type="text" class="hidden" name="category" value="notebook">
 
             <div class="form-group">
@@ -78,12 +77,18 @@
                 <input type="text" class="form-control" id="imageRef" name="imageRef" placeholder="Image reference">
             </div>
 
-
             <br/>
             <div>
                 <button type="submit" class="btn btn-primary"><fmt:message key="add" bundle="${messages}"/></button>
             </div>
+
+            <c:set var="badData" value="${sessionScope.badData}"/>
+            <c:if test="${badData==true}">
+                <p>Wrong input data</p>
+            </c:if>
+
         </form>
+
     </div>
 </div>
 
