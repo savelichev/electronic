@@ -79,11 +79,15 @@
                 <input type="text" class="form-control" id="imageRef" name="imageRef" placeholder="Image reference">
             </div>
 
-
             <br/>
             <div>
                 <button type="submit" class="btn btn-primary"><fmt:message key="add" bundle="${messages}"/></button>
             </div>
+
+            <c:set var="badData" value="${sessionScope.badData}"/>
+            <c:if test="${badData==true}">
+                <p>Wrong input data</p>
+            </c:if>
         </form>
     </div>
 </div>

@@ -25,5 +25,10 @@
         <location>/index</location>
     </error-page>
 
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/index</location>
+    </error-page>
+
 
 </web-app>
