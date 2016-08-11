@@ -1,8 +1,8 @@
 package ua.savelichev.electronic.ui.servlets.user;
 
 import ua.savelichev.electronic.dao.DAOFactory;
-import ua.savelichev.electronic.domain.services.UserService;
 import ua.savelichev.electronic.domain.entity.User;
+import ua.savelichev.electronic.domain.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +36,7 @@ public class SignUpServlet extends HttpServlet {
         if (email.equals("") || password.equals("") || login.equals("")) {
             req.getSession().setAttribute("badSignUpData", true);
             resp.sendRedirect("sign-up");
+            return;
         }
 
         User inUser = new User(email);
@@ -47,7 +48,6 @@ public class SignUpServlet extends HttpServlet {
         inUser.setAddress(address);
 
         boolean isUserCreated = new UserService(DAOFactory.getInstance()).createUserIfNotExist(inUser);
-
 
         if (isUserCreated) {
             resp.sendRedirect("sign-in");
